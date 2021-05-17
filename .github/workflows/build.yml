@@ -1,0 +1,36 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - CONTRIBUTING.md
+      - README
+      - README.md
+      - RELNOTES
+      - SECURITY.md
+  pull_request:
+    branches: [ master ]
+    paths-ignore:
+      - CONTRIBUTING.md
+      - README
+      - README.md
+      - RELNOTES
+      - SECURITY.md
+
+jobs:
+  build_and_test:
+    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies
+      run: sudo apt-get install gcc-10 libapparmor-dev libselinux1-dev expect xzdec
+    - name: configure
+      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
+    - name: make
+      run: make
+    - name: make install
+      run: sudo make install
+    - name: run tests
+      run: SHELL=/bin/bash make test-github
