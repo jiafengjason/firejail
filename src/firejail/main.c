@@ -1838,7 +1838,7 @@ int main(int argc, char **argv, char **envp) {
 					cfg.chrootdir = tmp;
 				}
 				// check chroot directory
-				fs_check_chroot_dir();
+				//fs_check_chroot_dir();
 			}
 			else
 				exit_err_feature("chroot");
