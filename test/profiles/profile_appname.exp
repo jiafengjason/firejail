@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --profile=firefox\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/firefox.profile"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Reading profile /etc/firejail/firefox-common.profile"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"shell=none configured, but no program specified"
+}
+
+after 100
+puts "\nall done\n"

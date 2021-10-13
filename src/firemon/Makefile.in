@@ -1,0 +1,14 @@
+all: firemon
+
+include ../common.mk
+
+%.o : %.c $(H_FILE_LIST)
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+
+firemon: $(OBJS) ../lib/common.o ../lib/pid.o
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
+
+clean:; rm -fr *.o firemon *.gcov *.gcda *.gcno *.plist
+
+distclean: clean
+	rm -fr Makefile

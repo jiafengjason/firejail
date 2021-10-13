@@ -1,0 +1,120 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+after 100
+send -- "fseccomp debug-syscalls\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"1	- write"
+}
+
+after 100
+send -- "fseccomp debug-errnos\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"1	- EPERM"
+}
+
+after 100
+send -- "fseccomp debug-protocols\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"unix, inet, inet6, netlink, packet,"
+}
+
+after 100
+send -- "fseccomp protocol build unix,inet seccomp-test-file\r"
+after 100
+send -- "fsec-print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"jeq socket"
+}
+
+after 100
+send -- "fseccomp default seccomp-test-file\r"
+after 100
+send -- "fsec-print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 6.1\n";exit}
+	"jeq mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.2\n";exit}
+	"jeq umount2"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.3\n";exit}
+	"ret ALLOW"
+}
+
+after 100
+send -- "fseccomp drop seccomp-test-file tmpfile chmod,chown\r"
+after 100
+send -- "fsec-print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 7.1\n";exit}
+	"jeq mount" {puts "TESTING ERROR 7.2\n";exit}
+	"jeq umount2" {puts "TESTING ERROR 7.3\n";exit}
+	"jeq chmod"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.4\n";exit}
+	"jeq chown"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.5\n";exit}
+	"ret ALLOW"
+}
+
+after 100
+send -- "fseccomp default drop seccomp-test-file tmpfile chmod,chown\r"
+after 100
+send -- "fsec-print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 8.1\n";exit}
+	"jeq mount"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.2\n";exit}
+	"jeq umount2"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.3\n";exit}
+	"jeq chmod"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.4\n";exit}
+	"jeq chown"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.5\n";exit}
+	"ret ALLOW"
+}
+after 100
+send -- "fseccomp keep seccomp-test-file tmpfile chmod,chown\r"
+after 100
+send -- "fsec-print seccomp-test-file\r"
+expect {
+	timeout {puts "TESTING ERROR 9.1\n";exit}
+	"jeq chmod"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.2\n";exit}
+	"jeq chown"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.3\n";exit}
+	"ret KILL"
+}
+
+
+
+after 100
+puts "\nall done\n"

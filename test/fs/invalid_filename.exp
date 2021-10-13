@@ -1,0 +1,150 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2019 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --noprofile --blacklist=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 1.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --cgroup=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 2.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --chroot=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 3.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --netfilter=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 4.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --output=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 5.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --private=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 6.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 6.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --private-bin=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 7.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 7.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --private-home=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 8.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --noprofile --private-etc=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 9.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --profile=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 10.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 10.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --read-only=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 11.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 11.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+send -- "firejail --shell=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 12.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 12.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+
+send -- "firejail --whitelist=\"bla&&bla\"\r"
+expect {
+	timeout {puts "TESTING ERROR 14.2\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 14.3\n";exit}
+	"is an invalid filename"
+}
+after 100
+
+puts "\nall done\n"
