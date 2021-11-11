@@ -819,7 +819,7 @@ void fs_basic_fs(void) {
 			fs_remount("/etc", MOUNT_NOEXEC, 1);
 	}
 	if (!arg_writable_var) {
-		fs_remount("/var", MOUNT_READONLY, 1);
+		//fs_remount("/var", MOUNT_READONLY, 1);
 		if (uid)
 			fs_remount("/var", MOUNT_NOEXEC, 1);
 	}
