@@ -603,6 +603,107 @@ static void enforce_filters(void) {
 	arg_nogroups = 1;
 }
 
+void fork_run_wait(char **argv, char *res, int pdeathsig) {
+    pid_t fpid; //fpid表示fork函数返回的值
+    int ret = 0;
+    char *command = argv[0];
+    char **arg_list = argv;
+    int pipefd[2];
+    size_t len = 0;
+
+    ret = pipe(pipefd);
+
+    fpid = fork();
+
+    if (fpid < 0) {
+        errExit("fork_run_wait");
+    }
+    else if (fpid == 0) {
+        close(pipefd[0]);
+        dup2(pipefd[1], STDOUT_FILENO);
+        dup2(pipefd[1], STDERR_FILENO);
+        close(pipefd[1]);
+        if (pdeathsig) {
+            prctl(PR_SET_PDEATHSIG,SIGTERM);
+        }
+
+        ret = execvp(command, arg_list);
+        if (ret == -1 ) {
+            errExit("fork_run_wait");
+        }
+    }
+    close(pipefd[1]);
+    if(res) {
+        ssize_t count;
+        while ((count = read(pipefd[0], res, 1024)) > 0) {
+            break;
+        }
+        len = strlen(res);
+        res[len-1] = '\0';
+    }
+    close(pipefd[0]);
+}
+
+void run_dbus_daemon() {
+    //需要dbus地址
+    char *res = (char*)malloc(1024);
+    if(!res) {
+        errExit("run_dbus_daemon malloc failed.");
+    }
+    memset(res, 0, 1024);
+    char **args = calloc(4, sizeof(char *));
+    if(!args) {
+        if(res){
+            free(res);
+            res = NULL;
+        }
+        errExit("run_dbus_daemon calloc failed.");
+    }
+    args[0] = "dbus-daemon";
+    args[1] = "--session";
+    args[2] = "--print-address";
+    args[3] = "--fork";
+    fork_run_wait(args, res, 1);
+    if(strlen(res) == 0) {
+        if(res){
+            free(res);
+            res = NULL;
+        }
+        if(args) {
+            free(args);
+            args = NULL;
+        }
+        errExit("run_dbus_daemon get address failed.");
+    }
+    setenv("DBUS_SESSION_BUS_ADDRESS", res, 1);
+
+    if (res){
+        free(res);
+        res = NULL;
+    }
+    if (args){
+        free(args);
+        args = NULL;
+    }
+    return;
+}
+
+void run_ibus_input_method() {
+    char **args = calloc(2, sizeof(char *));
+    if(!args) {
+        errExit("run_ibus_input_method calloc failed.");
+    }
+    args[0] = "ibus-daemon";
+    args[1] = "--xim";
+
+    fork_run_wait(args, NULL, 1);
+    if (args){
+        free(args);
+        args = NULL;
+    }
+    return;
+}
+
 int sandbox(void* sandbox_arg) {
 	// Get rid of unused parameter warning
 	(void)sandbox_arg;
@@ -775,9 +876,11 @@ int sandbox(void* sandbox_arg) {
 		// do nothing - there are problems with ibus version 1.5.11
 	}
 	else {
-		EUID_USER();
-		env_ibus_load();
-		EUID_ROOT();
+        //不需要加载ibus环境变量
+		// EUID_USER();
+		// env_ibus_load();
+		// EUID_ROOT();
+        ;
 	}
 
 	//****************************
@@ -1208,6 +1311,10 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.cpus)
 		set_cpu_affinity();
 
+    EUID_USER();
+    run_dbus_daemon();
+    run_ibus_input_method();
+    EUID_ROOT();
 	//****************************************
 	// fork the application and monitor it
 	//****************************************
