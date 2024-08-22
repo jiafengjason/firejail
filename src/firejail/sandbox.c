@@ -653,10 +653,8 @@ void run_dbus_daemon() {
     memset(res, 0, 1024);
     char **args = calloc(4, sizeof(char *));
     if(!args) {
-        if(res){
-            free(res);
-            res = NULL;
-        }
+        free(res);
+        res = NULL;
         errExit("run_dbus_daemon calloc failed.");
     }
     args[0] = "dbus-daemon";
@@ -665,14 +663,10 @@ void run_dbus_daemon() {
     args[3] = "--fork";
     fork_run_wait(args, res, 1);
     if(strlen(res) == 0) {
-        if(res){
-            free(res);
-            res = NULL;
-        }
-        if(args) {
-            free(args);
-            args = NULL;
-        }
+        free(res);
+        res = NULL;
+        free(args);
+        args = NULL;
         errExit("run_dbus_daemon get address failed.");
     }
     setenv("DBUS_SESSION_BUS_ADDRESS", res, 1);
