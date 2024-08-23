@@ -636,10 +636,12 @@ void fork_run_wait(char **argv, char *res, int pdeathsig) {
     if(res) {
         ssize_t count;
         while ((count = read(pipefd[0], res, 1024)) > 0) {
-            break;
+            if(strstr(res, "unix:")) {
+                len = strlen(res);
+                res[len-1] = '\0';
+                break;
+            }
         }
-        len = strlen(res);
-        res[len-1] = '\0';
     }
     close(pipefd[0]);
 }
@@ -670,7 +672,6 @@ void run_dbus_daemon() {
         errExit("run_dbus_daemon get address failed.");
     }
     setenv("DBUS_SESSION_BUS_ADDRESS", res, 1);
-
     if (res){
         free(res);
         res = NULL;
