@@ -1511,6 +1511,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.cgroup = strdup(argv[i] + 9);
 				if (!cfg.cgroup)
 					errExit("strdup");
+			        fprintf(stderr, "cgroup %s, getuid %d, geteuid %d\n", cfg.cgroup, getuid(), geteuid());
 				set_cgroup(cfg.cgroup);
 			}
 			else

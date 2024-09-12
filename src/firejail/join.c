@@ -414,6 +414,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	if (!arg_shell_none && !arg_audit)
 		shfd = open_shell();
 
+	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
 		extract_nonewprivs(pid);  // redundant on Linux >= 4.10; duplicated in function extract_caps
@@ -428,11 +429,13 @@ void join(pid_t pid, int argc, char **argv, int index) {
 #endif
 	}
 
+			        fprintf(stderr, "cgroup %s, getuid %d, geteuid %d\n", cfg.cgroup, getuid(), geteuid());
+	EUID_USER();
 	// set cgroup
 	if (cfg.cgroup)	// not available for uid 0
 		set_cgroup(cfg.cgroup);
-
 	EUID_ROOT();
+
 	// join namespaces
 	if (arg_join_network) {
 		if (join_namespace(pid, "net"))
