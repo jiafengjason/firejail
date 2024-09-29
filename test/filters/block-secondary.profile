@@ -1,1 +1,0 @@
-seccomp.block-secondary
