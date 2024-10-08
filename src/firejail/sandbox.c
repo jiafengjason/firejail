@@ -760,12 +760,12 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// netfilter
 	//****************************
-	if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
-		netfilter(arg_netfilter_file);
-	}
-	if (arg_netfilter6 && any_bridge_configured()) { // assuming by default the client filter
-		netfilter6(arg_netfilter6_file);
-	}
+	// if (arg_netfilter && any_bridge_configured()) { // assuming by default the client filter
+	// 	netfilter(arg_netfilter_file);
+	// }
+	// if (arg_netfilter6 && any_bridge_configured()) { // assuming by default the client filter
+	// 	netfilter6(arg_netfilter6_file);
+	// }
 
 	//****************************
 	// networking
@@ -1046,8 +1046,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// /etc overrides from the network namespace
 	//****************************
-	if (arg_netns)
-		netns_mounts(arg_netns);
+	// if (arg_netns)
+	// 	netns_mounts(arg_netns);
 
 	//****************************
 	// update /proc, /sys, /dev, /boot directory

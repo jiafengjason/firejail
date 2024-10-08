@@ -616,11 +616,11 @@ void fs_mount_hosts_file(void);
 void set_rlimits(void);
 
 // cpu.c
-void read_cpu_list(const char *str);
-void set_cpu_affinity(void);
-void load_cpu(const char *fname);
-void save_cpu(void);
-void cpu_print_filter(pid_t pid) __attribute__((noreturn));
+// void read_cpu_list(const char *str);
+// void set_cpu_affinity(void);
+// void load_cpu(const char *fname);
+// void save_cpu(void);
+// void cpu_print_filter(pid_t pid) __attribute__((noreturn));
 
 // cgroup.c
 void save_cgroup(void);
@@ -631,15 +631,15 @@ void set_cgroup(const char *path);
 void check_output(int argc, char **argv);
 
 // netfilter.c
-void check_netfilter_file(const char *fname);
-void netfilter(const char *fname);
-void netfilter6(const char *fname);
-void netfilter_print(pid_t pid, int ipv6);
+// void check_netfilter_file(const char *fname);
+// void netfilter(const char *fname);
+// void netfilter6(const char *fname);
+// void netfilter_print(pid_t pid, int ipv6);
 
-// netns.c
-void check_netns(const char *nsname);
-void netns(const char *nsname);
-void netns_mounts(const char *nsname);
+// // netns.c
+// void check_netns(const char *nsname);
+// void netns(const char *nsname);
+// void netns_mounts(const char *nsname);
 
 // bandwidth.c
 // void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) __attribute__((noreturn));
