@@ -1089,15 +1089,15 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// nosound/no3d/notv/novideo and fix for pulseaudio 7.0
 	//****************************
-	if (arg_nosound) {
-		// disable pulseaudio
-		pulseaudio_disable();
+	// if (arg_nosound) {
+	// 	// disable pulseaudio
+	// 	pulseaudio_disable();
 
-		// disable /dev/snd
-		fs_dev_disable_sound();
-	}
-	else if (!arg_noautopulse)
-		pulseaudio_init();
+	// 	// disable /dev/snd
+	// 	fs_dev_disable_sound();
+	// }
+	// else if (!arg_noautopulse)
+	// 	pulseaudio_init();
 
 	if (arg_no3d)
 		fs_dev_disable_3d();

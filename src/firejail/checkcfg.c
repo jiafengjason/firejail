@@ -311,13 +311,13 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- file transfer support is %s\n",
-#ifdef HAVE_FILE_TRANSFER
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
+// 	printf("\t- file transfer support is %s\n",
+// #ifdef HAVE_FILE_TRANSFER
+// 		"enabled"
+// #else
+// 		"disabled"
+// #endif
+// 		);
 
 	printf("\t- firetunnel support is %s\n",
 #ifdef HAVE_FIRETUNNEL
