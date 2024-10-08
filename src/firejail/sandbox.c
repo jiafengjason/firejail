@@ -110,21 +110,21 @@ static void install_handler(void) {
 	sigaction(SIGTERM, &sga, NULL);
 }
 
-static void set_caps(void) {
-	if (arg_caps_drop_all)
-		caps_drop_all();
-	else if (arg_caps_drop)
-		caps_drop_list(arg_caps_list);
-	else if (arg_caps_keep)
-		caps_keep_list(arg_caps_list);
-	else if (arg_caps_default_filter)
-		caps_default_filter();
+// static void set_caps(void) {
+// 	if (arg_caps_drop_all)
+// 		caps_drop_all();
+// 	else if (arg_caps_drop)
+// 		caps_drop_list(arg_caps_list);
+// 	else if (arg_caps_keep)
+// 		caps_keep_list(arg_caps_list);
+// 	else if (arg_caps_default_filter)
+// 		caps_default_filter();
 
-	// drop discretionary access control capabilities for root sandboxes
-	// if caps.keep, the user has to set it manually in the list
-	if (!arg_caps_keep)
-		caps_drop_dac_override();
-}
+// 	// drop discretionary access control capabilities for root sandboxes
+// 	// if caps.keep, the user has to set it manually in the list
+// 	if (!arg_caps_keep)
+// 		caps_drop_dac_override();
+// }
 
 #ifdef HAVE_APPARMOR
 void set_apparmor(void) {
@@ -1237,7 +1237,7 @@ int sandbox(void* sandbox_arg) {
 	seccomp_debug();
 
 	// set capabilities
-	set_caps();
+	// set_caps();
 
 	//****************************************
 	// relay status information to join option
@@ -1269,11 +1269,11 @@ int sandbox(void* sandbox_arg) {
 
 	// somehow, the new user namespace resets capabilities;
 	// we need to do them again
-	if (arg_noroot) {
-		if (arg_debug)
-			printf("noroot user namespace installed\n");
-		set_caps();
-	}
+	// if (arg_noroot) {
+	// 	if (arg_debug)
+	// 		printf("noroot user namespace installed\n");
+	// 	set_caps();
+	// }
 
 	//****************************************
 	// Set NO_NEW_PRIVS if desired

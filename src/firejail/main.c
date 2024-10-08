@@ -565,12 +565,12 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		free(pidstr);
 		exit(0);
 	}
-	else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
-		// join sandbox by pid or by name
-		pid_t pid = require_pid(argv[i] + 13);
-		caps_print_filter(pid);
-		exit(0);
-	}
+	// else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
+	// 	// join sandbox by pid or by name
+	// 	pid_t pid = require_pid(argv[i] + 13);
+	// 	caps_print_filter(pid);
+	// 	exit(0);
+	// }
 	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid = require_pid(argv[i] + 11);
@@ -583,10 +583,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		net_dns_print(pid);
 		exit(0);
 	}
-	else if (strcmp(argv[i], "--debug-caps") == 0) {
-		caps_print();
-		exit(0);
-	}
+	// else if (strcmp(argv[i], "--debug-caps") == 0) {
+	// 	caps_print();
+	// 	exit(0);
+	// }
 	else if (strcmp(argv[i], "--list") == 0) {
 		if (pid_hidepid())
 			sbox_run(SBOX_ROOT| SBOX_CAPS_HIDEPID | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
@@ -1418,24 +1418,24 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--caps.drop=all") == 0)
 			arg_caps_drop_all = 1;
-		else if (strncmp(argv[i], "--caps.drop=", 12) == 0) {
-			arg_caps_drop = 1;
-			arg_caps_list = strdup(argv[i] + 12);
-			if (!arg_caps_list)
-				errExit("strdup");
-			// verify caps list and exit if problems
-			caps_check_list(arg_caps_list, NULL);
-			arg_caps_cmdline = 1;
-		}
-		else if (strncmp(argv[i], "--caps.keep=", 12) == 0) {
-			arg_caps_keep = 1;
-			arg_caps_list = strdup(argv[i] + 12);
-			if (!arg_caps_list)
-				errExit("strdup");
-			// verify caps list and exit if problems
-			caps_check_list(arg_caps_list, NULL);
-			arg_caps_cmdline = 1;
-		}
+		// else if (strncmp(argv[i], "--caps.drop=", 12) == 0) {
+		// 	arg_caps_drop = 1;
+		// 	arg_caps_list = strdup(argv[i] + 12);
+		// 	if (!arg_caps_list)
+		// 		errExit("strdup");
+		// 	// verify caps list and exit if problems
+		// 	caps_check_list(arg_caps_list, NULL);
+		// 	arg_caps_cmdline = 1;
+		// }
+		// else if (strncmp(argv[i], "--caps.keep=", 12) == 0) {
+		// 	arg_caps_keep = 1;
+		// 	arg_caps_list = strdup(argv[i] + 12);
+		// 	if (!arg_caps_list)
+		// 		errExit("strdup");
+		// 	// verify caps list and exit if problems
+		// 	caps_check_list(arg_caps_list, NULL);
+		// 	arg_caps_cmdline = 1;
+		// }
 		else if (strcmp(argv[i], "--trace") == 0)
 			arg_trace = 1;
 		else if (strncmp(argv[i], "--trace=", 8) == 0) {

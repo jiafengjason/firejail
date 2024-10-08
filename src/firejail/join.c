@@ -98,34 +98,34 @@ errexit:
 }
 #endif // HAVE_APPARMOR
 
-static void extract_x11_display(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
-		errExit("asprintf");
+// static void extract_x11_display(pid_t pid) {
+// 	char *fname;
+// 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
+// 		errExit("asprintf");
 
-	FILE *fp = fopen(fname, "r");
-	free(fname);
-	if (!fp)
-		return;
+// 	FILE *fp = fopen(fname, "r");
+// 	free(fname);
+// 	if (!fp)
+// 		return;
 
-	if (1 != fscanf(fp, "%u", &display)) {
-		fprintf(stderr, "Error: cannot read X11 display file\n");
-		fclose(fp);
-		return;
-	}
-	fclose(fp);
+// 	if (1 != fscanf(fp, "%u", &display)) {
+// 		fprintf(stderr, "Error: cannot read X11 display file\n");
+// 		fclose(fp);
+// 		return;
+// 	}
+// 	fclose(fp);
 
-	// check display range
-	if (display < X11_DISPLAY_START || display > X11_DISPLAY_END) {
-		fprintf(stderr, "Error: invalid X11 display range\n");
-		return;
-	}
+// 	// check display range
+// 	if (display < X11_DISPLAY_START || display > X11_DISPLAY_END) {
+// 		fprintf(stderr, "Error: invalid X11 display range\n");
+// 		return;
+// 	}
 
-	// store the display number for join process in /run/firejail/x11
-	EUID_ROOT();
-	set_x11_run_file(getpid(), display);
-	EUID_USER();
-}
+// 	// store the display number for join process in /run/firejail/x11
+// 	EUID_ROOT();
+// 	set_x11_run_file(getpid(), display);
+// 	EUID_USER();
+// }
 
 static void extract_command(int argc, char **argv, int index) {
 	EUID_ASSERT();
@@ -408,7 +408,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// exit if no permission to join the sandbox
 	check_join_permission(pid);
 
-	extract_x11_display(parent);
+	// extract_x11_display(parent);
 
 	int shfd = -1;
 	if (!arg_shell_none && !arg_audit)
@@ -459,7 +459,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		errExit("fork");
 	if (child == 0) {
 		// drop discretionary access control capabilities for root sandboxes
-		caps_drop_dac_override();
+		// caps_drop_dac_override();
 
 		// chroot into /proc/PID/root directory
 		char *rootdir;
@@ -487,8 +487,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// set caps filter
 		EUID_ROOT();
-		if (apply_caps == 1)	// not available for uid 0
-			caps_set(caps);
+		// if (apply_caps == 1)	// not available for uid 0
+		// 	caps_set(caps);
 		// if (getuid() != 0)
 		// 	seccomp_load_file_list();
 
@@ -501,8 +501,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 			// user namespace resets capabilities
 			// set caps filter
-			if (apply_caps == 1)	// not available for uid 0
-				caps_set(caps);
+			// if (apply_caps == 1)	// not available for uid 0
+			// 	caps_set(caps);
 		}
 
 		// set nonewprivs

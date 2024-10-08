@@ -82,7 +82,8 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 
 	// apply filters
 	if (filtermask & SBOX_CAPS_NONE) {
-		caps_drop_all();
+		// caps_drop_all();
+        ;
 	} else {
 		uint64_t set = 0;
 		if (filtermask & SBOX_CAPS_NETWORK) {
@@ -103,11 +104,11 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 			set |= ((uint64_t) 1) << CAP_NET_BROADCAST;
 #endif
 		}
-		if (set != 0) { // some SBOX_CAPS_ flag was specified, drop all other capabilities
-#ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
-			caps_set(set);
-#endif
-		}
+// 		if (set != 0) { // some SBOX_CAPS_ flag was specified, drop all other capabilities
+// #ifndef HAVE_GCOV // the following filter will prevent GCOV from saving info in .gcda files
+// 			caps_set(set);
+// #endif
+// 		}
 	}
 
 	if (filtermask & SBOX_SECCOMP) {

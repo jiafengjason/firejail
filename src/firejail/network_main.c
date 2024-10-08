@@ -287,7 +287,7 @@ void net_dns_print(pid_t pid) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
-		caps_drop_all();
+		// caps_drop_all();
 		if (chdir("/") < 0)
 			errExit("chdir");
 

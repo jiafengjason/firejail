@@ -1043,26 +1043,26 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// caps drop list
-	if (strncmp(ptr, "caps.drop ", 10) == 0) {
-		arg_caps_drop = 1;
-		arg_caps_list = strdup(ptr + 10);
-		if (!arg_caps_list)
-			errExit("strdup");
-		// verify caps list and exit if problems
-		caps_check_list(arg_caps_list, NULL);
-		return 0;
-	}
+	// if (strncmp(ptr, "caps.drop ", 10) == 0) {
+	// 	arg_caps_drop = 1;
+	// 	arg_caps_list = strdup(ptr + 10);
+	// 	if (!arg_caps_list)
+	// 		errExit("strdup");
+	// 	// verify caps list and exit if problems
+	// 	caps_check_list(arg_caps_list, NULL);
+	// 	return 0;
+	// }
 
 	// caps keep list
-	if (strncmp(ptr, "caps.keep ", 10) == 0) {
-		arg_caps_keep = 1;
-		arg_caps_list = strdup(ptr + 10);
-		if (!arg_caps_list)
-			errExit("strdup");
-		// verify caps list and exit if problems
-		caps_check_list(arg_caps_list, NULL);
-		return 0;
-	}
+	// if (strncmp(ptr, "caps.keep ", 10) == 0) {
+	// 	arg_caps_keep = 1;
+	// 	arg_caps_list = strdup(ptr + 10);
+	// 	if (!arg_caps_list)
+	// 		errExit("strdup");
+	// 	// verify caps list and exit if problems
+	// 	caps_check_list(arg_caps_list, NULL);
+	// 	return 0;
+	// }
 
 	// hostname
 	if (strncmp(ptr, "hostname ", 9) == 0) {

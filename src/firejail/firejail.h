@@ -386,8 +386,8 @@ void net_print(pid_t pid);
 // network.c
 int check_ip46_address(const char *addr);
 void net_if_up(const char *ifname);
-void net_if_down(const char *ifname);
-void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
+// void net_if_down(const char *ifname);
+// void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
 void net_if_ip6(const char *ifname, const char *addr6);
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
 int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
@@ -580,25 +580,25 @@ void fs_private_home_list(void);
 
 
 // seccomp.c
-char *seccomp_check_list(const char *str);
-int seccomp_install_filters(void);
-int seccomp_load(const char *fname);
-int seccomp_filter_drop(bool native);
-int seccomp_filter_keep(bool native);
-int seccomp_filter_mdwx(bool native);
-void seccomp_print_filter(pid_t pid) __attribute__((noreturn));
+// char *seccomp_check_list(const char *str);
+// int seccomp_install_filters(void);
+// int seccomp_load(const char *fname);
+// int seccomp_filter_drop(bool native);
+// int seccomp_filter_keep(bool native);
+// int seccomp_filter_mdwx(bool native);
+// void seccomp_print_filter(pid_t pid) __attribute__((noreturn));
 
 // caps.c
-void seccomp_load_file_list(void);
-int caps_default_filter(void);
-void caps_print(void);
-void caps_drop_all(void);
-void caps_set(uint64_t caps);
-void caps_check_list(const char *clist, void (*callback)(int));
-void caps_drop_list(const char *clist);
-void caps_keep_list(const char *clist);
-void caps_print_filter(pid_t pid) __attribute__((noreturn));
-void caps_drop_dac_override(void);
+// void seccomp_load_file_list(void);
+// int caps_default_filter(void);
+// void caps_print(void);
+// void caps_drop_all(void);
+// void caps_set(uint64_t caps);
+// void caps_check_list(const char *clist, void (*callback)(int));
+// void caps_drop_list(const char *clist);
+// void caps_keep_list(const char *clist);
+// void caps_print_filter(pid_t pid) __attribute__((noreturn));
+// void caps_drop_dac_override(void);
 
 // fs_trace.c
 void fs_trace_preload(void);
@@ -716,17 +716,17 @@ void fs_mkfile(const char *name);
 //     Normal X servers typically use displays in the 0-10 range;
 //     ssh's X11 forwarding uses 10-20, and login screens
 //     (e.g. gdm3) may use displays above 1000.
-#define X11_DISPLAY_START 21
-#define X11_DISPLAY_END 1000
+// #define X11_DISPLAY_START 21
+// #define X11_DISPLAY_END 1000
 
-void fs_x11(void);
-int x11_display(void);
-void x11_start(int argc, char **argv) __attribute__((noreturn));
-void x11_start_xpra(int argc, char **argv) __attribute__((noreturn));
-void x11_start_xephyr(int argc, char **argv) __attribute__((noreturn));
-void x11_block(void);
-void x11_start_xvfb(int argc, char **argv) __attribute__((noreturn));
-void x11_xorg(void);
+// void fs_x11(void);
+// int x11_display(void);
+// void x11_start(int argc, char **argv) __attribute__((noreturn));
+// void x11_start_xpra(int argc, char **argv) __attribute__((noreturn));
+// void x11_start_xephyr(int argc, char **argv) __attribute__((noreturn));
+// void x11_block(void);
+// void x11_start_xvfb(int argc, char **argv) __attribute__((noreturn));
+// void x11_xorg(void);
 
 // ls.c
 enum {
