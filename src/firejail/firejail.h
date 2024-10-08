@@ -671,8 +671,8 @@ void env_ibus_load(void);
 void fs_whitelist(void);
 
 // pulseaudio.c
-void pulseaudio_init(void);
-void pulseaudio_disable(void);
+// void pulseaudio_init(void);
+// void pulseaudio_disable(void);
 
 // fs_bin.c
 void fs_private_bin_list(void);
@@ -729,16 +729,16 @@ void fs_mkfile(const char *name);
 // void x11_xorg(void);
 
 // ls.c
-enum {
-	SANDBOX_FS_LS = 0,
-	SANDBOX_FS_CAT,
-	SANDBOX_FS_GET,
-	SANDBOX_FS_PUT,
-	SANDBOX_FS_MAX // this should always be the last entry
-};
-void ls(const char *path);
-void cat(const char *path);
-void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attribute__((noreturn));
+// enum {
+// 	SANDBOX_FS_LS = 0,
+// 	SANDBOX_FS_CAT,
+// 	SANDBOX_FS_GET,
+// 	SANDBOX_FS_PUT,
+// 	SANDBOX_FS_MAX // this should always be the last entry
+// };
+// void ls(const char *path);
+// void cat(const char *path);
+// void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attribute__((noreturn));
 
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2

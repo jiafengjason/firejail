@@ -388,10 +388,10 @@ void fs_private(void) {
 			fs_logger2("mkdir", homedir);
 			fs_logger2("tmpfs", homedir);
 		}
-		else
+		// else
 			// mask user home directory
 			// the directory should be owned by the current user
-			fs_tmpfs(homedir, 1);
+			// fs_tmpfs(homedir, 1);
 	}
 
 	skel(homedir, u, g);

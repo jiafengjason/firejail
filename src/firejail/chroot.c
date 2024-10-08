@@ -315,8 +315,8 @@ void fs_chroot(const char *rootdir) {
 	restrict_users();
 
 	// when starting as root, firejail config is not disabled;
-	if (getuid() != 0)
-		disable_config();
+	// if (getuid() != 0)
+	// 	disable_config();
 }
 
 #endif // HAVE_CHROOT

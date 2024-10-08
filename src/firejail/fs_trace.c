@@ -80,7 +80,7 @@ void fs_tracefile(void) {
 	free(proc);
 	close(fd);
 	// now that RUN_TRACE_FILE is user-writable, mount it noexec
-	fs_remount(RUN_TRACE_FILE, MOUNT_NOEXEC, 0);
+	// fs_remount(RUN_TRACE_FILE, MOUNT_NOEXEC, 0);
 }
 
 void fs_trace(void) {

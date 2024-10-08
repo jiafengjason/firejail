@@ -932,7 +932,8 @@ int sandbox(void* sandbox_arg) {
 		fs_overlayfs();
 	else
 #endif
-		fs_basic_fs();
+		// fs_basic_fs();
+        ;
 
 	//****************************
 	// private mode
@@ -1020,12 +1021,12 @@ int sandbox(void* sandbox_arg) {
 	}
 #endif
 
-	if (arg_private_tmp) {
-		// private-tmp is implemented as a whitelist
-		EUID_USER();
-		fs_private_tmp();
-		EUID_ROOT();
-	}
+	// if (arg_private_tmp) {
+	// 	// private-tmp is implemented as a whitelist
+	// 	EUID_USER();
+	// 	fs_private_tmp();
+	// 	EUID_ROOT();
+	// }
 
 	//****************************
 	// Session D-BUS
@@ -1052,15 +1053,15 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// update /proc, /sys, /dev, /boot directory
 	//****************************
-	fs_proc_sys_dev_boot();
+	// fs_proc_sys_dev_boot();
 
 	//****************************
 	// handle /mnt and /media
 	//****************************
-	if (checkcfg(CFG_DISABLE_MNT))
-		fs_mnt(1);
-	else if (arg_disable_mnt)
-		fs_mnt(0);
+	// if (checkcfg(CFG_DISABLE_MNT))
+	// 	fs_mnt(1);
+	// else if (arg_disable_mnt)
+	// 	fs_mnt(0);
 
 	// Install new /etc last, so we can use it as long as possible
 	if (arg_private_etc) {
@@ -1081,10 +1082,10 @@ int sandbox(void* sandbox_arg) {
 	// apply the profile file
 	//****************************
 	// apply all whitelist commands ...
-	fs_whitelist();
+	// fs_whitelist();
 
 	// ... followed by blacklist commands
-	fs_blacklist(); // mkdir and mkfile are processed all over again
+	// fs_blacklist(); // mkdir and mkfile are processed all over again
 
 	//****************************
 	// nosound/no3d/notv/novideo and fix for pulseaudio 7.0
