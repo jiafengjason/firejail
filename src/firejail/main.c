@@ -293,7 +293,8 @@ static void fix_std_streams(void) {
 static void check_network(Bridge *br) {
 	assert(br);
 	if (br->macvlan == 0) // for bridge devices check network range or arp-scan and assign address
-		net_configure_sandbox_ip(br);
+		// net_configure_sandbox_ip(br);
+        ;
 	else if (br->ipsandbox) { // for macvlan check network range
 		char *rv = in_netrange(br->ipsandbox, br->ip, br->mask);
 		if (rv) {
@@ -402,81 +403,81 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 // 			exit_err_feature("x11");
 // 	}
 // #endif
-#ifdef HAVE_NETWORK
-	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
-		if (checkcfg(CFG_NETWORK)) {
-			logargs(argc, argv);
+// #ifdef HAVE_NETWORK
+// 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
+// 		if (checkcfg(CFG_NETWORK)) {
+// 			logargs(argc, argv);
 
-			// extract the command
-			if ((i + 1) == argc) {
-				fprintf(stderr, "Error: command expected after --bandwidth option\n");
-				exit(1);
-			}
-			char *cmd = argv[i + 1];
-			if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
-				fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
-				exit(1);
-			}
+// 			// extract the command
+// 			if ((i + 1) == argc) {
+// 				fprintf(stderr, "Error: command expected after --bandwidth option\n");
+// 				exit(1);
+// 			}
+// 			char *cmd = argv[i + 1];
+// 			if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
+// 				fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
+// 				exit(1);
+// 			}
 
-			// extract network name
-			char *dev = NULL;
-			int down = 0;
-			int up = 0;
-			if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
-				// extract device name
-				if ((i + 2) == argc) {
-					fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
-					exit(1);
-				}
-				dev = argv[i + 2];
+// 			// extract network name
+// 			char *dev = NULL;
+// 			int down = 0;
+// 			int up = 0;
+// 			if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
+// 				// extract device name
+// 				if ((i + 2) == argc) {
+// 					fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
+// 					exit(1);
+// 				}
+// 				dev = argv[i + 2];
 
-				// check device name
-				if (if_nametoindex(dev) == 0) {
-					fprintf(stderr, "Error: network device %s not found\n", dev);
-					exit(1);
-				}
+// 				// check device name
+// 				if (if_nametoindex(dev) == 0) {
+// 					fprintf(stderr, "Error: network device %s not found\n", dev);
+// 					exit(1);
+// 				}
 
-				// extract bandwidth
-				if (strcmp(cmd, "set") == 0) {
-					if ((i + 4) >= argc) {
-						fprintf(stderr, "Error: invalid --bandwidth set command\n");
-						exit(1);
-					}
+// 				// extract bandwidth
+// 				if (strcmp(cmd, "set") == 0) {
+// 					if ((i + 4) >= argc) {
+// 						fprintf(stderr, "Error: invalid --bandwidth set command\n");
+// 						exit(1);
+// 					}
 
-					down = atoi(argv[i + 3]);
-					if (down < 0) {
-						fprintf(stderr, "Error: invalid download speed\n");
-						exit(1);
-					}
-					up = atoi(argv[i + 4]);
-					if (up < 0) {
-						fprintf(stderr, "Error: invalid upload speed\n");
-						exit(1);
-					}
-				}
-			}
+// 					down = atoi(argv[i + 3]);
+// 					if (down < 0) {
+// 						fprintf(stderr, "Error: invalid download speed\n");
+// 						exit(1);
+// 					}
+// 					up = atoi(argv[i + 4]);
+// 					if (up < 0) {
+// 						fprintf(stderr, "Error: invalid upload speed\n");
+// 						exit(1);
+// 					}
+// 				}
+// 			}
 
-			// extract pid or sandbox name
-			pid_t pid = require_pid(argv[i] + 12);
-			bandwidth_pid(pid, cmd, dev, down, up);
-		}
-		else
-			exit_err_feature("networking");
-		exit(0);
-	}
-	else if (strncmp(argv[i], "--netfilter.print=", 18) == 0) {
-		// extract pid or sandbox name
-		pid_t pid = require_pid(argv[i] + 18);
-		netfilter_print(pid, 0);
-		exit(0);
-	}
-	else if (strncmp(argv[i], "--netfilter6.print=", 19) == 0) {
-		// extract pid or sandbox name
-		pid_t pid = require_pid(argv[i] + 19);
-		netfilter_print(pid, 1);
-		exit(0);
-	}
-#endif
+// 			// extract pid or sandbox name
+// 			pid_t pid = require_pid(argv[i] + 12);
+// 			bandwidth_pid(pid, cmd, dev, down, up);
+// 		}
+// 		else
+// 			exit_err_feature("networking");
+// 		exit(0);
+// 	}
+// 	else if (strncmp(argv[i], "--netfilter.print=", 18) == 0) {
+// 		// extract pid or sandbox name
+// 		pid_t pid = require_pid(argv[i] + 18);
+// 		netfilter_print(pid, 0);
+// 		exit(0);
+// 	}
+// 	else if (strncmp(argv[i], "--netfilter6.print=", 19) == 0) {
+// 		// extract pid or sandbox name
+// 		pid_t pid = require_pid(argv[i] + 19);
+// 		netfilter_print(pid, 1);
+// 		exit(0);
+// 	}
+// #endif
 	//*************************************
 	// independent commands - the program will exit!
 	//*************************************
@@ -577,12 +578,12 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		fs_logger_print_log(pid);
 		exit(0);
 	}
-	else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
-		// join sandbox by pid or by name
-		pid_t pid = require_pid(argv[i] + 12);
-		net_dns_print(pid);
-		exit(0);
-	}
+	// else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
+	// 	// join sandbox by pid or by name
+	// 	pid_t pid = require_pid(argv[i] + 12);
+	// 	net_dns_print(pid);
+	// 	exit(0);
+	// }
 	// else if (strcmp(argv[i], "--debug-caps") == 0) {
 	// 	caps_print();
 	// 	exit(0);
@@ -610,32 +611,32 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				2, PATH_FIREMON, "--top");
 		exit(0);
 	}
-#ifdef HAVE_NETWORK
-	else if (strcmp(argv[i], "--netstats") == 0) {
-		if (checkcfg(CFG_NETWORK)) {
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0 || pid_hidepid())
-				sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
-					2, PATH_FIREMON, "--netstats");
-			else
-				sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
-					2, PATH_FIREMON, "--netstats");
-			exit(0);
-		}
-		else
-			exit_err_feature("networking");
-	}
-	else if (strncmp(argv[i], "--net.print=", 12) == 0) {
-		if (checkcfg(CFG_NETWORK)) {
-			// extract pid or sandbox name
-			pid_t pid = require_pid(argv[i] + 12);
-			net_print(pid);
-			exit(0);
-		}
-		else
-			exit_err_feature("networking");
-	}
-#endif
+// #ifdef HAVE_NETWORK
+// 	else if (strcmp(argv[i], "--netstats") == 0) {
+// 		if (checkcfg(CFG_NETWORK)) {
+// 			struct stat s;
+// 			if (stat("/proc/sys/kernel/grsecurity", &s) == 0 || pid_hidepid())
+// 				sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+// 					2, PATH_FIREMON, "--netstats");
+// 			else
+// 				sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+// 					2, PATH_FIREMON, "--netstats");
+// 			exit(0);
+// 		}
+// 		else
+// 			exit_err_feature("networking");
+// 	}
+// 	else if (strncmp(argv[i], "--net.print=", 12) == 0) {
+// 		if (checkcfg(CFG_NETWORK)) {
+// 			// extract pid or sandbox name
+// 			pid_t pid = require_pid(argv[i] + 12);
+// 			net_print(pid);
+// 			exit(0);
+// 		}
+// 		else
+// 			exit_err_feature("networking");
+// 	}
+// #endif
 #ifdef HAVE_FILE_TRANSFER
 	else if (strncmp(argv[i], "--get=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -811,28 +812,28 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature("join");
 	}
-#ifdef HAVE_NETWORK
-	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
-		if (checkcfg(CFG_NETWORK)) {
-			logargs(argc, argv);
-			arg_join_network = 1;
-			if (getuid() != 0) {
-				fprintf(stderr, "Error: --join-network is only available to root user\n");
-				exit(1);
-			}
+// #ifdef HAVE_NETWORK
+// 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
+// 		if (checkcfg(CFG_NETWORK)) {
+// 			logargs(argc, argv);
+// 			arg_join_network = 1;
+// 			if (getuid() != 0) {
+// 				fprintf(stderr, "Error: --join-network is only available to root user\n");
+// 				exit(1);
+// 			}
 
-			if (!cfg.shell && !arg_shell_none)
-				cfg.shell = guess_shell();
+// 			if (!cfg.shell && !arg_shell_none)
+// 				cfg.shell = guess_shell();
 
-			// join sandbox by pid or by name
-			pid_t pid = require_pid(argv[i] + 15);
-			join(pid, argc, argv, i + 1);
-		}
-		else
-			exit_err_feature("networking");
-		exit(0);
-	}
-#endif
+// 			// join sandbox by pid or by name
+// 			pid_t pid = require_pid(argv[i] + 15);
+// 			join(pid, argc, argv, i + 1);
+// 		}
+// 		else
+// 			exit_err_feature("networking");
+// 		exit(0);
+// 	}
+// #endif
 	else if (strncmp(argv[i], "--join-filesystem=", 18) == 0) {
 		logargs(argc, argv);
 		arg_join_filesystem = 1;
@@ -2228,316 +2229,316 @@ int main(int argc, char **argv, char **envp) {
 			cfg.interface3.configured = 0;
 			continue;
 		}
-#ifdef HAVE_NETWORK
-		else if (strncmp(argv[i], "--interface=", 12) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				// checks
-				if (arg_nonetwork) {
-					fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
-					exit(1);
-				}
-				if (strcmp(argv[i] + 12, "lo") == 0) {
-					fprintf(stderr, "Error: cannot use lo device in --interface command\n");
-					exit(1);
-				}
-				int ifindex = if_nametoindex(argv[i] + 12);
-				if (ifindex <= 0) {
-					fprintf(stderr, "Error: cannot find interface %s\n", argv[i] + 12);
-					exit(1);
-				}
+// #ifdef HAVE_NETWORK
+// 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				// checks
+// 				if (arg_nonetwork) {
+// 					fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
+// 					exit(1);
+// 				}
+// 				if (strcmp(argv[i] + 12, "lo") == 0) {
+// 					fprintf(stderr, "Error: cannot use lo device in --interface command\n");
+// 					exit(1);
+// 				}
+// 				int ifindex = if_nametoindex(argv[i] + 12);
+// 				if (ifindex <= 0) {
+// 					fprintf(stderr, "Error: cannot find interface %s\n", argv[i] + 12);
+// 					exit(1);
+// 				}
 
-				Interface *intf;
-				if (cfg.interface0.configured == 0)
-					intf = &cfg.interface0;
-				else if (cfg.interface1.configured == 0)
-					intf = &cfg.interface1;
-				else if (cfg.interface2.configured == 0)
-					intf = &cfg.interface2;
-				else if (cfg.interface3.configured == 0)
-					intf = &cfg.interface3;
-				else {
-					fprintf(stderr, "Error: maximum 4 interfaces are allowed\n");
-					return 1;
-				}
+// 				Interface *intf;
+// 				if (cfg.interface0.configured == 0)
+// 					intf = &cfg.interface0;
+// 				else if (cfg.interface1.configured == 0)
+// 					intf = &cfg.interface1;
+// 				else if (cfg.interface2.configured == 0)
+// 					intf = &cfg.interface2;
+// 				else if (cfg.interface3.configured == 0)
+// 					intf = &cfg.interface3;
+// 				else {
+// 					fprintf(stderr, "Error: maximum 4 interfaces are allowed\n");
+// 					return 1;
+// 				}
 
-				intf->dev = strdup(argv[i] + 12);
-				if (!intf->dev)
-					errExit("strdup");
+// 				intf->dev = strdup(argv[i] + 12);
+// 				if (!intf->dev)
+// 					errExit("strdup");
 
-				if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
-					fwarning("interface %s is not configured\n", intf->dev);
-				}
-				intf->configured = 1;
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 				if (net_get_if_addr(intf->dev, &intf->ip, &intf->mask, intf->mac, &intf->mtu)) {
+// 					fwarning("interface %s is not configured\n", intf->dev);
+// 				}
+// 				intf->configured = 1;
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--net=", 6) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				if (strcmp(argv[i] + 6, "none") == 0) {
-					arg_nonetwork  = 1;
-					cfg.bridge0.configured = 0;
-					cfg.bridge1.configured = 0;
-					cfg.bridge2.configured = 0;
-					cfg.bridge3.configured = 0;
-					cfg.interface0.configured = 0;
-					cfg.interface1.configured = 0;
-					cfg.interface2.configured = 0;
-					cfg.interface3.configured = 0;
-					continue;
-				}
+// 		else if (strncmp(argv[i], "--net=", 6) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				if (strcmp(argv[i] + 6, "none") == 0) {
+// 					arg_nonetwork  = 1;
+// 					cfg.bridge0.configured = 0;
+// 					cfg.bridge1.configured = 0;
+// 					cfg.bridge2.configured = 0;
+// 					cfg.bridge3.configured = 0;
+// 					cfg.interface0.configured = 0;
+// 					cfg.interface1.configured = 0;
+// 					cfg.interface2.configured = 0;
+// 					cfg.interface3.configured = 0;
+// 					continue;
+// 				}
 
-				if (strcmp(argv[i] + 6, "lo") == 0) {
-					fprintf(stderr, "Error: cannot attach to lo device\n");
-					exit(1);
-				}
+// 				if (strcmp(argv[i] + 6, "lo") == 0) {
+// 					fprintf(stderr, "Error: cannot attach to lo device\n");
+// 					exit(1);
+// 				}
 
-				Bridge *br;
-				if (cfg.bridge0.configured == 0)
-					br = &cfg.bridge0;
-				else if (cfg.bridge1.configured == 0)
-					br = &cfg.bridge1;
-				else if (cfg.bridge2.configured == 0)
-					br = &cfg.bridge2;
-				else if (cfg.bridge3.configured == 0)
-					br = &cfg.bridge3;
-				else {
-					fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
-					return 1;
-				}
-				br->dev = argv[i] + 6;
-				br->configured = 1;
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 				Bridge *br;
+// 				if (cfg.bridge0.configured == 0)
+// 					br = &cfg.bridge0;
+// 				else if (cfg.bridge1.configured == 0)
+// 					br = &cfg.bridge1;
+// 				else if (cfg.bridge2.configured == 0)
+// 					br = &cfg.bridge2;
+// 				else if (cfg.bridge3.configured == 0)
+// 					br = &cfg.bridge3;
+// 				else {
+// 					fprintf(stderr, "Error: maximum 4 network devices are allowed\n");
+// 					return 1;
+// 				}
+// 				br->dev = argv[i] + 6;
+// 				br->configured = 1;
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--veth-name=", 12) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					exit(1);
-				}
-				br->veth_name = strdup(argv[i] + 12);
-				if (br->veth_name == NULL)
-					errExit("strdup");
-				if (*br->veth_name == '\0') {
-					fprintf(stderr, "Error: no veth-name configured\n");
-					exit(1);
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 		else if (strncmp(argv[i], "--veth-name=", 12) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					exit(1);
+// 				}
+// 				br->veth_name = strdup(argv[i] + 12);
+// 				if (br->veth_name == NULL)
+// 					errExit("strdup");
+// 				if (*br->veth_name == '\0') {
+// 					fprintf(stderr, "Error: no veth-name configured\n");
+// 					exit(1);
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strcmp(argv[i], "--scan") == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				arg_scan = 1;
-			}
-			else
-				exit_err_feature("networking");
-		}
-		else if (strncmp(argv[i], "--iprange=", 10) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					return 1;
-				}
-				if (br->iprange_start || br->iprange_end) {
-					fprintf(stderr, "Error: cannot configure the IP range twice for the same interface\n");
-					return 1;
-				}
+// 		else if (strcmp(argv[i], "--scan") == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				arg_scan = 1;
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
+// 		else if (strncmp(argv[i], "--iprange=", 10) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					return 1;
+// 				}
+// 				if (br->iprange_start || br->iprange_end) {
+// 					fprintf(stderr, "Error: cannot configure the IP range twice for the same interface\n");
+// 					return 1;
+// 				}
 
-				// parse option arguments
-				char *firstip = argv[i] + 10;
-				char *secondip = firstip;
-				while (*secondip != '\0') {
-					if (*secondip == ',')
-						break;
-					secondip++;
-				}
-				if (*secondip == '\0') {
-					fprintf(stderr, "Error: invalid IP range\n");
-					return 1;
-				}
-				*secondip = '\0';
-				secondip++;
+// 				// parse option arguments
+// 				char *firstip = argv[i] + 10;
+// 				char *secondip = firstip;
+// 				while (*secondip != '\0') {
+// 					if (*secondip == ',')
+// 						break;
+// 					secondip++;
+// 				}
+// 				if (*secondip == '\0') {
+// 					fprintf(stderr, "Error: invalid IP range\n");
+// 					return 1;
+// 				}
+// 				*secondip = '\0';
+// 				secondip++;
 
-				// check addresses
-				if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
-				    br->iprange_start >= br->iprange_end) {
-					fprintf(stderr, "Error: invalid IP range\n");
-					return 1;
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 				// check addresses
+// 				if (atoip(firstip, &br->iprange_start) || atoip(secondip, &br->iprange_end) ||
+// 				    br->iprange_start >= br->iprange_end) {
+// 					fprintf(stderr, "Error: invalid IP range\n");
+// 					return 1;
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--mac=", 6) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					exit(1);
-				}
-				if (mac_not_zero(br->macsandbox)) {
-					fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
-					exit(1);
-				}
+// 		else if (strncmp(argv[i], "--mac=", 6) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					exit(1);
+// 				}
+// 				if (mac_not_zero(br->macsandbox)) {
+// 					fprintf(stderr, "Error: cannot configure the MAC address twice for the same interface\n");
+// 					exit(1);
+// 				}
 
-				// read the address
-				if (atomac(argv[i] + 6, br->macsandbox)) {
-					fprintf(stderr, "Error: invalid MAC address\n");
-					exit(1);
-				}
+// 				// read the address
+// 				if (atomac(argv[i] + 6, br->macsandbox)) {
+// 					fprintf(stderr, "Error: invalid MAC address\n");
+// 					exit(1);
+// 				}
 
-				// check multicast address
-				if (br->macsandbox[0] & 1) {
-					fprintf(stderr, "Error: invalid MAC address (multicast)\n");
-					exit(1);
-				}
+// 				// check multicast address
+// 				if (br->macsandbox[0] & 1) {
+// 					fprintf(stderr, "Error: invalid MAC address (multicast)\n");
+// 					exit(1);
+// 				}
 
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					exit(1);
-				}
+// 		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					exit(1);
+// 				}
 
-				if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
-					fprintf(stderr, "Error: invalid mtu value\n");
-					exit(1);
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 				if (sscanf(argv[i] + 6, "%d", &br->mtu) != 1 || br->mtu < 576 || br->mtu > 9198) {
+// 					fprintf(stderr, "Error: invalid mtu value\n");
+// 					exit(1);
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--ip=", 5) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					exit(1);
-				}
-				if (br->arg_ip_none || br->ipsandbox) {
-					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
-					exit(1);
-				}
+// 		else if (strncmp(argv[i], "--ip=", 5) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					exit(1);
+// 				}
+// 				if (br->arg_ip_none || br->ipsandbox) {
+// 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+// 					exit(1);
+// 				}
 
-				// configure this IP address for the last bridge defined
-				if (strcmp(argv[i] + 5, "none") == 0)
-					br->arg_ip_none = 1;
-				else if (strcmp(argv[i] + 5, "dhcp") == 0) {
-					br->arg_ip_none = 1;
-					br->arg_ip_dhcp = 1;
-				} else {
-					if (atoip(argv[i] + 5, &br->ipsandbox)) {
-						fprintf(stderr, "Error: invalid IP address\n");
-						exit(1);
-					}
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 				// configure this IP address for the last bridge defined
+// 				if (strcmp(argv[i] + 5, "none") == 0)
+// 					br->arg_ip_none = 1;
+// 				else if (strcmp(argv[i] + 5, "dhcp") == 0) {
+// 					br->arg_ip_none = 1;
+// 					br->arg_ip_dhcp = 1;
+// 				} else {
+// 					if (atoip(argv[i] + 5, &br->ipsandbox)) {
+// 						fprintf(stderr, "Error: invalid IP address\n");
+// 						exit(1);
+// 					}
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--netmask=", 10) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					exit(1);
-				}
-				if (br->arg_ip_none || br->mask) {
-					fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
-					exit(1);
-				}
+// 		else if (strncmp(argv[i], "--netmask=", 10) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					exit(1);
+// 				}
+// 				if (br->arg_ip_none || br->mask) {
+// 					fprintf(stderr, "Error: cannot configure the network mask twice for the same interface\n");
+// 					exit(1);
+// 				}
 
-				// configure this network mask for the last bridge defined
-				if (atoip(argv[i] + 10, &br->mask)) {
-					fprintf(stderr, "Error: invalid  network mask\n");
-					exit(1);
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 				// configure this network mask for the last bridge defined
+// 				if (atoip(argv[i] + 10, &br->mask)) {
+// 					fprintf(stderr, "Error: invalid  network mask\n");
+// 					exit(1);
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				Bridge *br = last_bridge_configured();
-				if (br == NULL) {
-					fprintf(stderr, "Error: no network device configured\n");
-					exit(1);
-				}
-				if (br->arg_ip6_dhcp || br->ip6sandbox) {
-					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
-					exit(1);
-				}
+// 		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				Bridge *br = last_bridge_configured();
+// 				if (br == NULL) {
+// 					fprintf(stderr, "Error: no network device configured\n");
+// 					exit(1);
+// 				}
+// 				if (br->arg_ip6_dhcp || br->ip6sandbox) {
+// 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
+// 					exit(1);
+// 				}
 
-				// configure this IP address for the last bridge defined
-				if (strcmp(argv[i] + 6, "dhcp") == 0)
-					br->arg_ip6_dhcp = 1;
-				else {
-					if (check_ip46_address(argv[i] + 6) == 0) {
-						fprintf(stderr, "Error: invalid IPv6 address\n");
-						exit(1);
-					}
+// 				// configure this IP address for the last bridge defined
+// 				if (strcmp(argv[i] + 6, "dhcp") == 0)
+// 					br->arg_ip6_dhcp = 1;
+// 				else {
+// 					if (check_ip46_address(argv[i] + 6) == 0) {
+// 						fprintf(stderr, "Error: invalid IPv6 address\n");
+// 						exit(1);
+// 					}
 
-					br->ip6sandbox = strdup(argv[i] + 6);
-					if (br->ip6sandbox == NULL)
-						errExit("strdup");
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 					br->ip6sandbox = strdup(argv[i] + 6);
+// 					if (br->ip6sandbox == NULL)
+// 						errExit("strdup");
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
 
-		else if (strncmp(argv[i], "--defaultgw=", 12) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				if (atoip(argv[i] + 12, &cfg.defaultgw)) {
-					fprintf(stderr, "Error: invalid IP address\n");
-					exit(1);
-				}
-			}
-			else
-				exit_err_feature("networking");
-		}
-#endif
-		else if (strncmp(argv[i], "--dns=", 6) == 0) {
-			if (check_ip46_address(argv[i] + 6) == 0) {
-				fprintf(stderr, "Error: invalid DNS server IPv4 or IPv6 address\n");
-				exit(1);
-			}
-			char *dns = strdup(argv[i] + 6);
-			if (!dns)
-				errExit("strdup");
+// 		else if (strncmp(argv[i], "--defaultgw=", 12) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				if (atoip(argv[i] + 12, &cfg.defaultgw)) {
+// 					fprintf(stderr, "Error: invalid IP address\n");
+// 					exit(1);
+// 				}
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
+// #endif
+		// else if (strncmp(argv[i], "--dns=", 6) == 0) {
+		// 	if (check_ip46_address(argv[i] + 6) == 0) {
+		// 		fprintf(stderr, "Error: invalid DNS server IPv4 or IPv6 address\n");
+		// 		exit(1);
+		// 	}
+		// 	char *dns = strdup(argv[i] + 6);
+		// 	if (!dns)
+		// 		errExit("strdup");
 
-			if (cfg.dns1 == NULL)
-				cfg.dns1 = dns;
-			else if (cfg.dns2 == NULL)
-				cfg.dns2 = dns;
-			else if (cfg.dns3 == NULL)
-				cfg.dns3 = dns;
-			else if (cfg.dns4 == NULL)
-				cfg.dns4 = dns;
-			else {
-				fwarning("Warning: up to 4 DNS servers can be specified, %s ignored\n", dns);
-				free(dns);
-			}
-		}
+		// 	if (cfg.dns1 == NULL)
+		// 		cfg.dns1 = dns;
+		// 	else if (cfg.dns2 == NULL)
+		// 		cfg.dns2 = dns;
+		// 	else if (cfg.dns3 == NULL)
+		// 		cfg.dns3 = dns;
+		// 	else if (cfg.dns4 == NULL)
+		// 		cfg.dns4 = dns;
+		// 	else {
+		// 		fwarning("Warning: up to 4 DNS servers can be specified, %s ignored\n", dns);
+		// 		free(dns);
+		// 	}
+		// }
 
 		else if (strncmp(argv[i], "--hosts-file=", 13) == 0)
 			cfg.hosts_file = fs_check_hosts_file(argv[i] + 13);
@@ -2836,7 +2837,7 @@ int main(int argc, char **argv, char **envp) {
 	// 	x11_block();
 
 	// check network configuration options - it will exit if anything went wrong
-	net_check_cfg();
+	// net_check_cfg();
 
 	if (arg_seccomp)
 		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
@@ -2970,7 +2971,7 @@ int main(int argc, char **argv, char **envp) {
 				errExit("setreuid");
 			if (setregid(0, 0))
 				errExit("setregid");
-			network_main(child);
+			// network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");
 #ifdef HAVE_GCOV

@@ -141,22 +141,22 @@ void set_apparmor(void) {
 }
 #endif
 
-static void seccomp_debug(void) {
-	if (arg_debug == 0)
-		return;
+// static void seccomp_debug(void) {
+// 	if (arg_debug == 0)
+// 		return;
 
-	EUID_USER();
-	printf("Seccomp directory:\n");
-	ls(RUN_SECCOMP_DIR);
-	struct stat s;
-	if (stat(RUN_SECCOMP_LIST, &s) == 0) {
-		printf("Active seccomp files:\n");
-		cat(RUN_SECCOMP_LIST);
-	}
-	else
-		printf("No active seccomp files\n");
-	EUID_ROOT();
-}
+// 	EUID_USER();
+// 	printf("Seccomp directory:\n");
+// 	ls(RUN_SECCOMP_DIR);
+// 	struct stat s;
+// 	if (stat(RUN_SECCOMP_LIST, &s) == 0) {
+// 		printf("Active seccomp files:\n");
+// 		cat(RUN_SECCOMP_LIST);
+// 	}
+// 	else
+// 		printf("No active seccomp files\n");
+// 	EUID_ROOT();
+// }
 
 static void save_nogroups(void) {
 	if (arg_nogroups == 0)
@@ -222,7 +222,7 @@ static void sandbox_if_up(Bridge *br) {
 		return;
 
 	char *dev = br->devsandbox;
-	net_if_up(dev);
+	// net_if_up(dev);
 
 	if (br->arg_ip_none == 1);	// do nothing
 	else if (br->arg_ip_none == 0 && br->macvlan == 0) {
@@ -258,12 +258,12 @@ static void sandbox_if_up(Bridge *br) {
 
 		if (arg_debug)
 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
-		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
+		// net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 		arp_announce(dev, br);
 	}
 
-	if (br->ip6sandbox)
-		 net_if_ip6(dev, br->ip6sandbox);
+	// if (br->ip6sandbox)
+	// 	 net_if_ip6(dev, br->ip6sandbox);
 }
 
 static void chk_chroot(void) {
@@ -770,114 +770,114 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// networking
 	//****************************
-	int gw_cfg_failed = 0; // default gw configuration flag
-	if (arg_nonetwork) {
-		net_if_up("lo");
-		if (arg_debug)
-			printf("Network namespace enabled, only loopback interface available\n");
-	}
-	else if (arg_netns) {
-		netns(arg_netns);
-		if (arg_debug)
-			printf("Network namespace '%s' activated\n", arg_netns);
-	}
-	else if (any_bridge_configured() || any_interface_configured()) {
-		// configure lo and eth0...eth3
-		net_if_up("lo");
+	// int gw_cfg_failed = 0; // default gw configuration flag
+	// if (arg_nonetwork) {
+	// 	net_if_up("lo");
+	// 	if (arg_debug)
+	// 		printf("Network namespace enabled, only loopback interface available\n");
+	// }
+	// else if (arg_netns) {
+	// 	netns(arg_netns);
+	// 	if (arg_debug)
+	// 		printf("Network namespace '%s' activated\n", arg_netns);
+	// }
+	// else if (any_bridge_configured() || any_interface_configured()) {
+	// 	// configure lo and eth0...eth3
+	// 	net_if_up("lo");
 
-		if (mac_not_zero(cfg.bridge0.macsandbox))
-			net_config_mac(cfg.bridge0.devsandbox, cfg.bridge0.macsandbox);
-		sandbox_if_up(&cfg.bridge0);
+	// 	if (mac_not_zero(cfg.bridge0.macsandbox))
+	// 		net_config_mac(cfg.bridge0.devsandbox, cfg.bridge0.macsandbox);
+	// 	sandbox_if_up(&cfg.bridge0);
 
-		if (mac_not_zero(cfg.bridge1.macsandbox))
-			net_config_mac(cfg.bridge1.devsandbox, cfg.bridge1.macsandbox);
-		sandbox_if_up(&cfg.bridge1);
+	// 	if (mac_not_zero(cfg.bridge1.macsandbox))
+	// 		net_config_mac(cfg.bridge1.devsandbox, cfg.bridge1.macsandbox);
+	// 	sandbox_if_up(&cfg.bridge1);
 
-		if (mac_not_zero(cfg.bridge2.macsandbox))
-			net_config_mac(cfg.bridge2.devsandbox, cfg.bridge2.macsandbox);
-		sandbox_if_up(&cfg.bridge2);
+	// 	if (mac_not_zero(cfg.bridge2.macsandbox))
+	// 		net_config_mac(cfg.bridge2.devsandbox, cfg.bridge2.macsandbox);
+	// 	sandbox_if_up(&cfg.bridge2);
 
-		if (mac_not_zero(cfg.bridge3.macsandbox))
-			net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
-		sandbox_if_up(&cfg.bridge3);
+	// 	if (mac_not_zero(cfg.bridge3.macsandbox))
+	// 		net_config_mac(cfg.bridge3.devsandbox, cfg.bridge3.macsandbox);
+	// 	sandbox_if_up(&cfg.bridge3);
 
 
-		// moving an interface in a namespace using --interface will reset the interface configuration;
-		// we need to put the configuration back
-		if (cfg.interface0.configured && cfg.interface0.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
-			net_config_interface(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
-		}
-		if (cfg.interface1.configured && cfg.interface1.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
-			net_config_interface(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
-		}
-		if (cfg.interface2.configured && cfg.interface2.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
-			net_config_interface(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
-		}
-		if (cfg.interface3.configured && cfg.interface3.ip) {
-			if (arg_debug)
-				printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
-			net_config_interface(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
-		}
+	// 	// moving an interface in a namespace using --interface will reset the interface configuration;
+	// 	// we need to put the configuration back
+	// 	if (cfg.interface0.configured && cfg.interface0.ip) {
+	// 		if (arg_debug)
+	// 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface0.ip), cfg.interface0.dev);
+	// 		net_config_interface(cfg.interface0.dev, cfg.interface0.ip, cfg.interface0.mask, cfg.interface0.mtu);
+	// 	}
+	// 	if (cfg.interface1.configured && cfg.interface1.ip) {
+	// 		if (arg_debug)
+	// 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface1.ip), cfg.interface1.dev);
+	// 		net_config_interface(cfg.interface1.dev, cfg.interface1.ip, cfg.interface1.mask, cfg.interface1.mtu);
+	// 	}
+	// 	if (cfg.interface2.configured && cfg.interface2.ip) {
+	// 		if (arg_debug)
+	// 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface2.ip), cfg.interface2.dev);
+	// 		net_config_interface(cfg.interface2.dev, cfg.interface2.ip, cfg.interface2.mask, cfg.interface2.mtu);
+	// 	}
+	// 	if (cfg.interface3.configured && cfg.interface3.ip) {
+	// 		if (arg_debug)
+	// 			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(cfg.interface3.ip), cfg.interface3.dev);
+	// 		net_config_interface(cfg.interface3.dev, cfg.interface3.ip, cfg.interface3.mask, cfg.interface3.mtu);
+	// 	}
 
-		// add a default route
-		if (cfg.defaultgw) {
-			// set the default route
-			if (net_add_route(0, 0, cfg.defaultgw)) {
-				fwarning("cannot configure default route\n");
-				gw_cfg_failed = 1;
-			}
-		}
+	// 	// add a default route
+	// 	if (cfg.defaultgw) {
+	// 		// set the default route
+	// 		if (net_add_route(0, 0, cfg.defaultgw)) {
+	// 			fwarning("cannot configure default route\n");
+	// 			gw_cfg_failed = 1;
+	// 		}
+	// 	}
 
-		if (arg_debug)
-			printf("Network namespace enabled\n");
-	}
+	// 	if (arg_debug)
+	// 		printf("Network namespace enabled\n");
+	// }
 
-	// print network configuration
-	if (!arg_quiet) {
-		if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
-			fmessage("\n");
-			if (any_bridge_configured() || any_interface_configured()) {
-				if (arg_scan)
-					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
-				else
-					sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif");
+	// // print network configuration
+	// if (!arg_quiet) {
+	// 	if (any_bridge_configured() || any_interface_configured() || cfg.defaultgw || cfg.dns1) {
+	// 		fmessage("\n");
+	// 		if (any_bridge_configured() || any_interface_configured()) {
+	// 			if (arg_scan)
+	// 				sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 3, PATH_FNET, "printif", "scan");
+	// 			else
+	// 				sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, PATH_FNET, "printif");
 
-			}
-			if (cfg.defaultgw != 0) {
-				if (gw_cfg_failed)
-					fmessage("Default gateway configuration failed\n");
-				else
-					fmessage("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
-			}
-			if (cfg.dns1 != NULL)
-				fmessage("DNS server %s\n", cfg.dns1);
-			if (cfg.dns2 != NULL)
-				fmessage("DNS server %s\n", cfg.dns2);
-			if (cfg.dns3 != NULL)
-				fmessage("DNS server %s\n", cfg.dns3);
-			if (cfg.dns4 != NULL)
-				fmessage("DNS server %s\n", cfg.dns4);
-			fmessage("\n");
-		}
-	}
+	// 		}
+	// 		if (cfg.defaultgw != 0) {
+	// 			if (gw_cfg_failed)
+	// 				fmessage("Default gateway configuration failed\n");
+	// 			else
+	// 				fmessage("Default gateway %d.%d.%d.%d\n", PRINT_IP(cfg.defaultgw));
+	// 		}
+	// 		if (cfg.dns1 != NULL)
+	// 			fmessage("DNS server %s\n", cfg.dns1);
+	// 		if (cfg.dns2 != NULL)
+	// 			fmessage("DNS server %s\n", cfg.dns2);
+	// 		if (cfg.dns3 != NULL)
+	// 			fmessage("DNS server %s\n", cfg.dns3);
+	// 		if (cfg.dns4 != NULL)
+	// 			fmessage("DNS server %s\n", cfg.dns4);
+	// 		fmessage("\n");
+	// 	}
+	// }
 
-	// load IBUS env variables
-	if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
-		// do nothing - there are problems with ibus version 1.5.11
-	}
-	else {
-        //不需要加载ibus环境变量
-		// EUID_USER();
-		// env_ibus_load();
-		// EUID_ROOT();
-        ;
-	}
+	// // load IBUS env variables
+	// if (arg_nonetwork || any_bridge_configured() || any_interface_configured()) {
+	// 	// do nothing - there are problems with ibus version 1.5.11
+	// }
+	// else {
+    //     //不需要加载ibus环境变量
+	// 	// EUID_USER();
+	// 	// env_ibus_load();
+	// 	// EUID_ROOT();
+    //     ;
+	// }
 
 	//****************************
 	// fs pre-processing:
@@ -1233,8 +1233,8 @@ int sandbox(void* sandbox_arg) {
 	// }
 
 	// make seccomp filters read-only
-	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
-	seccomp_debug();
+	// fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
+	// seccomp_debug();
 
 	// set capabilities
 	// set_caps();

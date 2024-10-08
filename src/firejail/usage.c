@@ -34,9 +34,9 @@ static char *usage_str =
 	"    --apparmor.print=name|pid - print apparmor status.\n"
 	"    --appimage - sandbox an AppImage application.\n"
 	"    --audit[=test-program] - audit the sandbox.\n"
-#ifdef HAVE_NETWORK
-	"    --bandwidth=name|pid - set bandwidth limits.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --bandwidth=name|pid - set bandwidth limits.\n"
+// #endif
 	"    --bind=dirname1,dirname2 - mount-bind dirname1 on top of dirname2.\n"
 	"    --bind=filename1,filename2 - mount-bind filename1 on top of filename2.\n"
 	"    --blacklist=filename - blacklist directory or file.\n"
@@ -82,9 +82,9 @@ static char *usage_str =
 #ifdef HAVE_WHITELIST
 	"    --debug-whitelists - debug whitelisting.\n"
 #endif
-#ifdef HAVE_NETWORK
-	"    --defaultgw=address - configure default gateway.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --defaultgw=address - configure default gateway.\n"
+// #endif
 	"    --deterministic-exit-code - always exit with first child's status code.\n"
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
@@ -97,21 +97,21 @@ static char *usage_str =
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
 	"    --ignore=command - ignore command in profile files.\n"
-#ifdef HAVE_NETWORK
-	"    --interface=name - move interface in sandbox.\n"
-	"    --ip=address - set interface IP address.\n"
-	"    --ip=none - no IP address and no default gateway are configured.\n"
-	"    --ip=dhcp - acquire IP address by running dhclient.\n"
-	"    --ip6=address - set interface IPv6 address.\n"
-	"    --ip6=dhcp - acquire IPv6 address by running dhclient.\n"
-	"    --iprange=address,address - configure an IP address in this range.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --interface=name - move interface in sandbox.\n"
+// 	"    --ip=address - set interface IP address.\n"
+// 	"    --ip=none - no IP address and no default gateway are configured.\n"
+// 	"    --ip=dhcp - acquire IP address by running dhclient.\n"
+// 	"    --ip6=address - set interface IPv6 address.\n"
+// 	"    --ip6=dhcp - acquire IPv6 address by running dhclient.\n"
+// 	"    --iprange=address,address - configure an IP address in this range.\n"
+// #endif
 	"    --ipc-namespace - enable a new IPC namespace.\n"
 	"    --join=name|pid - join the sandbox.\n"
 	"    --join-filesystem=name|pid - join the mount namespace.\n"
-#ifdef HAVE_NETWORK
-	"    --join-network=name|pid - join the network namespace.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --join-network=name|pid - join the network namespace.\n"
+// #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
         "    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
@@ -119,31 +119,31 @@ static char *usage_str =
 #ifdef HAVE_FILE_TRANSFER
 	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"
 #endif
-#ifdef HAVE_NETWORK
-	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
+// #endif
 	"    --machine-id - preserve /etc/machine-id\n"
 	"    --memory-deny-write-execute - seccomp filter to block attempts to create\n"
 	"\tmemory mappings that are both writable and executable.\n"
-#ifdef HAVE_NETWORK
-	"    --mtu=number - set interface MTU.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --mtu=number - set interface MTU.\n"
+// #endif
 	"    --name=name - set sandbox name.\n"
-#ifdef HAVE_NETWORK
-	"    --net=bridgename - enable network namespaces and connect to this bridge.\n"
-	"    --net=ethernet_interface - enable network namespaces and connect to this\n"
-	"\tEthernet interface.\n"
-	"    --net=none - enable a new, unconnected network namespace.\n"
-	"    --net.print=name|pid - print network interface configuration.\n"
-	"    --netfilter[=filename,arg1,arg2,arg3 ...] - enable firewall.\n"
-	"    --netfilter.print=name|pid - print the firewall.\n"
-	"    --netfilter6=filename - enable IPv6 firewall.\n"
-	"    --netfilter6.print=name|pid - print the IPv6 firewall.\n"
-	"    --netmask=address - define a network mask when dealing with unconfigured"
-	"\tparrent interfaces.\n"
-	"    --netns=name - Run the program in a named, persistent network namespace.\n"
-	"    --netstats - monitor network statistics.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --net=bridgename - enable network namespaces and connect to this bridge.\n"
+// 	"    --net=ethernet_interface - enable network namespaces and connect to this\n"
+// 	"\tEthernet interface.\n"
+// 	"    --net=none - enable a new, unconnected network namespace.\n"
+// 	"    --net.print=name|pid - print network interface configuration.\n"
+// 	"    --netfilter[=filename,arg1,arg2,arg3 ...] - enable firewall.\n"
+// 	"    --netfilter.print=name|pid - print the firewall.\n"
+// 	"    --netfilter6=filename - enable IPv6 firewall.\n"
+// 	"    --netfilter6.print=name|pid - print the IPv6 firewall.\n"
+// 	"    --netmask=address - define a network mask when dealing with unconfigured"
+// 	"\tparrent interfaces.\n"
+// 	"    --netns=name - Run the program in a named, persistent network namespace.\n"
+// 	"    --netstats - monitor network statistics.\n"
+// #endif
 	"    --nice=value - set nice value.\n"
 	"    --no3d - disable 3D hardware acceleration.\n"
 	"    --noblacklist=filename - disable blacklist for file or directory.\n"
@@ -210,9 +210,9 @@ static char *usage_str =
 	"    --rlimit-sigpending=number - set the maximum number of pending signals\n"
 	"\tfor a process.\n"
 	"    --rmenv=name - remove environment variable in the new sandbox.\n"
-#ifdef HAVE_NETWORK
-	"    --scan - ARP-scan all the networks from inside a network namespace.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --scan - ARP-scan all the networks from inside a network namespace.\n"
+// #endif
 	"    --seccomp - enable seccomp filter and apply the default blacklist.\n"
 	"    --seccomp=syscall,syscall,syscall - enable seccomp filter, blacklist the\n"
 	"\tdefault syscall list and the syscalls specified by the command.\n"
@@ -240,9 +240,9 @@ static char *usage_str =
 	"    --tunnel[=devname] - connect the sandbox to a tunnel created by\n"
 	"\tfiretunnel utility.\n"
 	"    --version - print program version and exit.\n"
-#ifdef HAVE_NETWORK
-	"    --veth-name=name - use this name for the interface connected to the bridge.\n"
-#endif
+// #ifdef HAVE_NETWORK
+// 	"    --veth-name=name - use this name for the interface connected to the bridge.\n"
+// #endif
 #ifdef HAVE_WHITELIST
 	"    --whitelist=filename - whitelist directory or file.\n"
 #endif
