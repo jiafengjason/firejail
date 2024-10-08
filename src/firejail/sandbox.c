@@ -1013,13 +1013,13 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-#ifdef HAVE_USERTMPFS
-	if (arg_private_cache) {
-		EUID_USER();
-		profile_add("tmpfs ${HOME}/.cache");
-		EUID_ROOT();
-	}
-#endif
+// #ifdef HAVE_USERTMPFS
+// 	if (arg_private_cache) {
+// 		EUID_USER();
+// 		profile_add("tmpfs ${HOME}/.cache");
+// 		EUID_ROOT();
+// 	}
+// #endif
 
 	// if (arg_private_tmp) {
 	// 	// private-tmp is implemented as a whitelist
@@ -1031,9 +1031,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// Session D-BUS
 	//****************************
-#ifdef HAVE_DBUSPROXY
-	dbus_apply_policy();
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 	dbus_apply_policy();
+// #endif
 
 	//****************************
 	// hosts and hostname

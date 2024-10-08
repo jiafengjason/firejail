@@ -1054,12 +1054,12 @@ int main(int argc, char **argv, char **envp) {
 
 	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
 	// these paths are disabled in disable-common.inc
-	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
-		if (strncmp(argv[i] + 4, "=dhcp", 5) == 0) {
-			profile_add("noblacklist /sbin");
-			profile_add("noblacklist /usr/sbin");
-		}
-	}
+	// if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
+	// 	if (strncmp(argv[i] + 4, "=dhcp", 5) == 0) {
+	// 		profile_add("noblacklist /sbin");
+	// 		profile_add("noblacklist /usr/sbin");
+	// 	}
+	// }
 
 	// for appimages we need to remove "include disable-shell.inc from the profile
 	// a --profile command can show up before --appimage
@@ -1087,10 +1087,10 @@ int main(int argc, char **argv, char **envp) {
 		}
 
 		arg_allow_debuggers = 1;
-		char *cmd = strdup("noblacklist ${PATH}/strace");
-		if (!cmd)
-			errExit("strdup");
-		profile_add(cmd);
+		// char *cmd = strdup("noblacklist ${PATH}/strace");
+		// if (!cmd)
+		// 	errExit("strdup");
+		// profile_add(cmd);
 	}
 
 	// profile builder
@@ -1524,90 +1524,90 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		else if (strcmp(argv[i], "--allusers") == 0)
 			arg_allusers = 1;
-		else if (strncmp(argv[i], "--bind=", 7) == 0) {
-			if (checkcfg(CFG_BIND)) {
-				char *line;
-				if (asprintf(&line, "bind %s", argv[i] + 7) == -1)
-					errExit("asprintf");
+		// else if (strncmp(argv[i], "--bind=", 7) == 0) {
+		// 	if (checkcfg(CFG_BIND)) {
+		// 		char *line;
+		// 		if (asprintf(&line, "bind %s", argv[i] + 7) == -1)
+		// 			errExit("asprintf");
 
-				profile_check_line(line, 0, NULL);	// will exit if something wrong
-				profile_add(line);
-			}
-			else
-				exit_err_feature("bind");
-		}
-		else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {
-			char *line;
-			if (asprintf(&line, "tmpfs %s", argv[i] + 8) == -1)
-				errExit("asprintf");
+		// 		profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 		profile_add(line);
+		// 	}
+		// 	else
+		// 		exit_err_feature("bind");
+		// }
+		// else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {
+		// 	char *line;
+		// 	if (asprintf(&line, "tmpfs %s", argv[i] + 8) == -1)
+		// 		errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--blacklist=", 12) == 0) {
-			char *line;
-			if (asprintf(&line, "blacklist %s", argv[i] + 12) == -1)
-				errExit("asprintf");
+		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 	profile_add(line);
+		// }
+		// else if (strncmp(argv[i], "--blacklist=", 12) == 0) {
+		// 	char *line;
+		// 	if (asprintf(&line, "blacklist %s", argv[i] + 12) == -1)
+		// 		errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--noblacklist=", 14) == 0) {
-			char *line;
-			if (asprintf(&line, "noblacklist %s", argv[i] + 14) == -1)
-				errExit("asprintf");
+		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 	profile_add(line);
+		// }
+		// else if (strncmp(argv[i], "--noblacklist=", 14) == 0) {
+		// 	char *line;
+		// 	if (asprintf(&line, "noblacklist %s", argv[i] + 14) == -1)
+		// 		errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
+		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 	profile_add(line);
+		// }
 
-#ifdef HAVE_WHITELIST
-		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
-			if (checkcfg(CFG_WHITELIST)) {
-				char *line;
-				if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
-					errExit("asprintf");
+// #ifdef HAVE_WHITELIST
+// 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
+// 			if (checkcfg(CFG_WHITELIST)) {
+// 				char *line;
+// 				if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
+// 					errExit("asprintf");
 
-				profile_check_line(line, 0, NULL);	// will exit if something wrong
-				profile_add(line);
-			}
-			else
-				exit_err_feature("whitelist");
-		}
-		else if (strncmp(argv[i], "--nowhitelist=", 14) == 0) {
-			char *line;
-			if (asprintf(&line, "nowhitelist %s", argv[i] + 14) == -1)
-				errExit("asprintf");
+// 				profile_check_line(line, 0, NULL);	// will exit if something wrong
+// 				profile_add(line);
+// 			}
+// 			else
+// 				exit_err_feature("whitelist");
+// 		}
+// 		else if (strncmp(argv[i], "--nowhitelist=", 14) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "nowhitelist %s", argv[i] + 14) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-#endif
+// 			profile_check_line(line, 0, NULL);	// will exit if something wrong
+// 			profile_add(line);
+// 		}
+// #endif
 
-		else if (strncmp(argv[i], "--read-only=", 12) == 0) {
-			char *line;
-			if (asprintf(&line, "read-only %s", argv[i] + 12) == -1)
-				errExit("asprintf");
+		// else if (strncmp(argv[i], "--read-only=", 12) == 0) {
+		// 	char *line;
+		// 	if (asprintf(&line, "read-only %s", argv[i] + 12) == -1)
+		// 		errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--noexec=", 9) == 0) {
-			char *line;
-			if (asprintf(&line, "noexec %s", argv[i] + 9) == -1)
-				errExit("asprintf");
+		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 	profile_add(line);
+		// }
+		// else if (strncmp(argv[i], "--noexec=", 9) == 0) {
+		// 	char *line;
+		// 	if (asprintf(&line, "noexec %s", argv[i] + 9) == -1)
+		// 		errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--read-write=", 13) == 0) {
-			char *line;
-			if (asprintf(&line, "read-write %s", argv[i] + 13) == -1)
-				errExit("asprintf");
+		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 	profile_add(line);
+		// }
+		// else if (strncmp(argv[i], "--read-write=", 13) == 0) {
+		// 	char *line;
+		// 	if (asprintf(&line, "read-write %s", argv[i] + 13) == -1)
+		// 		errExit("asprintf");
 
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
+		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
+		// 	profile_add(line);
+		// }
 		else if (strcmp(argv[i], "--disable-mnt") == 0)
 			arg_disable_mnt = 1;
 #ifdef HAVE_OVERLAYFS
@@ -1697,106 +1697,106 @@ int main(int argc, char **argv, char **envp) {
 				exit_err_feature("overlayfs");
 		}
 #endif
-#ifdef HAVE_FIRETUNNEL
-		else if (strcmp(argv[i], "--tunnel") == 0) {
-			// try to connect to the default client side of the tunnel
-			// if this fails, try the default server side of the tunnel
-			if (access("/run/firetunnel/ftc", R_OK) == 0)
-				profile_read("/run/firetunnel/ftc");
-			else if (access("/run/firetunnel/fts", R_OK) == 0)
-				profile_read("/run/firetunnel/fts");
-			else {
-				fprintf(stderr, "Error: no default firetunnel found, please specify it using --tunnel=devname option\n");
-				exit(1);
-			}
-		}
-		else if (strncmp(argv[i], "--tunnel=", 9) == 0) {
-			char *fname;
+// #ifdef HAVE_FIRETUNNEL
+// 		else if (strcmp(argv[i], "--tunnel") == 0) {
+// 			// try to connect to the default client side of the tunnel
+// 			// if this fails, try the default server side of the tunnel
+// 			if (access("/run/firetunnel/ftc", R_OK) == 0)
+// 				profile_read("/run/firetunnel/ftc");
+// 			else if (access("/run/firetunnel/fts", R_OK) == 0)
+// 				profile_read("/run/firetunnel/fts");
+// 			else {
+// 				fprintf(stderr, "Error: no default firetunnel found, please specify it using --tunnel=devname option\n");
+// 				exit(1);
+// 			}
+// 		}
+// 		else if (strncmp(argv[i], "--tunnel=", 9) == 0) {
+// 			char *fname;
 
-			if (asprintf(&fname, "/run/firetunnel/%s", argv[i] + 9) == -1)
-				errExit("asprintf");
-			invalid_filename(fname, 0); // no globbing
-			if (access(fname, R_OK) == 0)
-				profile_read(fname);
-			else {
-				fprintf(stderr, "Error: tunnel not found\n");
-				exit(1);
-			}
-		}
-#endif
-		else if (strncmp(argv[i], "--include=", 10) == 0) {
-			char *ppath = expand_macros(argv[i] + 10);
-			if (!ppath)
-				errExit("strdup");
+// 			if (asprintf(&fname, "/run/firetunnel/%s", argv[i] + 9) == -1)
+// 				errExit("asprintf");
+// 			invalid_filename(fname, 0); // no globbing
+// 			if (access(fname, R_OK) == 0)
+// 				profile_read(fname);
+// 			else {
+// 				fprintf(stderr, "Error: tunnel not found\n");
+// 				exit(1);
+// 			}
+// 		}
+// #endif
+		// else if (strncmp(argv[i], "--include=", 10) == 0) {
+		// 	char *ppath = expand_macros(argv[i] + 10);
+		// 	if (!ppath)
+		// 		errExit("strdup");
 
-			char *ptr = ppath;
-			while (*ptr != '/' && *ptr != '\0')
-				ptr++;
-			if (*ptr == '\0') {
-				if (access(ppath, R_OK)) {
-					profile_read(ppath);
-				}
-				else {
-					// ppath contains no '/' and is not a local file, assume it's a name
-					int rv = profile_find_firejail(ppath, 0);
-					if (!rv) {
-						fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
-						exit(1);
-					}
-				}
-			}
-			else {
-				// ppath contains a '/', assume it's a path
-				profile_read(ppath);
-			}
+		// 	char *ptr = ppath;
+		// 	while (*ptr != '/' && *ptr != '\0')
+		// 		ptr++;
+		// 	if (*ptr == '\0') {
+		// 		if (access(ppath, R_OK)) {
+		// 			profile_read(ppath);
+		// 		}
+		// 		else {
+		// 			// ppath contains no '/' and is not a local file, assume it's a name
+		// 			int rv = profile_find_firejail(ppath, 0);
+		// 			if (!rv) {
+		// 				fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
+		// 				exit(1);
+		// 			}
+		// 		}
+		// 	}
+		// 	else {
+		// 		// ppath contains a '/', assume it's a path
+		// 		profile_read(ppath);
+		// 	}
 
-			free(ppath);
-		}
-		else if (strncmp(argv[i], "--profile=", 10) == 0) {
-			// multiple profile files are allowed!
+		// 	free(ppath);
+		// }
+		// else if (strncmp(argv[i], "--profile=", 10) == 0) {
+		// 	// multiple profile files are allowed!
 
-			if (arg_noprofile) {
-				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
-				exit(1);
-			}
+		// 	if (arg_noprofile) {
+		// 		fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
+		// 		exit(1);
+		// 	}
 
-			char *ppath = expand_macros(argv[i] + 10);
-			if (!ppath)
-				errExit("strdup");
+		// 	char *ppath = expand_macros(argv[i] + 10);
+		// 	if (!ppath)
+		// 		errExit("strdup");
 
-			// checking for strange chars in the file name, no globbing
-			invalid_filename(ppath, 0);
+		// 	// checking for strange chars in the file name, no globbing
+		// 	invalid_filename(ppath, 0);
 
-			if (*ppath == ':' || access(ppath, R_OK) || is_dir(ppath)) {
-				int has_colon = (*ppath == ':');
-				char *ptr = ppath;
-				while (*ptr != '/' && *ptr != '.' && *ptr != '\0')
-					ptr++;
-				// profile path contains no / or . chars,
-				// assume its a profile name
-				if (*ptr != '\0') {
-					fprintf(stderr, "Error: inaccessible profile file: %s\n", ppath);
-					exit(1);
-				}
+		// 	if (*ppath == ':' || access(ppath, R_OK) || is_dir(ppath)) {
+		// 		int has_colon = (*ppath == ':');
+		// 		char *ptr = ppath;
+		// 		while (*ptr != '/' && *ptr != '.' && *ptr != '\0')
+		// 			ptr++;
+		// 		// profile path contains no / or . chars,
+		// 		// assume its a profile name
+		// 		if (*ptr != '\0') {
+		// 			fprintf(stderr, "Error: inaccessible profile file: %s\n", ppath);
+		// 			exit(1);
+		// 		}
 
-				// profile was not read in previously, try to see if
-				// we were given a profile name.
-				if (!profile_find_firejail(ppath + has_colon, 1)) {
-					// do not fall through to default profile,
-					// because the user should be notified that
-					// given profile arg could not be used.
-					fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
-					exit(1);
-				}
-				else
-					custom_profile = 1;
-			}
-			else {
-				profile_read(ppath);
-				custom_profile = 1;
-			}
-			free(ppath);
-		}
+		// 		// profile was not read in previously, try to see if
+		// 		// we were given a profile name.
+		// 		if (!profile_find_firejail(ppath + has_colon, 1)) {
+		// 			// do not fall through to default profile,
+		// 			// because the user should be notified that
+		// 			// given profile arg could not be used.
+		// 			fprintf(stderr, "Error: no profile with name \"%s\" found.\n", ppath);
+		// 			exit(1);
+		// 		}
+		// 		else
+		// 			custom_profile = 1;
+		// 	}
+		// 	else {
+		// 		profile_read(ppath);
+		// 		custom_profile = 1;
+		// 	}
+		// 	free(ppath);
+		// }
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
 				fprintf(stderr, "Error: --profile and --noprofile options are mutually exclusive\n");
@@ -1804,13 +1804,13 @@ int main(int argc, char **argv, char **envp) {
 			}
 			arg_noprofile = 1;
 		}
-		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
-			if (custom_profile) {
-				fprintf(stderr, "Error: please use --profile after --ignore\n");
-				exit(1);
-			}
-			profile_add_ignore(argv[i] + 9);
-		}
+		// else if (strncmp(argv[i], "--ignore=", 9) == 0) {
+		// 	if (custom_profile) {
+		// 		fprintf(stderr, "Error: please use --profile after --ignore\n");
+		// 		exit(1);
+		// 	}
+		// 	profile_add_ignore(argv[i] + 9);
+		// }
 #ifdef HAVE_CHROOT
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
 			if (checkcfg(CFG_CHROOT)) {
@@ -1997,14 +1997,14 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}
-#ifdef HAVE_USERTMPFS
-		else if (strcmp(argv[i], "--private-cache") == 0) {
-			if (checkcfg(CFG_PRIVATE_CACHE))
-				arg_private_cache = 1;
-			else
-				exit_err_feature("private-cache");
-		}
-#endif
+// #ifdef HAVE_USERTMPFS
+// 		else if (strcmp(argv[i], "--private-cache") == 0) {
+// 			if (checkcfg(CFG_PRIVATE_CACHE))
+// 				arg_private_cache = 1;
+// 			else
+// 				exit_err_feature("private-cache");
+// 		}
+// #endif
 		else if (strcmp(argv[i], "--private-cwd") == 0) {
 			cfg.cwd = NULL;
 			arg_private_cwd = 1;
@@ -2074,161 +2074,161 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		// D-BUS proxy
 		//*************************************
-#ifdef HAVE_DBUSPROXY
-		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
-			if (strcmp("filter", argv[i] + 12) == 0) {
-				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
-					fprintf(stderr, "Warning: Cannot relax --dbus-user policy, it is already set to block\n");
-				} else {
-					arg_dbus_user = DBUS_POLICY_FILTER;
-				}
-			} else if (strcmp("none", argv[i] + 12) == 0) {
-				if (arg_dbus_log_user) {
-					fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
-					exit(1);
-				}
-				arg_dbus_user = DBUS_POLICY_BLOCK;
-			} else {
-				fprintf(stderr, "Unknown dbus-user policy: %s\n", argv[i] + 12);
-				exit(1);
-			}
-		}
-		else if (strncmp(argv[i], "--dbus-user.see=", 16) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-user.see %s", argv[i] + 16) == -1)
-				errExit("asprintf");
+// #ifdef HAVE_DBUSPROXY
+// 		else if (strncmp("--dbus-user=", argv[i], 12) == 0) {
+// 			if (strcmp("filter", argv[i] + 12) == 0) {
+// 				if (arg_dbus_user == DBUS_POLICY_BLOCK) {
+// 					fprintf(stderr, "Warning: Cannot relax --dbus-user policy, it is already set to block\n");
+// 				} else {
+// 					arg_dbus_user = DBUS_POLICY_FILTER;
+// 				}
+// 			} else if (strcmp("none", argv[i] + 12) == 0) {
+// 				if (arg_dbus_log_user) {
+// 					fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+// 					exit(1);
+// 				}
+// 				arg_dbus_user = DBUS_POLICY_BLOCK;
+// 			} else {
+// 				fprintf(stderr, "Unknown dbus-user policy: %s\n", argv[i] + 12);
+// 				exit(1);
+// 			}
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-user.see=", 16) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-user.see %s", argv[i] + 16) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-user.talk=", 17) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-user.talk %s", argv[i] + 17) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-user.talk=", 17) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-user.talk %s", argv[i] + 17) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-user.own=", 16) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-user.own %s", argv[i] + 16) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-user.own=", 16) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-user.own %s", argv[i] + 16) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-user.call=", 17) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-user.call %s", argv[i] + 17) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-user.call=", 17) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-user.call %s", argv[i] + 17) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-user.broadcast=", 22) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-user.broadcast %s", argv[i] + 22) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-user.broadcast=", 22) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-user.broadcast %s", argv[i] + 22) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
-			if (strcmp("filter", argv[i] + 14) == 0) {
-				if (arg_dbus_system == DBUS_POLICY_BLOCK) {
-					fprintf(stderr, "Warning: Cannot relax --dbus-system policy, it is already set to block\n");
-				} else {
-					arg_dbus_system = DBUS_POLICY_FILTER;
-				}
-			} else if (strcmp("none", argv[i] + 14) == 0) {
-				if (arg_dbus_log_system) {
-					fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
-					exit(1);
-				}
-				arg_dbus_system = DBUS_POLICY_BLOCK;
-			} else {
-				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
-				exit(1);
-			}
-		}
-		else if (strncmp(argv[i], "--dbus-system.see=", 18) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-system.see %s", argv[i] + 18) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp("--dbus-system=", argv[i], 14) == 0) {
+// 			if (strcmp("filter", argv[i] + 14) == 0) {
+// 				if (arg_dbus_system == DBUS_POLICY_BLOCK) {
+// 					fprintf(stderr, "Warning: Cannot relax --dbus-system policy, it is already set to block\n");
+// 				} else {
+// 					arg_dbus_system = DBUS_POLICY_FILTER;
+// 				}
+// 			} else if (strcmp("none", argv[i] + 14) == 0) {
+// 				if (arg_dbus_log_system) {
+// 					fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+// 					exit(1);
+// 				}
+// 				arg_dbus_system = DBUS_POLICY_BLOCK;
+// 			} else {
+// 				fprintf(stderr, "Unknown dbus-system policy: %s\n", argv[i] + 14);
+// 				exit(1);
+// 			}
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-system.see=", 18) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-system.see %s", argv[i] + 18) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-system.talk=", 19) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-system.talk %s", argv[i] + 19) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-system.talk=", 19) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-system.talk %s", argv[i] + 19) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-system.own=", 18) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-system.own %s", argv[i] + 18) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-system.own=", 18) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-system.own %s", argv[i] + 18) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-system.call=", 19) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-system.call %s", argv[i] + 19) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-system.call=", 19) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-system.call %s", argv[i] + 19) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-system.broadcast=", 24) == 0) {
-			char *line;
-			if (asprintf(&line, "dbus-system.broadcast %s", argv[i] + 24) == -1)
-				errExit("asprintf");
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-system.broadcast=", 24) == 0) {
+// 			char *line;
+// 			if (asprintf(&line, "dbus-system.broadcast %s", argv[i] + 24) == -1)
+// 				errExit("asprintf");
 
-			profile_check_line(line, 0, NULL); // will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--dbus-log=", 11) == 0) {
-			if (arg_dbus_log_file != NULL) {
-				fprintf(stderr, "Error: --dbus-log option already specified\n");
-				exit(1);
-			}
-			arg_dbus_log_file = argv[i] + 11;
-		}
-		else if (strcmp(argv[i], "--dbus-user.log") == 0) {
-			if (arg_dbus_user != DBUS_POLICY_FILTER) {
-				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
-				exit(1);
-			}
-			arg_dbus_log_user = 1;
-		}
-		else if (strcmp(argv[i], "--dbus-system.log") == 0) {
-			if (arg_dbus_system != DBUS_POLICY_FILTER) {
-				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
-				exit(1);
-			}
-			arg_dbus_log_system = 1;
-		}
-#endif
+// 			profile_check_line(line, 0, NULL); // will exit if something wrong
+// 			profile_add(line);
+// 		}
+// 		else if (strncmp(argv[i], "--dbus-log=", 11) == 0) {
+// 			if (arg_dbus_log_file != NULL) {
+// 				fprintf(stderr, "Error: --dbus-log option already specified\n");
+// 				exit(1);
+// 			}
+// 			arg_dbus_log_file = argv[i] + 11;
+// 		}
+// 		else if (strcmp(argv[i], "--dbus-user.log") == 0) {
+// 			if (arg_dbus_user != DBUS_POLICY_FILTER) {
+// 				fprintf(stderr, "Error: --dbus-user.log requires --dbus-user=filter\n");
+// 				exit(1);
+// 			}
+// 			arg_dbus_log_user = 1;
+// 		}
+// 		else if (strcmp(argv[i], "--dbus-system.log") == 0) {
+// 			if (arg_dbus_system != DBUS_POLICY_FILTER) {
+// 				fprintf(stderr, "Error: --dbus-system.log requires --dbus-system=filter\n");
+// 				exit(1);
+// 			}
+// 			arg_dbus_log_system = 1;
+// 		}
+// #endif
 
 		//*************************************
 		// network
 		//*************************************
-		else if (strcmp(argv[i], "--net=none") == 0) {
-			arg_nonetwork  = 1;
-			cfg.bridge0.configured = 0;
-			cfg.bridge1.configured = 0;
-			cfg.bridge2.configured = 0;
-			cfg.bridge3.configured = 0;
-			cfg.interface0.configured = 0;
-			cfg.interface1.configured = 0;
-			cfg.interface2.configured = 0;
-			cfg.interface3.configured = 0;
-			continue;
-		}
+		// else if (strcmp(argv[i], "--net=none") == 0) {
+		// 	arg_nonetwork  = 1;
+		// 	cfg.bridge0.configured = 0;
+		// 	cfg.bridge1.configured = 0;
+		// 	cfg.bridge2.configured = 0;
+		// 	cfg.bridge3.configured = 0;
+		// 	cfg.interface0.configured = 0;
+		// 	cfg.interface1.configured = 0;
+		// 	cfg.interface2.configured = 0;
+		// 	cfg.interface3.configured = 0;
+		// 	continue;
+		// }
 // #ifdef HAVE_NETWORK
 // 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
 // 			if (checkcfg(CFG_NETWORK)) {
@@ -2586,28 +2586,28 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
-		else if (strcmp(argv[i], "--audit") == 0) {
-			arg_audit_prog = LIBDIR "/firejail/faudit";
-			profile_add_ignore("shell none");
-			arg_audit = 1;
-		}
-		else if (strncmp(argv[i], "--audit=", 8) == 0) {
-			if (strlen(argv[i] + 8) == 0) {
-				fprintf(stderr, "Error: invalid audit program\n");
-				exit(1);
-			}
-			arg_audit_prog = strdup(argv[i] + 8);
-			if (!arg_audit_prog)
-				errExit("strdup");
+		// else if (strcmp(argv[i], "--audit") == 0) {
+		// 	arg_audit_prog = LIBDIR "/firejail/faudit";
+		// 	profile_add_ignore("shell none");
+		// 	arg_audit = 1;
+		// }
+		// else if (strncmp(argv[i], "--audit=", 8) == 0) {
+		// 	if (strlen(argv[i] + 8) == 0) {
+		// 		fprintf(stderr, "Error: invalid audit program\n");
+		// 		exit(1);
+		// 	}
+		// 	arg_audit_prog = strdup(argv[i] + 8);
+		// 	if (!arg_audit_prog)
+		// 		errExit("strdup");
 
-			struct stat s;
-			if (stat(arg_audit_prog, &s) != 0) {
-				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
-				exit(1);
-			}
-			profile_add_ignore("shell none");
-			arg_audit = 1;
-		}
+		// 	struct stat s;
+		// 	if (stat(arg_audit_prog, &s) != 0) {
+		// 		fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
+		// 		exit(1);
+		// 	}
+		// 	profile_add_ignore("shell none");
+		// 	arg_audit = 1;
+		// }
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
 		else if (strcmp(argv[i], "--shell=none") == 0) {
@@ -2808,28 +2808,28 @@ int main(int argc, char **argv, char **envp) {
 
 
 	// load the profile
-	if (!arg_noprofile && !custom_profile) {
-		custom_profile = profile_find_firejail(cfg.command_name, 1);
-	}
+	// if (!arg_noprofile && !custom_profile) {
+	// 	custom_profile = profile_find_firejail(cfg.command_name, 1);
+	// }
 
 	// use default.profile as the default
-	if (!custom_profile && !arg_noprofile) {
-		char *profile_name = DEFAULT_USER_PROFILE;
-		if (getuid() == 0)
-			profile_name = DEFAULT_ROOT_PROFILE;
-		if (arg_debug)
-			printf("Attempting to find %s.profile...\n", profile_name);
+	// if (!custom_profile && !arg_noprofile) {
+	// 	char *profile_name = DEFAULT_USER_PROFILE;
+	// 	if (getuid() == 0)
+	// 		profile_name = DEFAULT_ROOT_PROFILE;
+	// 	if (arg_debug)
+	// 		printf("Attempting to find %s.profile...\n", profile_name);
 
-		custom_profile = profile_find_firejail(profile_name, 1);
+	// 	custom_profile = profile_find_firejail(profile_name, 1);
 
-		if (!custom_profile) {
-			fprintf(stderr, "Error: no default.profile installed\n");
-			exit(1);
-		}
+	// 	if (!custom_profile) {
+	// 		fprintf(stderr, "Error: no default.profile installed\n");
+	// 		exit(1);
+	// 	}
 
-		if (custom_profile)
-			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
-	}
+	// 	if (custom_profile)
+	// 		fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
+	// }
 	EUID_ASSERT();
 
 	// block X11 sockets
