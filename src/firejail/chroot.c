@@ -268,9 +268,9 @@ void fs_chroot(const char *rootdir) {
 	// update chroot resolv.conf
 	update_file(parentfd, "etc/resolv.conf");
 
-#ifdef HAVE_GCOV
-	__gcov_flush();
-#endif
+// #ifdef HAVE_GCOV
+// 	__gcov_flush();
+// #endif
 	// create /run/firejail/mnt/oroot
 	char *oroot = RUN_OVERLAY_ROOT;
 	if (mkdir(oroot, 0755) == -1)

@@ -870,6 +870,6 @@ void set_profile_run_file(pid_t pid, const char *fname);
 // void dhcp_start(void);
 
 // selinux.c
-void selinux_relabel_path(const char *path, const char *inside_path);
+// void selinux_relabel_path(const char *path, const char *inside_path);
 
 #endif

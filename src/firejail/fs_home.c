@@ -59,7 +59,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			touch_file_as_user(fname, 0644);
 			fs_logger2("touch", fname);
 		}
-		selinux_relabel_path(fname, fname);
+		// selinux_relabel_path(fname, fname);
 		free(fname);
 	}
 	// csh
@@ -85,7 +85,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			touch_file_as_user(fname, 0644);
 			fs_logger2("touch", fname);
 		}
-		selinux_relabel_path(fname, fname);
+		// selinux_relabel_path(fname, fname);
 		free(fname);
 	}
 	// bash etc.
@@ -106,7 +106,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			fs_logger("clone /etc/skel/.bashrc");
 			fs_logger2("clone", fname);
 		}
-		selinux_relabel_path(fname, fname);
+		// selinux_relabel_path(fname, fname);
 		free(fname);
 	}
 }
@@ -141,7 +141,7 @@ static int store_xauthority(void) {
 
 		copy_file_as_user(src, dest, getuid(), getgid(), 0600); // regular user
 		fs_logger2("clone", dest);
-		selinux_relabel_path(dest, src);
+		// selinux_relabel_path(dest, src);
 		free(src);
 		return 1; // file copied
 	}
@@ -188,7 +188,7 @@ static int store_asoundrc(void) {
 			errExit("fopen");
 
 		copy_file_as_user(src, dest, getuid(), getgid(), 0644); // regular user
-		selinux_relabel_path(dest, src);
+		// selinux_relabel_path(dest, src);
 		fs_logger2("clone", dest);
 		free(src);
 		return 1; // file copied
@@ -212,7 +212,7 @@ static void copy_xauthority(void) {
 	}
 
 	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
-	selinux_relabel_path(dest, src);
+	// selinux_relabel_path(dest, src);
 	fs_logger2("clone", dest);
 	free(dest);
 
@@ -318,7 +318,7 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting /root directory");
-		selinux_relabel_path("/root", "/root");
+		// selinux_relabel_path("/root", "/root");
 		fs_logger("tmpfs /root");
 	}
 	if (u == 0 && !arg_allusers) {
@@ -327,7 +327,7 @@ void fs_private_homedir(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
-		selinux_relabel_path("/home", "/home");
+		// selinux_relabel_path("/home", "/home");
 		fs_logger("tmpfs /home");
 	}
 
@@ -357,7 +357,7 @@ void fs_private(void) {
 		printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 		errExit("mounting /root directory");
-	selinux_relabel_path("/root", "/root");
+	// selinux_relabel_path("/root", "/root");
 	fs_logger("tmpfs /root");
 
 	// mask /home
@@ -366,7 +366,7 @@ void fs_private(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
-		selinux_relabel_path("/home", "/home");
+		// selinux_relabel_path("/home", "/home");
 		fs_logger("tmpfs /home");
 	}
 
@@ -384,7 +384,7 @@ void fs_private(void) {
 			if (chown(homedir, u, g) < 0)
 				errExit("chown");
 
-			selinux_relabel_path(homedir, homedir);
+			// selinux_relabel_path(homedir, homedir);
 			fs_logger2("mkdir", homedir);
 			fs_logger2("tmpfs", homedir);
 		}
@@ -549,7 +549,7 @@ void fs_private_home_list(void) {
 
 	// create /run/firejail/mnt/home directory
 	mkdir_attr(RUN_HOME_DIR, 0755, uid, gid);
-	selinux_relabel_path(RUN_HOME_DIR, "/home");
+	// selinux_relabel_path(RUN_HOME_DIR, "/home");
 	fs_logger_print();	// save the current log
 
 	if (arg_debug)
@@ -612,7 +612,7 @@ void fs_private_home_list(void) {
 			printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting /root directory");
-		selinux_relabel_path("/root", "/root");
+		// selinux_relabel_path("/root", "/root");
 		fs_logger("tmpfs /root");
 	}
 	if (uid == 0 && !arg_allusers) {
@@ -621,7 +621,7 @@ void fs_private_home_list(void) {
 			printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
-		selinux_relabel_path("/home", "/home");
+		// selinux_relabel_path("/home", "/home");
 		fs_logger("tmpfs /home");
 	}
 
