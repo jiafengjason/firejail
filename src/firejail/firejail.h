@@ -376,25 +376,25 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) __attri
 void set_apparmor(void);
 
 // network_main.c
-void net_configure_sandbox_ip(Bridge *br);
-void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
-void net_check_cfg(void);
-void net_dns_print(pid_t pid) __attribute__((noreturn));
-void network_main(pid_t child);
-void net_print(pid_t pid);
+// void net_configure_sandbox_ip(Bridge *br);
+// void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
+// void net_check_cfg(void);
+// void net_dns_print(pid_t pid) __attribute__((noreturn));
+// void network_main(pid_t child);
+// void net_print(pid_t pid);
 
-// network.c
-int check_ip46_address(const char *addr);
-void net_if_up(const char *ifname);
+// // network.c
+// int check_ip46_address(const char *addr);
+// void net_if_up(const char *ifname);
 // void net_if_down(const char *ifname);
 // void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
-void net_if_ip6(const char *ifname, const char *addr6);
-int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
-int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
-uint32_t network_get_defaultgw(void);
-int net_config_mac(const char *ifname, const unsigned char mac[6]);
-int net_get_mac(const char *ifname, unsigned char mac[6]);
-void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
+// void net_if_ip6(const char *ifname, const char *addr6);
+// int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
+// int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
+// uint32_t network_get_defaultgw(void);
+// int net_config_mac(const char *ifname, const unsigned char mac[6]);
+// int net_get_mac(const char *ifname, unsigned char mac[6]);
+// void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
 
 // preproc.c
 void preproc_build_firejail_dir(void);
@@ -429,7 +429,7 @@ void fs_basic_fs(void);
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
 void fs_overlayfs(void);
 void fs_private_tmp(void);
-void fs_private_cache(void);
+// void fs_private_cache(void);
 void fs_mnt(const int enforce);
 
 // chroot.c
@@ -451,9 +451,9 @@ void profile_add(char *str);
 void profile_add_ignore(const char *str);
 
 // list.c
-void list(void);
-void tree(void);
-void top(void);
+// void list(void);
+// void tree(void);
+// void top(void);
 
 // usage.c
 void usage(void);
@@ -509,7 +509,7 @@ char *split_comma(char *str);
 char *clean_pathname(const char *path);
 void check_unsigned(const char *str, const char *msg);
 int find_child(pid_t parent, pid_t *child);
-void check_private_dir(void);
+// void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
@@ -642,8 +642,8 @@ void netns(const char *nsname);
 void netns_mounts(const char *nsname);
 
 // bandwidth.c
-void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) __attribute__((noreturn));
-void network_set_run_file(pid_t pid);
+// void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) __attribute__((noreturn));
+// void network_set_run_file(pid_t pid);
 
 // fs_etc.c
 void fs_machineid(void);

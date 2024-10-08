@@ -2866,7 +2866,7 @@ int main(int argc, char **argv, char **envp) {
 			check_network(&cfg.bridge3);
 
 		// save network mapping in shared memory
-		network_set_run_file(sandbox_pid);
+		// network_set_run_file(sandbox_pid);
 		EUID_USER();
 	}
 	EUID_ASSERT();
