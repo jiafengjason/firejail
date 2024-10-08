@@ -174,9 +174,9 @@ static void myexit(int rv) {
 
 
 	// delete sandbox files in shared memory
-#ifdef HAVE_DBUSPROXY
-	dbus_proxy_stop();
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 	dbus_proxy_stop();
+// #endif
 	EUID_ROOT();
 	delete_run_files(sandbox_pid);
 	appimage_clear();
@@ -368,40 +368,40 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 #endif
-#ifdef HAVE_X11
-	else if (strcmp(argv[i], "--x11") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-	else if (strcmp(argv[i], "--x11=xpra") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xpra(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xephyr(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xvfb(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-#endif
+// #ifdef HAVE_X11
+// 	else if (strcmp(argv[i], "--x11") == 0) {
+// 		if (checkcfg(CFG_X11)) {
+// 			x11_start(argc, argv);
+// 			exit(0);
+// 		}
+// 		else
+// 			exit_err_feature("x11");
+// 	}
+// 	else if (strcmp(argv[i], "--x11=xpra") == 0) {
+// 		if (checkcfg(CFG_X11)) {
+// 			x11_start_xpra(argc, argv);
+// 			exit(0);
+// 		}
+// 		else
+// 			exit_err_feature("x11");
+// 	}
+// 	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
+// 		if (checkcfg(CFG_X11)) {
+// 			x11_start_xephyr(argc, argv);
+// 			exit(0);
+// 		}
+// 		else
+// 			exit_err_feature("x11");
+// 	}
+// 	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
+// 		if (checkcfg(CFG_X11)) {
+// 			x11_start_xvfb(argc, argv);
+// 			exit(0);
+// 		}
+// 		else
+// 			exit_err_feature("x11");
+// 	}
+// #endif
 #ifdef HAVE_NETWORK
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -505,16 +505,16 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("seccomp");
 		exit(0);
 	}
-	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			// print seccomp filter for a sandbox specified by pid or by name
-			pid_t pid = require_pid(argv[i] + 16);
-			seccomp_print_filter(pid);
-		}
-		else
-			exit_err_feature("seccomp");
-		exit(0);
-	}
+	// else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		// print seccomp filter for a sandbox specified by pid or by name
+	// 		pid_t pid = require_pid(argv[i] + 16);
+	// 		seccomp_print_filter(pid);
+	// 	}
+	// 	else
+	// 		exit_err_feature("seccomp");
+	// 	exit(0);
+	// }
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-protocols");
 		exit(rv);
@@ -1026,29 +1026,29 @@ int main(int argc, char **argv, char **envp) {
 	init_cfg(argc, argv);
 
 	// get starting timestamp, process --quiet
-	timetrace_start();
-	char *env_quiet = getenv("FIREJAIL_QUIET");
-	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
-		arg_quiet = 1;
+	// timetrace_start();
+	// char *env_quiet = getenv("FIREJAIL_QUIET");
+	// if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
+	// 	arg_quiet = 1;
 
 	// cleanup at exit
 	EUID_ROOT();
 	atexit(clear_atexit);
 
 	// build /run/firejail directory structure
-	preproc_build_firejail_dir();
-	char *container_name = getenv("container");
-	if (!container_name || strcmp(container_name, "firejail")) {
-		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
-		if (lockfd_directory != -1) {
-			int rv = fchown(lockfd_directory, 0, 0);
-			(void) rv;
-			flock(lockfd_directory, LOCK_EX);
-		}
-		preproc_clean_run();
-		flock(lockfd_directory, LOCK_UN);
-		close(lockfd_directory);
-	}
+	// preproc_build_firejail_dir();
+	// char *container_name = getenv("container");
+	// if (!container_name || strcmp(container_name, "firejail")) {
+	// 	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+	// 	if (lockfd_directory != -1) {
+	// 		int rv = fchown(lockfd_directory, 0, 0);
+	// 		(void) rv;
+	// 		flock(lockfd_directory, LOCK_EX);
+	// 	}
+	// 	preproc_clean_run();
+	// 	flock(lockfd_directory, LOCK_UN);
+	// 	close(lockfd_directory);
+	// }
 	EUID_USER();
 
 	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
@@ -1301,78 +1301,78 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("seccomp");
 		}
-		else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
-					exit(1);
-				}
-				arg_seccomp = 1;
-				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strncmp(argv[i], "--seccomp.32=", 13) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 already enabled\n");
-					exit(1);
-				}
-				arg_seccomp32 = 1;
-				cfg.seccomp_list32 = seccomp_check_list(argv[i] + 13);
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
-					exit(1);
-				}
-				arg_seccomp = 1;
-				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strncmp(argv[i], "--seccomp.32.drop=", 18) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 already enabled\n");
-					exit(1);
-				}
-				arg_seccomp32 = 1;
-				cfg.seccomp_list_drop32 = seccomp_check_list(argv[i] + 18);
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
-					exit(1);
-				}
-				arg_seccomp = 1;
-				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strncmp(argv[i], "--seccomp.32.keep=", 18) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 already enabled\n");
-					exit(1);
-				}
-				arg_seccomp32 = 1;
-				cfg.seccomp_list_keep32 = seccomp_check_list(argv[i] + 18);
-			}
-			else
-				exit_err_feature("seccomp");
-		}
+		// else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp) {
+		// 			fprintf(stderr, "Error: seccomp already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp = 1;
+		// 		cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strncmp(argv[i], "--seccomp.32=", 13) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp32) {
+		// 			fprintf(stderr, "Error: seccomp.32 already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp32 = 1;
+		// 		cfg.seccomp_list32 = seccomp_check_list(argv[i] + 13);
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp) {
+		// 			fprintf(stderr, "Error: seccomp already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp = 1;
+		// 		cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strncmp(argv[i], "--seccomp.32.drop=", 18) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp32) {
+		// 			fprintf(stderr, "Error: seccomp.32 already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp32 = 1;
+		// 		cfg.seccomp_list_drop32 = seccomp_check_list(argv[i] + 18);
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp) {
+		// 			fprintf(stderr, "Error: seccomp already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp = 1;
+		// 		cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strncmp(argv[i], "--seccomp.32.keep=", 18) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp32) {
+		// 			fprintf(stderr, "Error: seccomp.32 already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp32 = 1;
+		// 		cfg.seccomp_list_keep32 = seccomp_check_list(argv[i] + 18);
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
 		else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				if (arg_seccomp32) {
@@ -2832,8 +2832,8 @@ int main(int argc, char **argv, char **envp) {
 	EUID_ASSERT();
 
 	// block X11 sockets
-	if (arg_x11_block)
-		x11_block();
+	// if (arg_x11_block)
+	// 	x11_block();
 
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
@@ -2896,26 +2896,26 @@ int main(int argc, char **argv, char **envp) {
 	}
 	if (cfg.name)
 		set_name_run_file(sandbox_pid);
-	int display = x11_display();
-	if (display > 0)
-		set_x11_run_file(sandbox_pid, display);
+	// int display = x11_display();
+	// if (display > 0)
+	// 	set_x11_run_file(sandbox_pid, display);
 	if (lockfd_directory != -1) {
 		flock(lockfd_directory, LOCK_UN);
 		close(lockfd_directory);
 	}
 	EUID_USER();
 
-#ifdef HAVE_DBUSPROXY
-	if (checkcfg(CFG_DBUS)) {
-		dbus_check_profile();
-		if (arg_dbus_user == DBUS_POLICY_FILTER ||
-			arg_dbus_system == DBUS_POLICY_FILTER) {
-			EUID_ROOT();
-			dbus_proxy_start();
-			EUID_USER();
-		}
-	}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 	if (checkcfg(CFG_DBUS)) {
+// 		dbus_check_profile();
+// 		if (arg_dbus_user == DBUS_POLICY_FILTER ||
+// 			arg_dbus_system == DBUS_POLICY_FILTER) {
+// 			EUID_ROOT();
+// 			dbus_proxy_start();
+// 			EUID_USER();
+// 		}
+// 	}
+// #endif
 
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;

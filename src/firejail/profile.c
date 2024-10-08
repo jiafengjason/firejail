@@ -494,21 +494,21 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.call ", 15) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_call_rule(ptr + 15)) {
-			fprintf(stderr, "Error: Invalid dbus-user.call rule: %s\n", ptr + 15);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_call_rule(ptr + 15)) {
+// 			fprintf(stderr, "Error: Invalid dbus-user.call rule: %s\n", ptr + 15);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-user.broadcast ", 20) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_call_rule(ptr + 20)) {
-			fprintf(stderr, "Error: Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_call_rule(ptr + 20)) {
+// 			fprintf(stderr, "Error: Invalid dbus-user.broadcast rule: %s\n", ptr + 20);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strncmp("dbus-system ", ptr, 12) == 0) {
@@ -534,48 +534,48 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strncmp(ptr, "dbus-system.see ", 16) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_name(ptr + 16)) {
-			fprintf(stderr, "Error: Invalid dbus-system.see name: %s\n", ptr + 17);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_name(ptr + 16)) {
+// 			fprintf(stderr, "Error: Invalid dbus-system.see name: %s\n", ptr + 17);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.talk ", 17) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_name(ptr + 17)) {
-			fprintf(stderr, "Error: Invalid dbus-system.talk name: %s\n", ptr + 17);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_name(ptr + 17)) {
+// 			fprintf(stderr, "Error: Invalid dbus-system.talk name: %s\n", ptr + 17);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.own ", 16) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_name(ptr + 16)) {
-			fprintf(stderr, "Error: Invalid dbus-system.own name: %s\n", ptr + 16);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_name(ptr + 16)) {
+// 			fprintf(stderr, "Error: Invalid dbus-system.own name: %s\n", ptr + 16);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.call ", 17) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_call_rule(ptr + 17)) {
-			fprintf(stderr, "Error: Invalid dbus-system.call rule: %s\n", ptr + 17);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_call_rule(ptr + 17)) {
+// 			fprintf(stderr, "Error: Invalid dbus-system.call rule: %s\n", ptr + 17);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strncmp(ptr, "dbus-system.broadcast ", 22) == 0) {
-#ifdef HAVE_DBUSPROXY
-		if (!dbus_check_call_rule(ptr + 22)) {
-			fprintf(stderr, "Error: Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
-			exit(1);
-		}
-#endif
+// #ifdef HAVE_DBUSPROXY
+// 		if (!dbus_check_call_rule(ptr + 22)) {
+// 			fprintf(stderr, "Error: Invalid dbus-system.broadcast rule: %s\n", ptr + 22);
+// 			exit(1);
+// 		}
+// #endif
 		return 1;
 	}
 	else if (strcmp(ptr, "nou2f") == 0) {
@@ -937,74 +937,74 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	// seccomp drop list on top of default list
-	if (strncmp(ptr, "seccomp ", 8) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp = 1;
-			cfg.seccomp_list = seccomp_check_list(ptr + 8);
-		}
-		else if (!arg_quiet)
-			warning_feature_disabled("seccomp");
+	// if (strncmp(ptr, "seccomp ", 8) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp = 1;
+	// 		cfg.seccomp_list = seccomp_check_list(ptr + 8);
+	// 	}
+	// 	else if (!arg_quiet)
+	// 		warning_feature_disabled("seccomp");
 
-		return 0;
-	}
-	if (strncmp(ptr, "seccomp.32 ", 11) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp32 = 1;
-			cfg.seccomp_list32 = seccomp_check_list(ptr + 11);
-		}
-		else if (!arg_quiet)
-			warning_feature_disabled("seccomp");
+	// 	return 0;
+	// }
+	// if (strncmp(ptr, "seccomp.32 ", 11) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp32 = 1;
+	// 		cfg.seccomp_list32 = seccomp_check_list(ptr + 11);
+	// 	}
+	// 	else if (!arg_quiet)
+	// 		warning_feature_disabled("seccomp");
 
-		return 0;
-	}
+	// 	return 0;
+	// }
 
-	if (strcmp(ptr, "seccomp.block-secondary") == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp_block_secondary = 1;
-		}
-		else
-			warning_feature_disabled("seccomp");
-		return 0;
-	}
+	// if (strcmp(ptr, "seccomp.block-secondary") == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp_block_secondary = 1;
+	// 	}
+	// 	else
+	// 		warning_feature_disabled("seccomp");
+	// 	return 0;
+	// }
 	// seccomp drop list without default list
-	if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp = 1;
-			cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
-		}
-		else
-			warning_feature_disabled("seccomp");
-		return 0;
-	}
-	if (strncmp(ptr, "seccomp.32.drop ", 13) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp32 = 1;
-			cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 13);
-		}
-		else
-			warning_feature_disabled("seccomp");
-		return 0;
-	}
+	// if (strncmp(ptr, "seccomp.drop ", 13) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp = 1;
+	// 		cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
+	// 	}
+	// 	else
+	// 		warning_feature_disabled("seccomp");
+	// 	return 0;
+	// }
+	// if (strncmp(ptr, "seccomp.32.drop ", 13) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp32 = 1;
+	// 		cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 13);
+	// 	}
+	// 	else
+	// 		warning_feature_disabled("seccomp");
+	// 	return 0;
+	// }
 
 	// seccomp keep list
-	if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp = 1;
-			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
-		}
-		else
-			warning_feature_disabled("seccomp");
-		return 0;
-	}
-	if (strncmp(ptr, "seccomp.32.keep ", 13) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			arg_seccomp32 = 1;
-			cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 13);
-		}
-		else
-			warning_feature_disabled("seccomp");
-		return 0;
-	}
+	// if (strncmp(ptr, "seccomp.keep ", 13) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp = 1;
+	// 		cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
+	// 	}
+	// 	else
+	// 		warning_feature_disabled("seccomp");
+	// 	return 0;
+	// }
+	// if (strncmp(ptr, "seccomp.32.keep ", 13) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		arg_seccomp32 = 1;
+	// 		cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 13);
+	// 	}
+	// 	else
+	// 		warning_feature_disabled("seccomp");
+	// 	return 0;
+	// }
 
 	// memory deny write&execute
 	if (strcmp(ptr, "memory-deny-write-execute") == 0) {
@@ -1179,21 +1179,21 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strcmp(ptr, "x11 xephyr") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled("x11");
-#endif
+// #ifdef HAVE_X11
+// 		if (checkcfg(CFG_X11)) {
+// 			char *x11env = getenv("FIREJAIL_X11");
+// 			if (x11env && strcmp(x11env, "yes") == 0) {
+// 				return 0;
+// 			}
+// 			else {
+// 				// start x11
+// 				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
+// 				exit(0);
+// 			}
+// 		}
+// 		else
+// 			warning_feature_disabled("x11");
+// #endif
 		return 0;
 	}
 
@@ -1208,61 +1208,61 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strcmp(ptr, "x11 xpra") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xpra(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled("x11");
-#endif
+// #ifdef HAVE_X11
+// 		if (checkcfg(CFG_X11)) {
+// 			char *x11env = getenv("FIREJAIL_X11");
+// 			if (x11env && strcmp(x11env, "yes") == 0) {
+// 				return 0;
+// 			}
+// 			else {
+// 				// start x11
+// 				x11_start_xpra(cfg.original_argc, cfg.original_argv);
+// 				exit(0);
+// 			}
+// 		}
+// 		else
+// 			warning_feature_disabled("x11");
+// #endif
 		return 0;
 	}
 
 	if (strcmp(ptr, "x11 xvfb") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xvfb(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled("x11");
-#endif
+// #ifdef HAVE_X11
+// 		if (checkcfg(CFG_X11)) {
+// 			char *x11env = getenv("FIREJAIL_X11");
+// 			if (x11env && strcmp(x11env, "yes") == 0) {
+// 				return 0;
+// 			}
+// 			else {
+// 				// start x11
+// 				x11_start_xvfb(cfg.original_argc, cfg.original_argv);
+// 				exit(0);
+// 			}
+// 		}
+// 		else
+// 			warning_feature_disabled("x11");
+// #endif
 		return 0;
 	}
 
-	if (strcmp(ptr, "x11") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled("x11");
-#endif
-		return 0;
-	}
+	// if (strcmp(ptr, "x11") == 0) {
+// #ifdef HAVE_X11
+// 		if (checkcfg(CFG_X11)) {
+// 			char *x11env = getenv("FIREJAIL_X11");
+// 			if (x11env && strcmp(x11env, "yes") == 0) {
+// 				return 0;
+// 			}
+// 			else {
+// 				// start x11
+// 				x11_start(cfg.original_argc, cfg.original_argv);
+// 				exit(0);
+// 			}
+// 		}
+// 		else
+// 			warning_feature_disabled("x11");
+// #endif
+		// return 0;
+	// }
 
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {

@@ -489,8 +489,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		EUID_ROOT();
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
-		if (getuid() != 0)
-			seccomp_load_file_list();
+		// if (getuid() != 0)
+		// 	seccomp_load_file_list();
 
 		// mount user namespace or drop privileges
 		if (arg_noroot) {	// not available for uid 0
@@ -567,16 +567,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			setenv("DISPLAY", display_str, 1);
 			free(display_str);
 		}
-
-#ifdef HAVE_DBUSPROXY
-		// set D-Bus environment variables
-		struct stat s;
-		if (stat(RUN_DBUS_USER_SOCKET, &s) == 0)
-			dbus_set_session_bus_env();
-		if (stat(RUN_DBUS_SYSTEM_SOCKET, &s) == 0)
-			dbus_set_system_bus_env();
-#endif
-
 		start_application(0, shfd, NULL);
 
 		__builtin_unreachable();

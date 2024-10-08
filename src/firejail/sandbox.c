@@ -371,8 +371,8 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if (pid == 1)
 				continue;
-			if ((pid_t) pid == dhclient4_pid || (pid_t) pid == dhclient6_pid)
-				continue;
+			// if ((pid_t) pid == dhclient4_pid || (pid_t) pid == dhclient6_pid)
+			// 	continue;
 
 			// todo: make this generic
 			// Dillo browser leaves a dpid process running, we need to shut it down
@@ -484,7 +484,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-		seccomp_install_filters();
+		// seccomp_install_filters();
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
 		execl(arg_audit_prog, arg_audit_prog, NULL);
@@ -518,7 +518,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-		seccomp_install_filters();
+		// seccomp_install_filters();
 
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
@@ -574,7 +574,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 #ifdef HAVE_GCOV
 		__gcov_dump();
 #endif
-		seccomp_install_filters();
+		// seccomp_install_filters();
 
 		if (set_sandbox_status)
 			*set_sandbox_status = SANDBOX_DONE;
@@ -741,7 +741,7 @@ int sandbox(void* sandbox_arg) {
 	    mount(NULL, RUN_FIREJAIL_LIB_DIR, NULL, MS_RDONLY|MS_NOSUID|MS_NODEV|MS_BIND|MS_REMOUNT, NULL) < 0)
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
 	// keep a copy of dhclient executable before the filesystem is modified
-	dhcp_store_exec();
+	// dhcp_store_exec();
 
 	//****************************
 	// log sandbox data
@@ -1134,7 +1134,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// start dhcp client
 	//****************************
-	dhcp_start();
+	// dhcp_start();
 
 	//****************************
 	// set application environment
@@ -1172,9 +1172,9 @@ int sandbox(void* sandbox_arg) {
 
 	EUID_ROOT();
 	// clean /tmp/.X11-unix sockets
-	fs_x11();
-	if (arg_x11_xorg)
-		x11_xorg();
+	// fs_x11();
+	// if (arg_x11_xorg)
+	// 	x11_xorg();
 
 	// save original umask
 	save_umask();
@@ -1197,7 +1197,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.protocol) {
 		if (arg_debug)
 			printf("Install protocol filter: %s\n", cfg.protocol);
-		seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
+		// seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
 		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
 	}
 	else {
@@ -1207,30 +1207,30 @@ int sandbox(void* sandbox_arg) {
 #endif
 
 	// if a keep list is available, disregard the drop list
-	if (arg_seccomp == 1) {
-		if (cfg.seccomp_list_keep)
-			seccomp_filter_keep(true);
-		else
-			seccomp_filter_drop(true);
-	}
-	if (arg_seccomp32 == 1) {
-		if (cfg.seccomp_list_keep32)
-			seccomp_filter_keep(false);
-		else
-			seccomp_filter_drop(false);
+	// if (arg_seccomp == 1) {
+	// 	if (cfg.seccomp_list_keep)
+	// 		seccomp_filter_keep(true);
+	// 	else
+	// 		seccomp_filter_drop(true);
+	// }
+	// if (arg_seccomp32 == 1) {
+	// 	if (cfg.seccomp_list_keep32)
+	// 		seccomp_filter_keep(false);
+	// 	else
+	// 		seccomp_filter_drop(false);
 
-	}
+	// }
 
-	if (arg_memory_deny_write_execute) {
-		if (arg_seccomp_error_action != EPERM) {
-			seccomp_filter_mdwx(true);
-			seccomp_filter_mdwx(false);
-		}
-		if (arg_debug)
-			printf("Install memory write&execute filter\n");
-		seccomp_load(RUN_SECCOMP_MDWX);	// install filter
-		seccomp_load(RUN_SECCOMP_MDWX_32);
-	}
+	// if (arg_memory_deny_write_execute) {
+	// 	if (arg_seccomp_error_action != EPERM) {
+	// 		seccomp_filter_mdwx(true);
+	// 		seccomp_filter_mdwx(false);
+	// 	}
+	// 	if (arg_debug)
+	// 		printf("Install memory write&execute filter\n");
+	// 	seccomp_load(RUN_SECCOMP_MDWX);	// install filter
+	// 	seccomp_load(RUN_SECCOMP_MDWX_32);
+	// }
 
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);

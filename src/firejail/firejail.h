@@ -854,20 +854,20 @@ void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
 
 // dbus.c
-int dbus_check_name(const char *name);
-int dbus_check_call_rule(const char *name);
-void dbus_check_profile(void);
-void dbus_proxy_start(void);
-void dbus_proxy_stop(void);
-void dbus_set_session_bus_env(void);
-void dbus_set_system_bus_env(void);
-void dbus_apply_policy(void);
+// int dbus_check_name(const char *name);
+// int dbus_check_call_rule(const char *name);
+// void dbus_check_profile(void);
+// void dbus_proxy_start(void);
+// void dbus_proxy_stop(void);
+// void dbus_set_session_bus_env(void);
+// void dbus_set_system_bus_env(void);
+// void dbus_apply_policy(void);
 
 // dhcp.c
-extern pid_t dhclient4_pid;
-extern pid_t dhclient6_pid;
-void dhcp_store_exec(void);
-void dhcp_start(void);
+// extern pid_t dhclient4_pid;
+// extern pid_t dhclient6_pid;
+// void dhcp_store_exec(void);
+// void dhcp_start(void);
 
 // selinux.c
 void selinux_relabel_path(const char *path, const char *inside_path);
