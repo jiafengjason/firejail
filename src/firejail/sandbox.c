@@ -1186,7 +1186,7 @@ int sandbox(void* sandbox_arg) {
 	save_nonewprivs();
 
 	// save cpu affinity mask to CPU_CFG file
-	save_cpu();
+	// save_cpu();
 
 	// save cgroup in CGROUP_CFG file
 	save_cgroup();
@@ -1304,8 +1304,8 @@ int sandbox(void* sandbox_arg) {
 	// set cpu affinity
 	//****************************************
 
-	if (cfg.cpus)
-		set_cpu_affinity();
+	// if (cfg.cpus)
+	// 	set_cpu_affinity();
    
     //EUID_USER();
     //run_dbus_daemon();

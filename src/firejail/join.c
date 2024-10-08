@@ -192,7 +192,7 @@ static void extract_cpu(pid_t pid) {
 	}
 
 	// there is a CPU_CFG file, load it!
-	load_cpu(fname);
+	// load_cpu(fname);
 	free(fname);
 }
 
@@ -552,8 +552,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			printf("Extracted command #%s#\n", cfg.command_line);
 
 		// set cpu affinity
-		if (cfg.cpus)	// not available for uid 0
-			set_cpu_affinity();
+		// if (cfg.cpus)	// not available for uid 0
+		// 	set_cpu_affinity();
 
 		// set nice value
 		if (arg_nice)

@@ -1103,10 +1103,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// }
 
 	// cpu affinity
-	if (strncmp(ptr, "cpu ", 4) == 0) {
-		read_cpu_list(ptr + 4);
-		return 0;
-	}
+	// if (strncmp(ptr, "cpu ", 4) == 0) {
+	// 	read_cpu_list(ptr + 4);
+	// 	return 0;
+	// }
 
 	// nice value
 	if (strncmp(ptr, "nice ", 5) == 0) {
