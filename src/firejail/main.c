@@ -520,16 +520,16 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-protocols");
 		exit(rv);
 	}
-	else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			// print seccomp filter for a sandbox specified by pid or by name
-			pid_t pid = require_pid(argv[i] + 17);
-			protocol_print_filter(pid);
-		}
-		else
-			exit_err_feature("seccomp");
-		exit(0);
-	}
+	// else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		// print seccomp filter for a sandbox specified by pid or by name
+	// 		pid_t pid = require_pid(argv[i] + 17);
+	// 		protocol_print_filter(pid);
+	// 	}
+	// 	else
+	// 		exit_err_feature("seccomp");
+	// 	exit(0);
+	// }
 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
 		pid_t pid = require_pid(argv[i] + 16);
 

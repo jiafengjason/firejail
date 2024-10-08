@@ -1194,18 +1194,18 @@ int sandbox(void* sandbox_arg) {
 
 	// set seccomp
 	// install protocol filter
-#ifdef SYS_socket
-	if (cfg.protocol) {
-		if (arg_debug)
-			printf("Install protocol filter: %s\n", cfg.protocol);
-		// seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
-		protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
-	}
-	else {
-		int rv = unlink(RUN_SECCOMP_PROTOCOL);
-		(void) rv;
-	}
-#endif
+// #ifdef SYS_socket
+// 	if (cfg.protocol) {
+// 		if (arg_debug)
+// 			printf("Install protocol filter: %s\n", cfg.protocol);
+// 		// seccomp_load(RUN_SECCOMP_PROTOCOL);	// install filter
+// 		// protocol_filter_save();	// save filter in RUN_PROTOCOL_CFG
+// 	}
+// 	else {
+// 		int rv = unlink(RUN_SECCOMP_PROTOCOL);
+// 		(void) rv;
+// 	}
+// #endif
 
 	// if a keep list is available, disregard the drop list
 	// if (arg_seccomp == 1) {
