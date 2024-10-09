@@ -481,31 +481,31 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	//*************************************
 	// independent commands - the program will exit!
 	//*************************************
-	else if (strcmp(argv[i], "--debug-syscalls") == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls");
-			exit(rv);
-		}
-		else
-			exit_err_feature("seccomp");
-	}
-	else if (strcmp(argv[i], "--debug-syscalls32") == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls32");
-			exit(rv);
-		}
-		else
-			exit_err_feature("seccomp");
-	}
-	else if (strcmp(argv[i], "--debug-errnos") == 0) {
-		if (checkcfg(CFG_SECCOMP)) {
-			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-errnos");
-			exit(rv);
-		}
-		else
-			exit_err_feature("seccomp");
-		exit(0);
-	}
+	// else if (strcmp(argv[i], "--debug-syscalls") == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls");
+	// 		exit(rv);
+	// 	}
+	// 	else
+	// 		exit_err_feature("seccomp");
+	// }
+	// else if (strcmp(argv[i], "--debug-syscalls32") == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscalls32");
+	// 		exit(rv);
+	// 	}
+	// 	else
+	// 		exit_err_feature("seccomp");
+	// }
+	// else if (strcmp(argv[i], "--debug-errnos") == 0) {
+	// 	if (checkcfg(CFG_SECCOMP)) {
+	// 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-errnos");
+	// 		exit(rv);
+	// 	}
+	// 	else
+	// 		exit_err_feature("seccomp");
+	// 	exit(0);
+	// }
 	// else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
 	// 	if (checkcfg(CFG_SECCOMP)) {
 	// 		// print seccomp filter for a sandbox specified by pid or by name
@@ -516,10 +516,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	// 		exit_err_feature("seccomp");
 	// 	exit(0);
 	// }
-	else if (strcmp(argv[i], "--debug-protocols") == 0) {
-		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-protocols");
-		exit(rv);
-	}
+	// else if (strcmp(argv[i], "--debug-protocols") == 0) {
+	// 	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-protocols");
+	// 	exit(rv);
+	// }
 	// else if (strncmp(argv[i], "--protocol.print=", 17) == 0) {
 	// 	if (checkcfg(CFG_SECCOMP)) {
 	// 		// print seccomp filter for a sandbox specified by pid or by name
@@ -530,54 +530,54 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	// 		exit_err_feature("seccomp");
 	// 	exit(0);
 	// }
-	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
-		pid_t pid = require_pid(argv[i] + 16);
+// 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
+// 		pid_t pid = require_pid(argv[i] + 16);
 
-		// print /run/firejail/profile/<PID> file
-		char *fname;
-		if (asprintf(&fname, RUN_FIREJAIL_PROFILE_DIR "/%d", pid) == -1)
-			errExit("asprintf");
-		FILE *fp = fopen(fname, "r");
-		if (!fp) {
-			fprintf(stderr, "Error: sandbox %s not found\n", argv[i] + 16);
-			exit(1);
-		}
-#define MAXBUF 4096
-		char buf[MAXBUF];
-		if (fgets(buf, MAXBUF, fp))
-			printf("%s", buf);
-		fclose(fp);
-		exit(0);
+// 		// print /run/firejail/profile/<PID> file
+// 		char *fname;
+// 		if (asprintf(&fname, RUN_FIREJAIL_PROFILE_DIR "/%d", pid) == -1)
+// 			errExit("asprintf");
+// 		FILE *fp = fopen(fname, "r");
+// 		if (!fp) {
+// 			fprintf(stderr, "Error: sandbox %s not found\n", argv[i] + 16);
+// 			exit(1);
+// 		}
+// #define MAXBUF 4096
+// 		char buf[MAXBUF];
+// 		if (fgets(buf, MAXBUF, fp))
+// 			printf("%s", buf);
+// 		fclose(fp);
+// 		exit(0);
 
-	}
+// 	}
 	// else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
 	// 	// join sandbox by pid or by name
 	// 	pid_t pid = require_pid(argv[i] + 12);
 	// 	cpu_print_filter(pid);
 	// 	exit(0);
 	// }
-	else if (strncmp(argv[i], "--apparmor.print=", 17) == 0) {
-		// join sandbox by pid or by name
-		pid_t pid = require_pid(argv[i] + 17);
-		char *pidstr;
-		if (asprintf(&pidstr, "%u", pid) == -1)
-			errExit("asprintf");
-		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FIREMON, "--apparmor", pidstr);
-		free(pidstr);
-		exit(0);
-	}
+	// else if (strncmp(argv[i], "--apparmor.print=", 17) == 0) {
+	// 	// join sandbox by pid or by name
+	// 	pid_t pid = require_pid(argv[i] + 17);
+	// 	char *pidstr;
+	// 	if (asprintf(&pidstr, "%u", pid) == -1)
+	// 		errExit("asprintf");
+	// 	sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FIREMON, "--apparmor", pidstr);
+	// 	free(pidstr);
+	// 	exit(0);
+	// }
 	// else if (strncmp(argv[i], "--caps.print=", 13) == 0) {
 	// 	// join sandbox by pid or by name
 	// 	pid_t pid = require_pid(argv[i] + 13);
 	// 	caps_print_filter(pid);
 	// 	exit(0);
 	// }
-	else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
-		// join sandbox by pid or by name
-		pid_t pid = require_pid(argv[i] + 11);
-		fs_logger_print_log(pid);
-		exit(0);
-	}
+	// else if (strncmp(argv[i], "--fs.print=", 11) == 0) {
+	// 	// join sandbox by pid or by name
+	// 	pid_t pid = require_pid(argv[i] + 11);
+	// 	fs_logger_print_log(pid);
+	// 	exit(0);
+	// }
 	// else if (strncmp(argv[i], "--dns.print=", 12) == 0) {
 	// 	// join sandbox by pid or by name
 	// 	pid_t pid = require_pid(argv[i] + 12);
@@ -595,22 +595,22 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--list");
 		exit(0);
 	}
-	else if (strcmp(argv[i], "--tree") == 0) {
-		if (pid_hidepid())
-			sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
-		else
-			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
-		exit(0);
-	}
-	else if (strcmp(argv[i], "--top") == 0) {
-		if (pid_hidepid())
-			sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
-				2, PATH_FIREMON, "--top");
-		else
-			sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
-				2, PATH_FIREMON, "--top");
-		exit(0);
-	}
+	// else if (strcmp(argv[i], "--tree") == 0) {
+	// 	if (pid_hidepid())
+	// 		sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+	// 	else
+	// 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FIREMON, "--tree");
+	// 	exit(0);
+	// }
+	// else if (strcmp(argv[i], "--top") == 0) {
+	// 	if (pid_hidepid())
+	// 		sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+	// 			2, PATH_FIREMON, "--top");
+	// 	else
+	// 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
+	// 			2, PATH_FIREMON, "--top");
+	// 	exit(0);
+	// }
 // #ifdef HAVE_NETWORK
 // 	else if (strcmp(argv[i], "--netstats") == 0) {
 // 		if (checkcfg(CFG_NETWORK)) {
@@ -784,34 +784,34 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("join");
 
 	}
-	else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
-		// NOTE: this is first part of option handler,
-		// 		 sandbox name is set in other part
-		if (checkcfg(CFG_JOIN) || getuid() == 0) {
-			logargs(argc, argv);
+	// else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
+	// 	// NOTE: this is first part of option handler,
+	// 	// 		 sandbox name is set in other part
+	// 	if (checkcfg(CFG_JOIN) || getuid() == 0) {
+	// 		logargs(argc, argv);
 
-			if (arg_shell_none) {
-				if (argc <= (i+1)) {
-					fprintf(stderr, "Error: --shell=none set, but no command specified\n");
-					exit(1);
-				}
-				cfg.original_program_index = i + 1;
-			}
+	// 		if (arg_shell_none) {
+	// 			if (argc <= (i+1)) {
+	// 				fprintf(stderr, "Error: --shell=none set, but no command specified\n");
+	// 				exit(1);
+	// 			}
+	// 			cfg.original_program_index = i + 1;
+	// 		}
 
-			// try to join by name only
-			pid_t pid;
-			if (!read_pid(argv[i] + 16, &pid)) {
-				if (!cfg.shell && !arg_shell_none)
-					cfg.shell = guess_shell();
+	// 		// try to join by name only
+	// 		pid_t pid;
+	// 		if (!read_pid(argv[i] + 16, &pid)) {
+	// 			if (!cfg.shell && !arg_shell_none)
+	// 				cfg.shell = guess_shell();
 
-				join(pid, argc, argv, i + 1);
-				exit(0);
-			}
-			// if there no such sandbox continue argument processing
-		}
-		else
-			exit_err_feature("join");
-	}
+	// 			join(pid, argc, argv, i + 1);
+	// 			exit(0);
+	// 		}
+	// 		// if there no such sandbox continue argument processing
+	// 	}
+	// 	else
+	// 		exit_err_feature("join");
+	// }
 // #ifdef HAVE_NETWORK
 // 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
 // 		if (checkcfg(CFG_NETWORK)) {
@@ -834,30 +834,30 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 // 		exit(0);
 // 	}
 // #endif
-	else if (strncmp(argv[i], "--join-filesystem=", 18) == 0) {
-		logargs(argc, argv);
-		arg_join_filesystem = 1;
-		if (getuid() != 0) {
-			fprintf(stderr, "Error: --join-filesystem is only available to root user\n");
-			exit(1);
-		}
+	// else if (strncmp(argv[i], "--join-filesystem=", 18) == 0) {
+	// 	logargs(argc, argv);
+	// 	arg_join_filesystem = 1;
+	// 	if (getuid() != 0) {
+	// 		fprintf(stderr, "Error: --join-filesystem is only available to root user\n");
+	// 		exit(1);
+	// 	}
 
-		if (!cfg.shell && !arg_shell_none)
-			cfg.shell = guess_shell();
+	// 	if (!cfg.shell && !arg_shell_none)
+	// 		cfg.shell = guess_shell();
 
-		// join sandbox by pid or by name
-		pid_t pid = require_pid(argv[i] + 18);
-		join(pid, argc, argv, i + 1);
-		exit(0);
-	}
-	else if (strncmp(argv[i], "--shutdown=", 11) == 0) {
-		logargs(argc, argv);
+	// 	// join sandbox by pid or by name
+	// 	pid_t pid = require_pid(argv[i] + 18);
+	// 	join(pid, argc, argv, i + 1);
+	// 	exit(0);
+	// }
+	// else if (strncmp(argv[i], "--shutdown=", 11) == 0) {
+	// 	logargs(argc, argv);
 
-		// shutdown sandbox by pid or by name
-		pid_t pid = require_pid(argv[i] + 11);
-		shut(pid);
-		exit(0);
-	}
+	// 	// shutdown sandbox by pid or by name
+	// 	pid_t pid = require_pid(argv[i] + 11);
+	// 	shut(pid);
+	// 	exit(0);
+	// }
 
 }
 

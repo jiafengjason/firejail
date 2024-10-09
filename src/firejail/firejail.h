@@ -413,24 +413,24 @@ typedef enum {
 	OPERATION_MAX
 } OPERATION;
 
-// blacklist files or directories by mounting empty files on top of them
-void fs_blacklist(void);
-// mount a writable tmpfs
-void fs_tmpfs(const char *dir, unsigned check_owner);
-// remount noexec/nodev/nosuid or read-only or read-write
-void fs_remount(const char *dir, OPERATION op, int rec);
-// mount /proc and /sys directories
-void fs_proc_sys_dev_boot(void);
-// blacklist firejail configuration and runtime directories
-void disable_config(void);
-// build a basic read-only filesystem
-void fs_basic_fs(void);
-// mount overlayfs on top of / directory
-char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
-void fs_overlayfs(void);
-void fs_private_tmp(void);
-// void fs_private_cache(void);
-void fs_mnt(const int enforce);
+// // blacklist files or directories by mounting empty files on top of them
+// void fs_blacklist(void);
+// // mount a writable tmpfs
+// void fs_tmpfs(const char *dir, unsigned check_owner);
+// // remount noexec/nodev/nosuid or read-only or read-write
+// void fs_remount(const char *dir, OPERATION op, int rec);
+// // mount /proc and /sys directories
+// void fs_proc_sys_dev_boot(void);
+// // blacklist firejail configuration and runtime directories
+// void disable_config(void);
+// // build a basic read-only filesystem
+// void fs_basic_fs(void);
+// // mount overlayfs on top of / directory
+// char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
+// void fs_overlayfs(void);
+// void fs_private_tmp(void);
+// // void fs_private_cache(void);
+// void fs_mnt(const int enforce);
 
 // chroot.c
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
@@ -439,16 +439,16 @@ void fs_chroot(const char *rootdir);
 
 // profile.c
 // find and read the profile specified by name from dir directory
-int profile_find_firejail(const char *name, int add_ext);
+// int profile_find_firejail(const char *name, int add_ext);
 // read a profile file
-void profile_read(const char *fname);
+// void profile_read(const char *fname);
 // check profile line; if line == 0, this was generated from a command line option
 // return 1 if the command is to be added to the linked list of profile commands
 // return 0 if the command was already executed inside the function
-int profile_check_line(char *ptr, int lineno, const char *fname);
+// int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
-void profile_add(char *str);
-void profile_add_ignore(const char *str);
+// void profile_add(char *str);
+// void profile_add_ignore(const char *str);
 
 // list.c
 // void list(void);
@@ -471,11 +471,11 @@ void shut(pid_t pid);
 int restricted_shell(const char *user);
 
 // arp.c
-void arp_announce(const char *dev, Bridge *br);
+// void arp_announce(const char *dev, Bridge *br);
 // returns 0 if the address is not in use, -1 otherwise
-int arp_check(const char *dev, uint32_t destaddr);
+// int arp_check(const char *dev, uint32_t destaddr);
 // assign an IP address using arp scanning
-uint32_t arp_assign(const char *dev, Bridge *br);
+// uint32_t arp_assign(const char *dev, Bridge *br);
 
 // macros.c
 char *expand_macros(const char *path);
@@ -551,7 +551,7 @@ char **build_mount_array(const int mount_id, const char *path);
 void fs_var_log(void);	// mounting /var/log
 void fs_var_lib(void);	// various other fixes for software in /var directory
 void fs_var_cache(void); // various other fixes for software in /var/cache directory
-void fs_var_run(void);
+// void fs_var_run(void);
 void fs_var_lock(void);
 void fs_var_tmp(void);
 void fs_var_utmp(void);
@@ -668,7 +668,7 @@ void env_defaults(void);
 void env_ibus_load(void);
 
 // fs_whitelist.c
-void fs_whitelist(void);
+// void fs_whitelist(void);
 
 // pulseaudio.c
 // void pulseaudio_init(void);
@@ -681,9 +681,9 @@ void fs_private_bin_list(void);
 void fs_private_lib(void);
 
 // protocol.c
-void protocol_filter_save(void);
-void protocol_filter_load(const char *fname);
-void protocol_print_filter(pid_t pid) __attribute__((noreturn));
+// void protocol_filter_save(void);
+// void protocol_filter_load(const char *fname);
+// void protocol_print_filter(pid_t pid) __attribute__((noreturn));
 
 // restrict_users.c
 void restrict_users(void);
@@ -788,9 +788,9 @@ int checkcfg(int val);
 void print_compiletime_support(void);
 
 // appimage.c
-void appimage_set(const char *appimage_path);
-void appimage_clear(void);
-const char *appimage_getdir(void);
+// void appimage_set(const char *appimage_path);
+// void appimage_clear(void);
+// const char *appimage_getdir(void);
 
 // appimage_size.c
 long unsigned int appimage2_size(const char *fname);
