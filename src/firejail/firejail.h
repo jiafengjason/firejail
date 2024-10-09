@@ -25,11 +25,6 @@
 #include <stdarg.h>
 #include <sys/stat.h>
 
-// debug restricted shell
-//#define DEBUG_RESTRICTED_SHELL
-
-
-
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
 #define DEFAULT_ROOT_PROFILE	"server"
@@ -258,32 +253,23 @@ static inline int any_dhcp(void) {
   return any_ip_dhcp() || any_ip6_dhcp();
 }
 
-// extern int arg_private;		// mount private /home
 extern int arg_private_cache;	// private home/.cache
-// extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
-// extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
 
-// extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
-// extern int arg_seccomp_postexec;	// need postexec ld.preload library?
-// extern int arg_seccomp_block_secondary;	// block any secondary architectures
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list
-// extern int arg_caps_drop_all;		// drop all capabilities
 extern int arg_caps_keep;		// keep list
 extern char *arg_caps_list;		// optional caps list
 
-// extern int arg_trace;		// syscall tracing support
 extern char *arg_tracefile;	// syscall tracing file
-// extern int arg_tracelog;	// blacklist tracing support
 extern int arg_rlimit_cpu;	// rlimit cpu
 extern int arg_rlimit_nofile;	// rlimit nofile
 extern int arg_rlimit_nproc;	// rlimit nproc
@@ -311,10 +297,7 @@ extern int arg_private_lib;	// private lib directory
 extern int arg_private_cwd;	// private working directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
-// extern int arg_nosound;	// disable sound
 extern int arg_noautopulse; // disable automatic ~/.config/pulse init
-// extern int arg_novideo; //disable video devices in /dev
-// extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace
@@ -325,13 +308,7 @@ extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
-// extern int arg_appimage;	// appimage
-// extern int arg_audit;		// audit
-// extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
-// extern int arg_allow_debuggers;	// allow debuggers
-// extern int arg_x11_block;	// block X11
-// extern int arg_x11_xorg;	// use X11 security extension
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
@@ -373,28 +350,6 @@ char *guess_shell(void);
 #define SANDBOX_DONE '1'
 int sandbox(void* sandbox_arg);
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) __attribute__((noreturn));
-// void set_apparmor(void);
-
-// network_main.c
-// void net_configure_sandbox_ip(Bridge *br);
-// void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
-// void net_check_cfg(void);
-// void net_dns_print(pid_t pid) __attribute__((noreturn));
-// void network_main(pid_t child);
-// void net_print(pid_t pid);
-
-// // network.c
-// int check_ip46_address(const char *addr);
-// void net_if_up(const char *ifname);
-// void net_if_down(const char *ifname);
-// void net_if_ip(const char *ifname, uint32_t ip, uint32_t mask, int mtu);
-// void net_if_ip6(const char *ifname, const char *addr6);
-// int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu);
-// int net_add_route(uint32_t dest, uint32_t mask, uint32_t gw);
-// uint32_t network_get_defaultgw(void);
-// int net_config_mac(const char *ifname, const unsigned char mac[6]);
-// int net_get_mac(const char *ifname, unsigned char mac[6]);
-// void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
 
 // preproc.c
 void preproc_build_firejail_dir(void);
@@ -413,47 +368,10 @@ typedef enum {
 	OPERATION_MAX
 } OPERATION;
 
-// // blacklist files or directories by mounting empty files on top of them
-// void fs_blacklist(void);
-// // mount a writable tmpfs
-// void fs_tmpfs(const char *dir, unsigned check_owner);
-// // remount noexec/nodev/nosuid or read-only or read-write
-// void fs_remount(const char *dir, OPERATION op, int rec);
-// // mount /proc and /sys directories
-// void fs_proc_sys_dev_boot(void);
-// // blacklist firejail configuration and runtime directories
-// void disable_config(void);
-// // build a basic read-only filesystem
-// void fs_basic_fs(void);
-// // mount overlayfs on top of / directory
-// char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
-// void fs_overlayfs(void);
-// void fs_private_tmp(void);
-// // void fs_private_cache(void);
-// void fs_mnt(const int enforce);
-
 // chroot.c
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
 void fs_check_chroot_dir(void);
 void fs_chroot(const char *rootdir);
-
-// profile.c
-// find and read the profile specified by name from dir directory
-// int profile_find_firejail(const char *name, int add_ext);
-// read a profile file
-// void profile_read(const char *fname);
-// check profile line; if line == 0, this was generated from a command line option
-// return 1 if the command is to be added to the linked list of profile commands
-// return 0 if the command was already executed inside the function
-// int profile_check_line(char *ptr, int lineno, const char *fname);
-// add a profile entry in cfg.profile list; use str to populate the list
-// void profile_add(char *str);
-// void profile_add_ignore(const char *str);
-
-// list.c
-// void list(void);
-// void tree(void);
-// void top(void);
 
 // usage.c
 void usage(void);
@@ -464,18 +382,8 @@ bool is_ready_for_join(const pid_t pid);
 void check_join_permission(pid_t pid);
 pid_t switch_to_child(pid_t pid);
 
-// shutdown.c
-// void shut(pid_t pid);
-
 // restricted_shell.c
 int restricted_shell(const char *user);
-
-// arp.c
-// void arp_announce(const char *dev, Bridge *br);
-// returns 0 if the address is not in use, -1 otherwise
-// int arp_check(const char *dev, uint32_t destaddr);
-// assign an IP address using arp scanning
-// uint32_t arp_assign(const char *dev, Bridge *br);
 
 // macros.c
 char *expand_macros(const char *path);
@@ -509,7 +417,6 @@ char *split_comma(char *str);
 char *clean_pathname(const char *path);
 void check_unsigned(const char *str, const char *msg);
 int find_child(pid_t parent, pid_t *child);
-// void check_private_dir(void);
 void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
@@ -578,28 +485,6 @@ void fs_check_private_dir(void);
 void fs_check_private_cwd(const char *dir);
 void fs_private_home_list(void);
 
-
-// seccomp.c
-// char *seccomp_check_list(const char *str);
-// int seccomp_install_filters(void);
-// int seccomp_load(const char *fname);
-// int seccomp_filter_drop(bool native);
-// int seccomp_filter_keep(bool native);
-// int seccomp_filter_mdwx(bool native);
-// void seccomp_print_filter(pid_t pid) __attribute__((noreturn));
-
-// caps.c
-// void seccomp_load_file_list(void);
-// int caps_default_filter(void);
-// void caps_print(void);
-// void caps_drop_all(void);
-// void caps_set(uint64_t caps);
-// void caps_check_list(const char *clist, void (*callback)(int));
-// void caps_drop_list(const char *clist);
-// void caps_keep_list(const char *clist);
-// void caps_print_filter(pid_t pid) __attribute__((noreturn));
-// void caps_drop_dac_override(void);
-
 // fs_trace.c
 void fs_trace_preload(void);
 void fs_tracefile(void);
@@ -615,13 +500,6 @@ void fs_mount_hosts_file(void);
 // rlimit.c
 void set_rlimits(void);
 
-// cpu.c
-// void read_cpu_list(const char *str);
-// void set_cpu_affinity(void);
-// void load_cpu(const char *fname);
-// void save_cpu(void);
-// void cpu_print_filter(pid_t pid) __attribute__((noreturn));
-
 // cgroup.c
 void save_cgroup(void);
 void load_cgroup(const char *fname);
@@ -629,21 +507,6 @@ void set_cgroup(const char *path);
 
 // output.c
 void check_output(int argc, char **argv);
-
-// netfilter.c
-// void check_netfilter_file(const char *fname);
-// void netfilter(const char *fname);
-// void netfilter6(const char *fname);
-// void netfilter_print(pid_t pid, int ipv6);
-
-// // netns.c
-// void check_netns(const char *nsname);
-// void netns(const char *nsname);
-// void netns_mounts(const char *nsname);
-
-// bandwidth.c
-// void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) __attribute__((noreturn));
-// void network_set_run_file(pid_t pid);
 
 // fs_etc.c
 void fs_machineid(void);
@@ -665,25 +528,12 @@ typedef enum {
 void env_store(const char *str, ENV_OP op);
 void env_apply(void);
 void env_defaults(void);
-void env_ibus_load(void);
-
-// fs_whitelist.c
-// void fs_whitelist(void);
-
-// pulseaudio.c
-// void pulseaudio_init(void);
-// void pulseaudio_disable(void);
 
 // fs_bin.c
 void fs_private_bin_list(void);
 
 // fs_lib.c
 void fs_private_lib(void);
-
-// protocol.c
-// void protocol_filter_save(void);
-// void protocol_filter_load(const char *fname);
-// void protocol_print_filter(pid_t pid) __attribute__((noreturn));
 
 // restrict_users.c
 void restrict_users(void);
@@ -708,37 +558,6 @@ int program_in_path(const char *program);
 // fs_mkdir.c
 void fs_mkdir(const char *name);
 void fs_mkfile(const char *name);
-
-// x11.c
-
-// X11 display range as assigned by --x11 options
-//     We try display numbers in the range 21 through 1000.
-//     Normal X servers typically use displays in the 0-10 range;
-//     ssh's X11 forwarding uses 10-20, and login screens
-//     (e.g. gdm3) may use displays above 1000.
-// #define X11_DISPLAY_START 21
-// #define X11_DISPLAY_END 1000
-
-// void fs_x11(void);
-// int x11_display(void);
-// void x11_start(int argc, char **argv) __attribute__((noreturn));
-// void x11_start_xpra(int argc, char **argv) __attribute__((noreturn));
-// void x11_start_xephyr(int argc, char **argv) __attribute__((noreturn));
-// void x11_block(void);
-// void x11_start_xvfb(int argc, char **argv) __attribute__((noreturn));
-// void x11_xorg(void);
-
-// ls.c
-// enum {
-// 	SANDBOX_FS_LS = 0,
-// 	SANDBOX_FS_CAT,
-// 	SANDBOX_FS_GET,
-// 	SANDBOX_FS_PUT,
-// 	SANDBOX_FS_MAX // this should always be the last entry
-// };
-// void ls(const char *path);
-// void cat(const char *path);
-// void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attribute__((noreturn));
 
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
@@ -786,11 +605,6 @@ extern char *config_seccomp_error_action_str;
 
 int checkcfg(int val);
 void print_compiletime_support(void);
-
-// appimage.c
-// void appimage_set(const char *appimage_path);
-// void appimage_clear(void);
-// const char *appimage_getdir(void);
 
 // appimage_size.c
 long unsigned int appimage2_size(const char *fname);
@@ -852,24 +666,5 @@ void delete_bandwidth_run_file(pid_t pid);
 void set_name_run_file(pid_t pid);
 void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
-
-// dbus.c
-// int dbus_check_name(const char *name);
-// int dbus_check_call_rule(const char *name);
-// void dbus_check_profile(void);
-// void dbus_proxy_start(void);
-// void dbus_proxy_stop(void);
-// void dbus_set_session_bus_env(void);
-// void dbus_set_system_bus_env(void);
-// void dbus_apply_policy(void);
-
-// dhcp.c
-// extern pid_t dhclient4_pid;
-// extern pid_t dhclient6_pid;
-// void dhcp_store_exec(void);
-// void dhcp_start(void);
-
-// selinux.c
-// void selinux_relabel_path(const char *path, const char *inside_path);
 
 #endif

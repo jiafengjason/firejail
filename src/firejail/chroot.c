@@ -83,8 +83,6 @@ static void update_file(int parentfd, const char *relpath) {
 			return;
 		}
 	}
-	// if (arg_debug)
-	// 	printf("Updating chroot /%s\n", relpath);
 	unlinkat(parentfd, relpath, 0);
 	int out = openat(parentfd, relpath, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 	if (out == -1) {
@@ -155,9 +153,6 @@ void fs_chroot(const char *rootdir) {
 	check_subdir(parentfd, "var", 1);
 	check_subdir(parentfd, "var/tmp", 0);
 
-	// mount-bind a /dev in rootdir
-	// if (arg_debug)
-	// 	printf("Mounting /dev on chroot /dev\n");
 	// open chroot /dev to get a file descriptor,
 	// then use this descriptor as a mount target
 	int fd = openat(parentfd, "dev", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
@@ -174,8 +169,6 @@ void fs_chroot(const char *rootdir) {
 	// x11
 	// if users want this mount, they should set FIREJAIL_CHROOT_X11
 	if (getenv("FIREJAIL_X11") || getenv("FIREJAIL_CHROOT_X11")) {
-		// if (arg_debug)
-		// 	printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
 		check_subdir(parentfd, "tmp/.X11-unix", 0);
 		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1)
@@ -200,8 +193,6 @@ void fs_chroot(const char *rootdir) {
 			errExit("asprintf");
 		char *orig_pulse = pulse + strlen(cfg.chrootdir);
 
-		// if (arg_debug)
-		// 	printf("Mounting %s on chroot %s\n", orig_pulse, orig_pulse);
 		int src = safe_fd(orig_pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (src == -1) {
 			fprintf(stderr, "Error: cannot open %s\n", orig_pulse);
@@ -268,9 +259,6 @@ void fs_chroot(const char *rootdir) {
 	// update chroot resolv.conf
 	update_file(parentfd, "etc/resolv.conf");
 
-// #ifdef HAVE_GCOV
-// 	__gcov_flush();
-// #endif
 	// create /run/firejail/mnt/oroot
 	char *oroot = RUN_OVERLAY_ROOT;
 	if (mkdir(oroot, 0755) == -1)
@@ -282,15 +270,10 @@ void fs_chroot(const char *rootdir) {
 		errExit("mounting rootdir oroot");
 	free(proc);
 	close(parentfd);
-	// chroot into the new directory
-	// if (arg_debug)
-	// 	printf("Chrooting into %s\n", rootdir);
 	if (chroot(oroot) < 0)
 		errExit("chroot");
 
 	// mount a new proc filesystem
-	// if (arg_debug)
-	// 	printf("Mounting /proc filesystem representing the PID namespace\n");
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc");
 
@@ -298,8 +281,6 @@ void fs_chroot(const char *rootdir) {
 	preproc_build_firejail_dir();
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
-	//	if (!arg_private_dev)
-	//		fs_dev_shm();
 	fs_var_lock();
 	if (!arg_keep_var_tmp)
 	        fs_var_tmp();
@@ -313,10 +294,6 @@ void fs_chroot(const char *rootdir) {
 
 	// don't leak user information
 	restrict_users();
-
-	// when starting as root, firejail config is not disabled;
-	// if (getuid() != 0)
-	// 	disable_config();
 }
 
 #endif // HAVE_CHROOT

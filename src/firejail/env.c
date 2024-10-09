@@ -50,70 +50,6 @@ static void env_add(Env *env) {
 	}
 }
 
-// load IBUS env variables
-void env_ibus_load(void) {
-	EUID_ASSERT();
-
-	// check ~/.config/ibus/bus directory
-	char *dirname;
-	if (asprintf(&dirname, "%s/.config/ibus/bus", cfg.homedir) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(dirname, &s) == -1)
-		return;
-
-	// find the file
-	/* coverity[toctou] */
-	DIR *dir = opendir(dirname);
-	if (!dir) {
-		free(dirname);
-		return;
-	}
-
-	struct dirent *entry;
-	while ((entry = readdir(dir)) != NULL) {
-		// check the file name ends in "unix-0"
-		char *ptr = strstr(entry->d_name, "unix-0");
-		if (!ptr)
-			continue;
-		if (strlen(ptr) != 6)
-			continue;
-
-		// open the file
-		char *fname;
-		if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
-			errExit("asprintf");
-		FILE *fp = fopen(fname, "r");
-		free(fname);
-		if (!fp)
-			continue;
-
-		// read the file
-		const int maxline = 4096;
-		char buf[maxline];
-		while (fgets(buf, maxline, fp)) {
-			if (strncmp(buf, "IBUS_", 5) != 0)
-				continue;
-			char *ptr = strchr(buf, '=');
-			if (!ptr)
-				continue;
-			ptr = strchr(buf, '\n');
-			if (ptr)
-				*ptr = '\0';
-			// if (arg_debug)
-			// 	printf("%s\n", buf);
-			env_store(buf, SETENV);
-		}
-
-		fclose(fp);
-	}
-
-	free(dirname);
-	closedir(dir);
-}
-
-
 // default sandbox env variables
 void env_defaults(void) {
 	// Qt fixes
@@ -121,10 +57,6 @@ void env_defaults(void) {
 		errExit("setenv");
 	if (setenv("QML_DISABLE_DISK_CACHE", "1", 1) < 0)
 		errExit("setenv");
-//	if (setenv("QTWEBENGINE_DISABLE_SANDBOX", "1", 1) < 0)
-//		errExit("setenv");
-//	if (setenv("MOZ_NO_REMOTE, "1", 1) < 0)
-//		errExit("setenv");
 	if (setenv("container", "firejail", 1) < 0) // LXC sets container=lxc,
 		errExit("setenv");
 	if (!cfg.shell)

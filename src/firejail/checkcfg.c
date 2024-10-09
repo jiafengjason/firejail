@@ -141,8 +141,6 @@ int checkcfg(int val) {
 				netfilter_default = strdup(fname);
 				if (!netfilter_default)
 					errExit("strdup");
-				// if (arg_debug)
-				// 	printf("netfilter default file %s\n", fname);
 			}
 
 			// Xephyr screen size
@@ -310,23 +308,6 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
-// 	printf("\t- file transfer support is %s\n",
-// #ifdef HAVE_FILE_TRANSFER
-// 		"enabled"
-// #else
-// 		"disabled"
-// #endif
-// 		);
-
-// 	printf("\t- firetunnel support is %s\n",
-// #ifdef HAVE_FIRETUNNEL
-// 		"enabled"
-// #else
-// 		"disabled"
-// #endif
-// 		);
-
 	printf("\t- networking support is %s\n",
 #ifdef HAVE_NETWORK
 		"enabled"
@@ -350,15 +331,6 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
-// 	printf("\t- private-cache and tmpfs as user %s\n",
-// #ifdef HAVE_USERTMPFS
-// 		"enabled"
-// #else
-// 		"disabled"
-// #endif
-// 		);
-
 	printf("\t- SELinux support is %s\n",
 #ifdef HAVE_SELINUX
 		"enabled"

@@ -408,11 +408,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// exit if no permission to join the sandbox
 	check_join_permission(pid);
 
-	// extract_x11_display(parent);
-
 	int shfd = -1;
-	// if (!arg_shell_none && !arg_audit)
-	// 	shfd = open_shell();
 
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
@@ -508,8 +504,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// set nonewprivs
 		if (arg_nonewprivs == 1) {	// not available for uid 0
 			int rv = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-			// if (arg_debug && rv == 0)
-			// 	printf("NO_NEW_PRIVS set\n");
 		}
 
 		EUID_USER();
@@ -548,12 +542,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			assert(cfg.shell);
 			cfg.window_title = cfg.shell;
 		}
-		// else if (arg_debug)
-		// 	printf("Extracted command #%s#\n", cfg.command_line);
-
-		// set cpu affinity
-		// if (cfg.cpus)	// not available for uid 0
-		// 	set_cpu_affinity();
 
 		// set nice value
 		if (arg_nice)

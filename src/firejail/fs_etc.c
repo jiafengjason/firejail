@@ -186,8 +186,6 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		fs_logger_print();
 	}
 
-	// if (arg_debug)
-	// 	printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);

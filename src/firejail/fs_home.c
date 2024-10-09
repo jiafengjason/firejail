@@ -112,9 +112,6 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 }
 
 static int store_xauthority(void) {
-	// if (arg_x11_block)
-	// 	return 0;
-
 	// put a copy of .Xauthority in XAUTHORITY_FILE
 	char *dest = RUN_XAUTHORITY_FILE;
 	char *src;

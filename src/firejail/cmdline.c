@@ -202,10 +202,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 	// 'fix' command_line now
 	if (asprintf(command_line, "'%s' %s", tmp1, command_line_tmp + len2) == -1)
 		errExit("asprintf");
-
-	// if (arg_debug)
-	// 	printf("AppImage quoted command line: %s\n", *command_line);
-
 	// free strdup
 	free(tmp1);
 	free(command_line_tmp);

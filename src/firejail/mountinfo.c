@@ -145,9 +145,6 @@ MountData *get_last_mount(void) {
 	// 	printf("%s", mbuf);
 
 	parse_line(mbuf, &mdata);
-
-	// if (arg_debug)
-	// 	printf("mountid=%d fsname=%s dir=%s fstype=%s\n", mdata.mountid, mdata.fsname, mdata.dir, mdata.fstype);
 	return &mdata;
 }
 
