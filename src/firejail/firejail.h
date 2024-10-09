@@ -465,7 +465,7 @@ void check_join_permission(pid_t pid);
 pid_t switch_to_child(pid_t pid);
 
 // shutdown.c
-void shut(pid_t pid);
+// void shut(pid_t pid);
 
 // restricted_shell.c
 int restricted_shell(const char *user);

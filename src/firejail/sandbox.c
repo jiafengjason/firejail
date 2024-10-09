@@ -905,8 +905,8 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// trace pre-install
-	if (need_preload)
-		fs_trace_preload();
+	// if (need_preload)
+	// 	fs_trace_preload();
 
 	// store hosts file
 	if (cfg.hosts_file)
@@ -922,8 +922,8 @@ int sandbox(void* sandbox_arg) {
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
-		if (need_preload)
-			fs_trace_preload();
+		// if (need_preload)
+		// 	fs_trace_preload();
 	}
 	else
 #endif
@@ -1073,8 +1073,8 @@ int sandbox(void* sandbox_arg) {
 			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
 			// create /etc/ld.so.preload file again
-			if (need_preload)
-				fs_trace_preload();
+			// if (need_preload)
+			// 	fs_trace_preload();
 		}
 	}
 
@@ -1118,8 +1118,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// install trace
 	//****************************
-	if (need_preload)
-		fs_trace();
+	// if (need_preload)
+	// 	fs_trace();
 
 	//****************************
 	// set dns
