@@ -141,8 +141,8 @@ int checkcfg(int val) {
 				netfilter_default = strdup(fname);
 				if (!netfilter_default)
 					errExit("strdup");
-				if (arg_debug)
-					printf("netfilter default file %s\n", fname);
+				// if (arg_debug)
+				// 	printf("netfilter default file %s\n", fname);
 			}
 
 			// Xephyr screen size

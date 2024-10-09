@@ -38,8 +38,8 @@ void set_rlimits(void) {
 #endif
 		if (setrlimit(RLIMIT_CPU, &rl) == -1)
 			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: max cpu time %llu\n", cfg.rlimit_cpu);
+		// if (arg_debug)
+		// 	printf("Config rlimit: max cpu time %llu\n", cfg.rlimit_cpu);
 	}
 
 	if (arg_rlimit_nofile) {
@@ -55,8 +55,8 @@ void set_rlimits(void) {
 #endif
 		if (setrlimit(RLIMIT_NOFILE, &rl) == -1)
 			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: number of open file descriptors %llu\n", cfg.rlimit_nofile);
+		// if (arg_debug)
+		// 	printf("Config rlimit: number of open file descriptors %llu\n", cfg.rlimit_nofile);
 	}
 
 	if (arg_rlimit_nproc) {
@@ -72,8 +72,8 @@ void set_rlimits(void) {
 #endif
 		if (setrlimit(RLIMIT_NPROC, &rl) == -1)
 			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: number of processes %llu\n", cfg.rlimit_nproc);
+		// if (arg_debug)
+		// 	printf("Config rlimit: number of processes %llu\n", cfg.rlimit_nproc);
 	}
 
 	if (arg_rlimit_fsize) {
@@ -89,8 +89,8 @@ void set_rlimits(void) {
 #endif
 		if (setrlimit(RLIMIT_FSIZE, &rl) == -1)
 			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: maximum file size %llu\n", cfg.rlimit_fsize);
+		// if (arg_debug)
+		// 	printf("Config rlimit: maximum file size %llu\n", cfg.rlimit_fsize);
 	}
 
 	if (arg_rlimit_sigpending) {
@@ -106,8 +106,8 @@ void set_rlimits(void) {
 #endif
 		if (setrlimit(RLIMIT_SIGPENDING, &rl) == -1)
 			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: maximum number of signals pending %llu\n", cfg.rlimit_sigpending);
+		// if (arg_debug)
+		// 	printf("Config rlimit: maximum number of signals pending %llu\n", cfg.rlimit_sigpending);
 	}
 
 	if (arg_rlimit_as) {
@@ -123,7 +123,7 @@ void set_rlimits(void) {
 #endif
 		if (setrlimit(RLIMIT_AS, &rl) == -1)
 			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: maximum virtual memory %llu\n", cfg.rlimit_as);
+		// if (arg_debug)
+		// 	printf("Config rlimit: maximum virtual memory %llu\n", cfg.rlimit_as);
 	}
 }

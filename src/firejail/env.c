@@ -101,8 +101,8 @@ void env_ibus_load(void) {
 			ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-			if (arg_debug)
-				printf("%s\n", buf);
+			// if (arg_debug)
+			// 	printf("%s\n", buf);
 			env_store(buf, SETENV);
 		}
 

@@ -276,8 +276,8 @@ static void extract_user_namespace(pid_t pid) {
 	int u1;
 	int u2;
 	if (fscanf(fp, "%d %d", &u1, &u2) == 2) {
-		if (arg_debug)
-			printf("User namespace detected: %s, %d, %d\n", uidmap, u1, u2);
+		// if (arg_debug)
+		// 	printf("User namespace detected: %s, %d, %d\n", uidmap, u1, u2);
 		if (u1 != 0 || u2 != 0)
 			arg_noroot = 1;
 	}
@@ -307,8 +307,8 @@ static int open_shell(void) {
 	EUID_ASSERT();
 	assert(cfg.shell);
 
-	if (arg_debug)
-		printf("Opening shell %s\n", cfg.shell);
+	// if (arg_debug)
+	// 	printf("Opening shell %s\n", cfg.shell);
 	// file descriptor will leak if not opened with O_CLOEXEC !!
 	int fd = open(cfg.shell, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
@@ -411,8 +411,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	// extract_x11_display(parent);
 
 	int shfd = -1;
-	if (!arg_shell_none && !arg_audit)
-		shfd = open_shell();
+	// if (!arg_shell_none && !arg_audit)
+	// 	shfd = open_shell();
 
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
@@ -494,8 +494,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// mount user namespace or drop privileges
 		if (arg_noroot) {	// not available for uid 0
-			if (arg_debug)
-				printf("Joining user namespace\n");
+			// if (arg_debug)
+			// 	printf("Joining user namespace\n");
 			if (join_namespace(1, "user"))
 				exit(1);
 
@@ -508,8 +508,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// set nonewprivs
 		if (arg_nonewprivs == 1) {	// not available for uid 0
 			int rv = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-			if (arg_debug && rv == 0)
-				printf("NO_NEW_PRIVS set\n");
+			// if (arg_debug && rv == 0)
+			// 	printf("NO_NEW_PRIVS set\n");
 		}
 
 		EUID_USER();
@@ -538,18 +538,18 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// kill the child in case the parent died
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
-#ifdef HAVE_APPARMOR
-		// add apparmor confinement after the execve
-		set_apparmor();
-#endif
+// #ifdef HAVE_APPARMOR
+// 		// add apparmor confinement after the execve
+// 		set_apparmor();
+// #endif
 
 		extract_command(argc, argv, index);
 		if (cfg.command_line == NULL) {
 			assert(cfg.shell);
 			cfg.window_title = cfg.shell;
 		}
-		else if (arg_debug)
-			printf("Extracted command #%s#\n", cfg.command_line);
+		// else if (arg_debug)
+		// 	printf("Extracted command #%s#\n", cfg.command_line);
 
 		// set cpu affinity
 		// if (cfg.cpus)	// not available for uid 0

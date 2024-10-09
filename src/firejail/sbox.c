@@ -43,8 +43,8 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	}
 	if (arg_quiet) // --quiet is passed as an environment variable
 		new_environment[env_index++] = "FIREJAIL_QUIET=yes";
-	if (arg_debug) // --debug is passed as an environment variable
-		new_environment[env_index++] = "FIREJAIL_DEBUG=yes";
+	// if (arg_debug) // --debug is passed as an environment variable
+	// 	new_environment[env_index++] = "FIREJAIL_DEBUG=yes";
 	if (cfg.seccomp_error_action)
 		if (asprintf(&new_environment[env_index++], "FIREJAIL_SECCOMP_ERROR_ACTION=%s", cfg.seccomp_error_action) == -1)
 			errExit("asprintf");
@@ -125,69 +125,69 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 #endif
 
 		// syscall list
-#ifdef SYS_mount
-			BLACKLIST(SYS_mount), // mount/unmount filesystems
-#endif
-#ifdef SYS_umount
-			BLACKLIST(SYS_umount),
-#endif
-#ifdef SYS_umount2
-			BLACKLIST(SYS_umount2),
-#endif
-#ifdef SYS_ptrace
-			BLACKLIST(SYS_ptrace), // trace processes
-#endif
-#ifdef SYS_process_vm_readv
-			BLACKLIST(SYS_process_vm_readv),
-#endif
-#ifdef SYS_process_vm_writev
-			BLACKLIST(SYS_process_vm_writev),
-#endif
-#ifdef SYS_kexec_file_load
-			BLACKLIST(SYS_kexec_file_load), // loading a different kernel
-#endif
-#ifdef SYS_kexec_load
-			BLACKLIST(SYS_kexec_load),
-#endif
-#ifdef SYS_name_to_handle_at
-			BLACKLIST(SYS_name_to_handle_at),
-#endif
-#ifdef SYS_open_by_handle_at
-			BLACKLIST(SYS_open_by_handle_at), // open by handle
-#endif
-#ifdef SYS_init_module
-			BLACKLIST(SYS_init_module), // kernel module handling
-#endif
-#ifdef SYS_finit_module // introduced in 2013
-			BLACKLIST(SYS_finit_module),
-#endif
-#ifdef SYS_create_module
-			BLACKLIST(SYS_create_module),
-#endif
-#ifdef SYS_delete_module
-			BLACKLIST(SYS_delete_module),
-#endif
-#ifdef SYS_iopl
-			BLACKLIST(SYS_iopl), // io permissions
-#endif
-#ifdef SYS_ioperm
-			BLACKLIST(SYS_ioperm),
-#endif
-#ifdef SYS_ioprio_set
-			BLACKLIST(SYS_ioprio_set),
-#endif
-#ifdef SYS_ni_syscall // new io permissions call on arm devices
-			BLACKLIST(SYS_ni_syscall),
-#endif
-#ifdef SYS_swapon
-			BLACKLIST(SYS_swapon), // swap on/off
-#endif
-#ifdef SYS_swapoff
-			BLACKLIST(SYS_swapoff),
-#endif
-#ifdef SYS_syslog
-			BLACKLIST(SYS_syslog), // kernel printk control
-#endif
+// #ifdef SYS_mount
+// 			BLACKLIST(SYS_mount), // mount/unmount filesystems
+// #endif
+// #ifdef SYS_umount
+// 			BLACKLIST(SYS_umount),
+// #endif
+// #ifdef SYS_umount2
+// 			BLACKLIST(SYS_umount2),
+// #endif
+// #ifdef SYS_ptrace
+// 			BLACKLIST(SYS_ptrace), // trace processes
+// #endif
+// #ifdef SYS_process_vm_readv
+// 			BLACKLIST(SYS_process_vm_readv),
+// #endif
+// #ifdef SYS_process_vm_writev
+// 			BLACKLIST(SYS_process_vm_writev),
+// #endif
+// #ifdef SYS_kexec_file_load
+// 			BLACKLIST(SYS_kexec_file_load), // loading a different kernel
+// #endif
+// #ifdef SYS_kexec_load
+// 			BLACKLIST(SYS_kexec_load),
+// #endif
+// #ifdef SYS_name_to_handle_at
+// 			BLACKLIST(SYS_name_to_handle_at),
+// #endif
+// #ifdef SYS_open_by_handle_at
+// 			BLACKLIST(SYS_open_by_handle_at), // open by handle
+// #endif
+// #ifdef SYS_init_module
+// 			BLACKLIST(SYS_init_module), // kernel module handling
+// #endif
+// #ifdef SYS_finit_module // introduced in 2013
+// 			BLACKLIST(SYS_finit_module),
+// #endif
+// #ifdef SYS_create_module
+// 			BLACKLIST(SYS_create_module),
+// #endif
+// #ifdef SYS_delete_module
+// 			BLACKLIST(SYS_delete_module),
+// #endif
+// #ifdef SYS_iopl
+// 			BLACKLIST(SYS_iopl), // io permissions
+// #endif
+// #ifdef SYS_ioperm
+// 			BLACKLIST(SYS_ioperm),
+// #endif
+// #ifdef SYS_ioprio_set
+// 			BLACKLIST(SYS_ioprio_set),
+// #endif
+// #ifdef SYS_ni_syscall // new io permissions call on arm devices
+// 			BLACKLIST(SYS_ni_syscall),
+// #endif
+// #ifdef SYS_swapon
+// 			BLACKLIST(SYS_swapon), // swap on/off
+// #endif
+// #ifdef SYS_swapoff
+// 			BLACKLIST(SYS_swapoff),
+// #endif
+// #ifdef SYS_syslog
+// 			BLACKLIST(SYS_syslog), // kernel printk control
+// #endif
 			RETURN_ALLOW
 		};
 
@@ -266,15 +266,15 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	EUID_ROOT();
 	assert(arg);
 
-	if (arg_debug) {
-		printf("sbox run: ");
-		int i = 0;
-		while (arg[i]) {
-			printf("%s ", arg[i]);
-			i++;
-		}
-		printf("\n");
-	}
+	// if (arg_debug) {
+	// 	printf("sbox run: ");
+	// 	int i = 0;
+	// 	while (arg[i]) {
+	// 		printf("%s ", arg[i]);
+	// 		i++;
+	// 	}
+	// 	printf("\n");
+	// }
 
 	// KEEP_FDS only makes sense with sbox_exec_v
 	assert((filtermask & SBOX_KEEP_FDS) == 0);
@@ -301,15 +301,15 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 void sbox_exec_v(unsigned filtermask, char * const arg[]) {
 	EUID_ROOT();
 
-	if (arg_debug) {
-		printf("sbox exec: ");
-		int i = 0;
-		while (arg[i]) {
-			printf("%s ", arg[i]);
-			i++;
-		}
-		printf("\n");
-	}
+	// if (arg_debug) {
+	// 	printf("sbox exec: ");
+	// 	int i = 0;
+	// 	while (arg[i]) {
+	// 		printf("%s ", arg[i]);
+	// 		i++;
+	// 	}
+	// 	printf("\n");
+	// }
 
 	sbox_do_exec_v(filtermask, arg);
 }

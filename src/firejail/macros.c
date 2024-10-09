@@ -181,8 +181,8 @@ char *resolve_macro(const char *name) {
 	rv = resolve_xdg(macro[id].xdg);
 	if (rv == NULL)
 		rv = resolve_hardcoded(macro[id].translation);
-	if (rv && arg_debug)
-		printf("Directory %s resolved as %s\n", name, rv);
+	// if (rv && arg_debug)
+	// 	printf("Directory %s resolved as %s\n", name, rv);
 
 	return rv;
 }

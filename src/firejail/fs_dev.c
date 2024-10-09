@@ -98,24 +98,24 @@ static void deventry_mount(void) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
 			// check device type and subsystem configuration
-			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
-			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
-			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
-			    (dev[i].type == DEV_TV && arg_notv == 0) ||
-			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-			    (dev[i].type == DEV_U2F && arg_nou2f == 0)) {
+			if ((dev[i].type == DEV_SOUND) ||
+			    (dev[i].type == DEV_3D) ||
+			    (dev[i].type == DEV_VIDEO) ||
+			    (dev[i].type == DEV_TV) ||
+			    (dev[i].type == DEV_DVD) ||
+			    (dev[i].type == DEV_U2F)) {
 
 				int dir = is_dir(dev[i].run_fname);
-				if (arg_debug)
-					printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
+				// if (arg_debug)
+				// 	printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
 				if (dir) {
 					mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
 				}
 				else {
 					struct stat s;
 					if (stat(dev[i].run_fname, &s) == -1) {
-						if (arg_debug)
-							fwarning("cannot stat %s file\n", dev[i].run_fname);
+						// if (arg_debug)
+						// 	fwarning("cannot stat %s file\n", dev[i].run_fname);
 						i++;
 						continue;
 					}
@@ -201,8 +201,8 @@ static void process_dev_shm(void) {
 
 void fs_private_dev(void){
 	// install a new /dev directory
-	if (arg_debug)
-		printf("Mounting tmpfs on /dev\n");
+	// if (arg_debug)
+	// 	printf("Mounting tmpfs on /dev\n");
 
 	// create DRI_DIR
 	// keep a copy of dev directory
@@ -249,8 +249,8 @@ void fs_private_dev(void){
 	}
 
 	// bring forward the current /dev/shm directory if necessary
-	if (arg_debug)
-		printf("Process /dev/shm directory\n");
+	// if (arg_debug)
+	// 	printf("Process /dev/shm directory\n");
 	process_dev_shm();
 
 	if (mount(RUN_RO_DIR, RUN_DEV_DIR, "none", MS_BIND, "mode=400,gid=0") < 0)

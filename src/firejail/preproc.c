@@ -60,9 +60,9 @@ void preproc_build_firejail_dir(void) {
 
 	if (stat(RUN_FIREJAIL_DBUS_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_DBUS_DIR, 0755);
-		if (arg_debug)
-			printf("Remounting the " RUN_FIREJAIL_DBUS_DIR
-				   " directory as noexec\n");
+		// if (arg_debug)
+		// 	printf("Remounting the " RUN_FIREJAIL_DBUS_DIR
+		// 		   " directory as noexec\n");
 		if (mount(RUN_FIREJAIL_DBUS_DIR, RUN_FIREJAIL_DBUS_DIR, NULL,
 				  MS_BIND, NULL) == -1)
 			errExit("mounting " RUN_FIREJAIL_DBUS_DIR);
@@ -92,8 +92,8 @@ void preproc_build_firejail_dir(void) {
 void preproc_mount_mnt_dir(void) {
 	// mount tmpfs on top of /run/firejail/mnt
 	if (!tmpfs_mounted) {
-		if (arg_debug)
-			printf("Mounting tmpfs on %s directory\n", RUN_MNT_DIR);
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on %s directory\n", RUN_MNT_DIR);
 		if (mount("tmpfs", RUN_MNT_DIR, "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /run/firejail/mnt");
 		tmpfs_mounted = 1;
@@ -105,16 +105,16 @@ void preproc_mount_mnt_dir(void) {
 
 		create_empty_dir_as_root(RUN_SECCOMP_DIR, 0755);
 
-		if (arg_seccomp_block_secondary)
-			copy_file(PATH_SECCOMP_BLOCK_SECONDARY, RUN_SECCOMP_BLOCK_SECONDARY, getuid(), getgid(), 0644); // root needed
-		else {
+		// if (arg_seccomp_block_secondary)
+		// 	copy_file(PATH_SECCOMP_BLOCK_SECONDARY, RUN_SECCOMP_BLOCK_SECONDARY, getuid(), getgid(), 0644); // root needed
+		// else {
 			//copy default seccomp files
 			copy_file(PATH_SECCOMP_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
-		}
-		if (arg_allow_debuggers) {
-			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
-			copy_file(PATH_SECCOMP_DEBUG_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
-		} else
+		// }
+		// if (arg_allow_debuggers) {
+		// 	copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
+		// 	copy_file(PATH_SECCOMP_DEBUG_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
+		// } else
 			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
 
 		if (arg_memory_deny_write_execute) {

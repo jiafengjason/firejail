@@ -30,8 +30,8 @@ void fs_hostname(const char *hostname) {
 
 	// create a new /etc/hostname
 	if (stat("/etc/hostname", &s) == 0) {
-		if (arg_debug)
-			printf("Creating a new /etc/hostname file\n");
+		// if (arg_debug)
+		// 	printf("Creating a new /etc/hostname file\n");
 
 		create_empty_file_as_root(RUN_HOSTNAME_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
 
@@ -43,8 +43,8 @@ void fs_hostname(const char *hostname) {
 
 	// create a new /etc/hosts
 	if (cfg.hosts_file == NULL && stat("/etc/hosts", &s) == 0) {
-		if (arg_debug)
-			printf("Creating a new /etc/hosts file\n");
+		// if (arg_debug)
+		// 	printf("Creating a new /etc/hosts file\n");
 		// copy /etc/host into our new file, and modify it on the fly
 		/* coverity[toctou] */
 		FILE *fp1 = fopen("/etc/hosts", "r");
@@ -92,8 +92,8 @@ void fs_resolvconf(void) {
 	if (cfg.dns1 == NULL && !any_dhcp())
 		return;
 
-	if (arg_debug)
-		printf("mirroring /etc directory\n");
+	// if (arg_debug)
+	// 	printf("mirroring /etc directory\n");
 	if (mkdir(RUN_DNS_ETC, 0755))
 		errExit("mkdir");
 	// selinux_relabel_path(RUN_DNS_ETC, "/etc");
@@ -157,14 +157,14 @@ void fs_resolvconf(void) {
 	closedir(dir);
 
 	// mount bind our private etc directory on top of /etc
-	if (arg_debug)
-		printf("Mount-bind %s on top of /etc\n", RUN_DNS_ETC);
+	// if (arg_debug)
+	// 	printf("Mount-bind %s on top of /etc\n", RUN_DNS_ETC);
 	if (mount(RUN_DNS_ETC, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind mirroring /etc");
 	fs_logger("mount /etc");
 
-	if (arg_debug)
-		printf("Creating a new /etc/resolv.conf file\n");
+	// if (arg_debug)
+	// 	printf("Creating a new /etc/resolv.conf file\n");
 	FILE *fp = fopen("/etc/resolv.conf", "w");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot create /etc/resolv.conf file\n");
@@ -215,8 +215,8 @@ void fs_store_hosts_file(void) {
 }
 
 void fs_mount_hosts_file(void) {
-	if (arg_debug)
-		printf("Loading user hosts file\n");
+	// if (arg_debug)
+	// 	printf("Loading user hosts file\n");
 
 	// check /etc/hosts file
 	struct stat s;

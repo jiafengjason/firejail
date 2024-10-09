@@ -99,8 +99,8 @@ int check_kernel_procs(void) {
 	};
 	int i;
 
-	if (arg_debug)
-		printf("Looking for kernel processes\n");
+	// if (arg_debug)
+	// 	printf("Looking for kernel processes\n");
 
 	// look at the first 10 processes
 	// if a kernel process is found, return 1
@@ -140,8 +140,8 @@ int check_kernel_procs(void) {
 		int j = 0;
 		while (kern_proc[j] != NULL) {
 			if (strncmp(buf, kern_proc[j], strlen(kern_proc[j])) == 0) {
-				if (arg_debug)
-					printf("Found %s process, we are not running in a sandbox\n", buf);
+				// if (arg_debug)
+				// 	printf("Found %s process, we are not running in a sandbox\n", buf);
 				fclose(fp);
 				free(fname);
 				return 1;
@@ -153,8 +153,8 @@ int check_kernel_procs(void) {
 		free(fname);
 	}
 
-	if (arg_debug)
-		printf("No kernel processes found, we are already running in a sandbox\n");
+	// if (arg_debug)
+	// 	printf("No kernel processes found, we are already running in a sandbox\n");
 
 	return 0;
 }
@@ -169,12 +169,12 @@ void run_no_sandbox(int argc, char **argv) {
 
 	// process limited subset of options
 	int i;
-	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--debug") == 0)
-			arg_debug = 1;
-		else if (strncmp(argv[i], "--shell=", 8) == 0)
-			fwarning("shell-related command line options are disregarded - using SHELL environment variable\n");
-	}
+	// for (i = 0; i < argc; i++) {
+	// 	if (strcmp(argv[i], "--debug") == 0)
+	// 		arg_debug = 1;
+	// 	else if (strncmp(argv[i], "--shell=", 8) == 0)
+	// 		fwarning("shell-related command line options are disregarded - using SHELL environment variable\n");
+	// }
 
 	// use $SHELL to get shell used in sandbox, guess shell otherwise
 	cfg.shell = guess_shell();
@@ -182,8 +182,8 @@ void run_no_sandbox(int argc, char **argv) {
 		fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
 		exit(1);
 	}
-	else if (arg_debug)
-		printf("Selecting %s as shell\n", cfg.shell);
+	// else if (arg_debug)
+	// 	printf("Selecting %s as shell\n", cfg.shell);
 
 	int prog_index = 0;
 	// find first non option arg:

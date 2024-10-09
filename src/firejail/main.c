@@ -61,33 +61,33 @@ gid_t firejail_gid = 0;
 static char child_stack[STACK_SIZE] __attribute__((aligned(STACK_ALIGNMENT)));		// space for child's stack
 
 Config cfg;					// configuration
-int arg_private = 0;				// mount private /home and /tmp directoryu
-int arg_private_cache = 0;		// mount private home/.cache
-int arg_debug = 0;				// print debug messages
-int arg_debug_blacklists = 0;			// print debug messages for blacklists
-int arg_debug_whitelists = 0;			// print debug messages for whitelists
-int arg_debug_private_lib = 0;			// print debug messages for private-lib
-int arg_nonetwork = 0;				// --net=none
+// int arg_private = 0;				// mount private /home and /tmp directoryu
+// int arg_private_cache = 0;		// mount private home/.cache
+// int arg_debug = 0;				// print debug messages
+// int arg_debug_blacklists = 0;			// print debug messages for blacklists
+// int arg_debug_whitelists = 0;			// print debug messages for whitelists
+// int arg_debug_private_lib = 0;			// print debug messages for private-lib
+// int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 int arg_overlay = 0;				// overlay option
 int arg_overlay_keep = 0;			// place overlay diff in a known directory
 int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
-int arg_seccomp = 0;				// enable default seccomp filter
-int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
-int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
-int arg_seccomp_block_secondary = 0;		// block any secondary architectures
-int arg_seccomp_error_action = 0;
+// int arg_seccomp = 0;				// enable default seccomp filter
+// int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
+// int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
+// int arg_seccomp_block_secondary = 0;		// block any secondary architectures
+// int arg_seccomp_error_action = 0;
 
-int arg_caps_default_filter = 0;			// enable default capabilities filter
-int arg_caps_drop = 0;				// drop list
-int arg_caps_drop_all = 0;			// drop all capabilities
-int arg_caps_keep = 0;			// keep list
-char *arg_caps_list = NULL;			// optional caps list
+// int arg_caps_default_filter = 0;			// enable default capabilities filter
+// int arg_caps_drop = 0;				// drop list
+// int arg_caps_drop_all = 0;			// drop all capabilities
+// int arg_caps_keep = 0;			// keep list
+// char *arg_caps_list = NULL;			// optional caps list
 
-int arg_trace = 0;				// syscall tracing support
-char *arg_tracefile = NULL;			// syscall tracing file
-int arg_tracelog = 0;				// blacklist tracing support
+// int arg_trace = 0;				// syscall tracing support
+// char *arg_tracefile = NULL;			// syscall tracing file
+// int arg_tracelog = 0;				// blacklist tracing support
 int arg_rlimit_cpu = 0;				// rlimit max cpu time
 int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
@@ -97,11 +97,11 @@ int arg_rlimit_as = 0;				// rlimit as
 int arg_nogroups = 0;				// disable supplementary groups
 int arg_nonewprivs = 0;			// set the NO_NEW_PRIVS prctl
 int arg_noroot = 0;				// create a new user namespace and disable root user
-int arg_netfilter;				// enable netfilter
-int arg_netfilter6;				// enable netfilter6
-char *arg_netfilter_file = NULL;			// netfilter file
-char *arg_netfilter6_file = NULL;		// netfilter6 file
-char *arg_netns = NULL;			// "ip netns"-created network namespace to use
+// int arg_netfilter;				// enable netfilter
+// int arg_netfilter6;				// enable netfilter6
+// char *arg_netfilter_file = NULL;			// netfilter file
+// char *arg_netfilter6_file = NULL;		// netfilter6 file
+// char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
 int arg_shell_none = 0;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
@@ -114,11 +114,11 @@ int arg_private_tmp = 0;			// private tmp directory
 int arg_private_lib = 0;			// private lib directory
 int arg_private_cwd = 0;			// private working directory
 int arg_scan = 0;				// arp-scan all interfaces
-int arg_whitelist = 0;				// whitelist command
-int arg_nosound = 0;				// disable sound
-int arg_noautopulse = 0;			// disable automatic ~/.config/pulse init
-int arg_novideo = 0;			//disable video devices in /dev
-int arg_no3d;					// disable 3d hardware acceleration
+// int arg_whitelist = 0;				// whitelist command
+// int arg_nosound = 0;				// disable sound
+// int arg_noautopulse = 0;			// disable automatic ~/.config/pulse init
+// int arg_novideo = 0;			//disable video devices in /dev
+// int arg_no3d;					// disable 3d hardware acceleration
 int arg_quiet = 0;				// no output for scripting
 int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
@@ -129,13 +129,13 @@ int arg_writable_var = 0;			// writable var
 int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
-int arg_appimage = 0;				// appimage
-int arg_audit = 0;				// audit
-char *arg_audit_prog = NULL;			// audit
-int arg_apparmor = 0;				// apparmor
-int arg_allow_debuggers = 0;			// allow debuggers
-int arg_x11_block = 0;				// block X11
-int arg_x11_xorg = 0;				// use X11 security extension
+// int arg_appimage = 0;				// appimage
+// int arg_audit = 0;				// audit
+// char *arg_audit_prog = NULL;			// audit
+// int arg_apparmor = 0;				// apparmor
+// int arg_allow_debuggers = 0;			// allow debuggers
+// int arg_x11_block = 0;				// block X11
+// int arg_x11_xorg = 0;				// use X11 security extension
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
@@ -268,7 +268,7 @@ static void init_cfg(int argc, char **argv) {
 	time_t t = time(NULL);
 	srand(t ^ sandbox_pid);
 
-	arg_seccomp_error_action = EPERM;
+	// arg_seccomp_error_action = EPERM;
 	cfg.seccomp_error_action = "EPERM";
 }
 
@@ -356,19 +356,19 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("\n");
 		exit(0);
 	}
-#ifdef HAVE_OVERLAYFS
-	else if (strcmp(argv[i], "--overlay-clean") == 0) {
-		if (checkcfg(CFG_OVERLAYFS)) {
-			if (remove_overlay_directory()) {
-				fprintf(stderr, "Error: cannot remove overlay directory\n");
-				exit(1);
-			}
-		}
-		else
-			exit_err_feature("overlayfs");
-		exit(0);
-	}
-#endif
+// #ifdef HAVE_OVERLAYFS
+// 	else if (strcmp(argv[i], "--overlay-clean") == 0) {
+// 		if (checkcfg(CFG_OVERLAYFS)) {
+// 			if (remove_overlay_directory()) {
+// 				fprintf(stderr, "Error: cannot remove overlay directory\n");
+// 				exit(1);
+// 			}
+// 		}
+// 		else
+// 			exit_err_feature("overlayfs");
+// 		exit(0);
+// 	}
+// #endif
 // #ifdef HAVE_X11
 // 	else if (strcmp(argv[i], "--x11") == 0) {
 // 		if (checkcfg(CFG_X11)) {
@@ -917,25 +917,25 @@ static int check_arg(int argc, char **argv, const char *argument, int strict) {
 	return found;
 }
 
-static void run_builder(int argc, char **argv) {
-	EUID_ASSERT();
-	(void) argc;
+// static void run_builder(int argc, char **argv) {
+// 	EUID_ASSERT();
+// 	(void) argc;
 
-	// drop privileges
-	if (setresgid(-1, getgid(), getgid()) != 0)
-		errExit("setresgid");
-	if (setresuid(-1, getuid(), getuid()) != 0)
-		errExit("setresuid");
+// 	// drop privileges
+// 	if (setresgid(-1, getgid(), getgid()) != 0)
+// 		errExit("setresgid");
+// 	if (setresuid(-1, getuid(), getuid()) != 0)
+// 		errExit("setresuid");
 
-	assert(getenv("LD_PRELOAD") == NULL);
-	umask(orig_umask);
+// 	assert(getenv("LD_PRELOAD") == NULL);
+// 	umask(orig_umask);
 
-	argv[0] = LIBDIR "/firejail/fbuilder";
-	execvp(argv[0], argv);
+// 	argv[0] = LIBDIR "/firejail/fbuilder";
+// 	execvp(argv[0], argv);
 
-	perror("execvp");
-	exit(1);
-}
+// 	perror("execvp");
+// 	exit(1);
+// }
 
 void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) fd;
@@ -1063,8 +1063,8 @@ int main(int argc, char **argv, char **envp) {
 
 	// for appimages we need to remove "include disable-shell.inc from the profile
 	// a --profile command can show up before --appimage
-	if (check_arg(argc, argv, "--appimage", 1))
-		arg_appimage = 1;
+	// if (check_arg(argc, argv, "--appimage", 1))
+	// 	arg_appimage = 1;
 
 	// process allow-debuggers
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
@@ -1086,7 +1086,7 @@ int main(int argc, char **argv, char **envp) {
 			exit(1);
 		}
 
-		arg_allow_debuggers = 1;
+		// arg_allow_debuggers = 1;
 		// char *cmd = strdup("noblacklist ${PATH}/strace");
 		// if (!cmd)
 		// 	errExit("strdup");
@@ -1094,8 +1094,8 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	// profile builder
-	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
-		run_builder(argc, argv); // this function will not return
+	// if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
+	// 	run_builder(argc, argv); // this function will not return
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
@@ -1140,34 +1140,34 @@ int main(int argc, char **argv, char **envp) {
 				arg_quiet = 1;
 				parent_sshd = 1;
 
-#ifdef DEBUG_RESTRICTED_SHELL
-				{EUID_ROOT();
-				FILE *fp = fopen("/firelog", "w");
-				if (fp) {
-					int i;
-					fprintf(fp, "argc %d: ", argc);
-					for (i = 0; i < argc; i++)
-						fprintf(fp, "#%s# ", argv[i]);
-					fprintf(fp, "\n");
-					fclose(fp);
-				}
-				EUID_USER();}
-#endif
+// #ifdef DEBUG_RESTRICTED_SHELL
+// 				{EUID_ROOT();
+// 				FILE *fp = fopen("/firelog", "w");
+// 				if (fp) {
+// 					int i;
+// 					fprintf(fp, "argc %d: ", argc);
+// 					for (i = 0; i < argc; i++)
+// 						fprintf(fp, "#%s# ", argv[i]);
+// 					fprintf(fp, "\n");
+// 					fclose(fp);
+// 				}
+// 				EUID_USER();}
+// #endif
 				// run sftp and scp directly without any sandboxing
 				// regular login has argv[0] == "-firejail"
 				if (*argv[0] != '-') {
 					if (strcmp(argv[1], "-c") == 0 && argc > 2) {
 						if (strcmp(argv[2], "/usr/lib/openssh/sftp-server") == 0 ||
 						    strncmp(argv[2], "scp ", 4) == 0) {
-#ifdef DEBUG_RESTRICTED_SHELL
-							{EUID_ROOT();
-							FILE *fp = fopen("/firelog", "a");
-							if (fp) {
-								fprintf(fp, "run without a sandbox\n");
-								fclose(fp);
-							}
-							EUID_USER();}
-#endif
+// #ifdef DEBUG_RESTRICTED_SHELL
+// 							{EUID_ROOT();
+// 							FILE *fp = fopen("/firelog", "a");
+// 							if (fp) {
+// 								fprintf(fp, "run without a sandbox\n");
+// 								fclose(fp);
+// 							}
+// 							EUID_USER();}
+// #endif
 
 							drop_privs(1);
 							umask(orig_umask);
@@ -1189,19 +1189,19 @@ int main(int argc, char **argv, char **envp) {
 		fullargc = restricted_shell(cfg.username);
 		if (fullargc) {
 
-#ifdef DEBUG_RESTRICTED_SHELL
-			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "a");
-			if (fp) {
-				fprintf(fp, "fullargc %d: ",  fullargc);
-				int i;
-				for (i = 0; i < fullargc; i++)
-					fprintf(fp, "#%s# ", fullargv[i]);
-				fprintf(fp, "\n");
-				fclose(fp);
-			}
-			EUID_USER();}
-#endif
+// #ifdef DEBUG_RESTRICTED_SHELL
+// 			{EUID_ROOT();
+// 			FILE *fp = fopen("/firelog", "a");
+// 			if (fp) {
+// 				fprintf(fp, "fullargc %d: ",  fullargc);
+// 				int i;
+// 				for (i = 0; i < fullargc; i++)
+// 					fprintf(fp, "#%s# ", fullargv[i]);
+// 				fprintf(fp, "\n");
+// 				fclose(fp);
+// 			}
+// 			EUID_USER();}
+// #endif
 
 			int j;
 			for (i = 1, j = fullargc; i < argc && j < MAX_ARGS; i++, j++, fullargc++)
@@ -1211,19 +1211,19 @@ int main(int argc, char **argv, char **envp) {
 			argv = fullargv;
 			argc = j;
 
-#ifdef DEBUG_RESTRICTED_SHELL
-			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "a");
-			if (fp) {
-				fprintf(fp, "argc %d: ", argc);
-				int i;
-				for (i = 0; i < argc; i++)
-					fprintf(fp, "#%s# ", argv[i]);
-				fprintf(fp, "\n");
-				fclose(fp);
-			}
-			EUID_USER();}
-#endif
+// #ifdef DEBUG_RESTRICTED_SHELL
+// 			{EUID_ROOT();
+// 			FILE *fp = fopen("/firelog", "a");
+// 			if (fp) {
+// 				fprintf(fp, "argc %d: ", argc);
+// 				int i;
+// 				for (i = 0; i < argc; i++)
+// 					fprintf(fp, "#%s# ", argv[i]);
+// 				fprintf(fp, "\n");
+// 				fclose(fp);
+// 			}
+// 			EUID_USER();}
+// #endif
 		}
 	}
 	else {
@@ -1240,68 +1240,68 @@ int main(int argc, char **argv, char **envp) {
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 
-		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
-			arg_debug = 1;
-		else if (strcmp(argv[i], "--debug-blacklists") == 0)
-			arg_debug_blacklists = 1;
-		else if (strcmp(argv[i], "--debug-whitelists") == 0)
-			arg_debug_whitelists = 1;
-		else if (strcmp(argv[i], "--debug-private-lib") == 0)
-			arg_debug_private_lib = 1;
-		else if (strcmp(argv[i], "--quiet") == 0) {
-			arg_quiet = 1;
-			arg_debug = 0;
-		}
-		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
-			// already handled
-		}
+		// if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
+		// 	arg_debug = 1;
+		// else if (strcmp(argv[i], "--debug-blacklists") == 0)
+		// 	arg_debug_blacklists = 1;
+		// else if (strcmp(argv[i], "--debug-whitelists") == 0)
+		// 	arg_debug_whitelists = 1;
+		// else if (strcmp(argv[i], "--debug-private-lib") == 0)
+		// 	arg_debug_private_lib = 1;
+		// else if (strcmp(argv[i], "--quiet") == 0) {
+		// 	arg_quiet = 1;
+		// 	arg_debug = 0;
+		// }
+		// else if (strcmp(argv[i], "--allow-debuggers") == 0) {
+		// 	// already handled
+		// }
 
 
 		//*************************************
 		// x11
 		//*************************************
 
-#ifdef HAVE_X11
-		else if (strncmp(argv[i], "--xephyr-screen=", 16) == 0) {
-			if (checkcfg(CFG_X11))
-				; // the processing is done directly in x11.c
-			else
-				exit_err_feature("x11");
-		}
-#endif
+// #ifdef HAVE_X11
+// 		else if (strncmp(argv[i], "--xephyr-screen=", 16) == 0) {
+// 			if (checkcfg(CFG_X11))
+// 				; // the processing is done directly in x11.c
+// 			else
+// 				exit_err_feature("x11");
+// 		}
+// #endif
 		//*************************************
 		// filtering
 		//*************************************
-#ifdef HAVE_APPARMOR
-		else if (strcmp(argv[i], "--apparmor") == 0)
-			arg_apparmor = 1;
-#endif
-		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (cfg.protocol) {
-					fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
-				}
-				else {
-					// store list
-					cfg.protocol = strdup(argv[i] + 11);
-					if (!cfg.protocol)
-						errExit("strdup");
-				}
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strcmp(argv[i], "--seccomp") == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp) {
-					fprintf(stderr, "Error: seccomp already enabled\n");
-					exit(1);
-				}
-				arg_seccomp = 1;
-			}
-			else
-				exit_err_feature("seccomp");
-		}
+// #ifdef HAVE_APPARMOR
+// 		else if (strcmp(argv[i], "--apparmor") == 0)
+// 			arg_apparmor = 1;
+// #endif
+		// else if (strncmp(argv[i], "--protocol=", 11) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (cfg.protocol) {
+		// 			fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
+		// 		}
+		// 		else {
+		// 			// store list
+		// 			cfg.protocol = strdup(argv[i] + 11);
+		// 			if (!cfg.protocol)
+		// 				errExit("strdup");
+		// 		}
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strcmp(argv[i], "--seccomp") == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp) {
+		// 			fprintf(stderr, "Error: seccomp already enabled\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp = 1;
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
 		// else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
 		// 	if (checkcfg(CFG_SECCOMP)) {
 		// 		if (arg_seccomp) {
@@ -1374,51 +1374,51 @@ int main(int argc, char **argv, char **envp) {
 		// 	else
 		// 		exit_err_feature("seccomp");
 		// }
-		else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				if (arg_seccomp32) {
-					fprintf(stderr, "Error: seccomp.32 conflicts with block-secondary\n");
-					exit(1);
-				}
-				arg_seccomp_block_secondary = 1;
-			}
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
-			if (checkcfg(CFG_SECCOMP))
-				arg_memory_deny_write_execute = 1;
-			else
-				exit_err_feature("seccomp");
-		}
-		else if (strncmp(argv[i], "--seccomp-error-action=", 23) == 0) {
-			if (checkcfg(CFG_SECCOMP)) {
-				int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
-				if (config_seccomp_error_action == -1) {
-					if (strcmp(argv[i] + 23, "kill") == 0)
-						arg_seccomp_error_action = SECCOMP_RET_KILL;
-					else if (strcmp(argv[i] + 23, "log") == 0)
-						arg_seccomp_error_action = SECCOMP_RET_LOG;
-					else {
-						arg_seccomp_error_action = errno_find_name(argv[i] + 23);
-						if (arg_seccomp_error_action == -1)
-							errExit("seccomp-error-action: unknown errno");
-					}
-					cfg.seccomp_error_action = strdup(argv[i] + 23);
-					if (!cfg.seccomp_error_action)
-						errExit("strdup");
-				} else
-					exit_err_feature("seccomp-error-action");
+		// else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		if (arg_seccomp32) {
+		// 			fprintf(stderr, "Error: seccomp.32 conflicts with block-secondary\n");
+		// 			exit(1);
+		// 		}
+		// 		arg_seccomp_block_secondary = 1;
+		// 	}
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
+		// 	if (checkcfg(CFG_SECCOMP))
+		// 		arg_memory_deny_write_execute = 1;
+		// 	else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strncmp(argv[i], "--seccomp-error-action=", 23) == 0) {
+		// 	if (checkcfg(CFG_SECCOMP)) {
+		// 		int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);
+		// 		if (config_seccomp_error_action == -1) {
+		// 			if (strcmp(argv[i] + 23, "kill") == 0)
+		// 				arg_seccomp_error_action = SECCOMP_RET_KILL;
+		// 			else if (strcmp(argv[i] + 23, "log") == 0)
+		// 				arg_seccomp_error_action = SECCOMP_RET_LOG;
+		// 			else {
+		// 				arg_seccomp_error_action = errno_find_name(argv[i] + 23);
+		// 				if (arg_seccomp_error_action == -1)
+		// 					errExit("seccomp-error-action: unknown errno");
+		// 			}
+		// 			cfg.seccomp_error_action = strdup(argv[i] + 23);
+		// 			if (!cfg.seccomp_error_action)
+		// 				errExit("strdup");
+		// 		} else
+		// 			exit_err_feature("seccomp-error-action");
 
-			} else
-				exit_err_feature("seccomp");
-		}
-		else if (strcmp(argv[i], "--caps") == 0) {
-			arg_caps_default_filter = 1;
-			arg_caps_cmdline = 1;
-		}
-		else if (strcmp(argv[i], "--caps.drop=all") == 0)
-			arg_caps_drop_all = 1;
+		// 	} else
+		// 		exit_err_feature("seccomp");
+		// }
+		// else if (strcmp(argv[i], "--caps") == 0) {
+		// 	arg_caps_default_filter = 1;
+		// 	arg_caps_cmdline = 1;
+		// }
+		// else if (strcmp(argv[i], "--caps.drop=all") == 0)
+		// 	arg_caps_drop_all = 1;
 		// else if (strncmp(argv[i], "--caps.drop=", 12) == 0) {
 		// 	arg_caps_drop = 1;
 		// 	arg_caps_list = strdup(argv[i] + 12);
@@ -1437,71 +1437,71 @@ int main(int argc, char **argv, char **envp) {
 		// 	caps_check_list(arg_caps_list, NULL);
 		// 	arg_caps_cmdline = 1;
 		// }
-		else if (strcmp(argv[i], "--trace") == 0)
-			arg_trace = 1;
-		else if (strncmp(argv[i], "--trace=", 8) == 0) {
-			arg_trace = 1;
-			arg_tracefile = argv[i] + 8;
-			if (*arg_tracefile == '\0') {
-				fprintf(stderr, "Error: invalid trace option\n");
-				exit(1);
-			}
-			invalid_filename(arg_tracefile, 0); // no globbing
-			if (strstr(arg_tracefile, "..")) {
-				fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
-				exit(1);
-			}
-			// if the filename starts with ~, expand the home directory
-			if (*arg_tracefile == '~') {
-				char *tmp;
-				if (asprintf(&tmp, "%s%s", cfg.homedir, arg_tracefile + 1) == -1)
-					errExit("asprintf");
-				arg_tracefile = tmp;
-			}
-		}
-		else if (strcmp(argv[i], "--tracelog") == 0)
-			arg_tracelog = 1;
-		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
-			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
-			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
-			arg_rlimit_cpu = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
-			check_unsigned(argv[i] + 16, "Error: invalid rlimit");
-			sscanf(argv[i] + 16, "%llu", &cfg.rlimit_nofile);
-			arg_rlimit_nofile = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-nproc=", 15) == 0) {
-			check_unsigned(argv[i] + 15, "Error: invalid rlimit");
-			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_nproc);
-			arg_rlimit_nproc = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
-			check_unsigned(argv[i] + 15, "Error: invalid rlimit");
-			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_fsize);
-			arg_rlimit_fsize = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-sigpending=", 20) == 0) {
-			check_unsigned(argv[i] + 20, "Error: invalid rlimit");
-			sscanf(argv[i] + 20, "%llu", &cfg.rlimit_sigpending);
-			arg_rlimit_sigpending = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
-			check_unsigned(argv[i] + 12, "Error: invalid rlimit");
-			sscanf(argv[i] + 12, "%llu", &cfg.rlimit_as);
-			arg_rlimit_as = 1;
-		}
-		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
-			arg_ipc = 1;
-		// else if (strncmp(argv[i], "--cpu=", 6) == 0)
-		// 	read_cpu_list(argv[i] + 6);
-		else if (strncmp(argv[i], "--nice=", 7) == 0) {
-			cfg.nice = atoi(argv[i] + 7);
-			if (getuid() != 0 &&cfg.nice < 0)
-				cfg.nice = 0;
-			arg_nice = 1;
-		}
-		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
+		// else if (strcmp(argv[i], "--trace") == 0)
+		// 	arg_trace = 1;
+		// else if (strncmp(argv[i], "--trace=", 8) == 0) {
+		// 	arg_trace = 1;
+		// 	arg_tracefile = argv[i] + 8;
+		// 	if (*arg_tracefile == '\0') {
+		// 		fprintf(stderr, "Error: invalid trace option\n");
+		// 		exit(1);
+		// 	}
+		// 	invalid_filename(arg_tracefile, 0); // no globbing
+		// 	if (strstr(arg_tracefile, "..")) {
+		// 		fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
+		// 		exit(1);
+		// 	}
+		// 	// if the filename starts with ~, expand the home directory
+		// 	if (*arg_tracefile == '~') {
+		// 		char *tmp;
+		// 		if (asprintf(&tmp, "%s%s", cfg.homedir, arg_tracefile + 1) == -1)
+		// 			errExit("asprintf");
+		// 		arg_tracefile = tmp;
+		// 	}
+		// }
+		// else if (strcmp(argv[i], "--tracelog") == 0)
+		// 	arg_tracelog = 1;
+		// else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
+		// 	check_unsigned(argv[i] + 13, "Error: invalid rlimit");
+		// 	sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
+		// 	arg_rlimit_cpu = 1;
+		// }
+		// else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
+		// 	check_unsigned(argv[i] + 16, "Error: invalid rlimit");
+		// 	sscanf(argv[i] + 16, "%llu", &cfg.rlimit_nofile);
+		// 	arg_rlimit_nofile = 1;
+		// }
+		// else if (strncmp(argv[i], "--rlimit-nproc=", 15) == 0) {
+		// 	check_unsigned(argv[i] + 15, "Error: invalid rlimit");
+		// 	sscanf(argv[i] + 15, "%llu", &cfg.rlimit_nproc);
+		// 	arg_rlimit_nproc = 1;
+		// }
+		// else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
+		// 	check_unsigned(argv[i] + 15, "Error: invalid rlimit");
+		// 	sscanf(argv[i] + 15, "%llu", &cfg.rlimit_fsize);
+		// 	arg_rlimit_fsize = 1;
+		// }
+		// else if (strncmp(argv[i], "--rlimit-sigpending=", 20) == 0) {
+		// 	check_unsigned(argv[i] + 20, "Error: invalid rlimit");
+		// 	sscanf(argv[i] + 20, "%llu", &cfg.rlimit_sigpending);
+		// 	arg_rlimit_sigpending = 1;
+		// }
+		// else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
+		// 	check_unsigned(argv[i] + 12, "Error: invalid rlimit");
+		// 	sscanf(argv[i] + 12, "%llu", &cfg.rlimit_as);
+		// 	arg_rlimit_as = 1;
+		// }
+		// else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
+		// 	arg_ipc = 1;
+		// // else if (strncmp(argv[i], "--cpu=", 6) == 0)
+		// // 	read_cpu_list(argv[i] + 6);
+		// else if (strncmp(argv[i], "--nice=", 7) == 0) {
+		// 	cfg.nice = atoi(argv[i] + 7);
+		// 	if (getuid() != 0 &&cfg.nice < 0)
+		// 		cfg.nice = 0;
+		// 	arg_nice = 1;
+		// }
+		if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (checkcfg(CFG_CGROUP)) {
 				if (option_cgroup) {
 					fprintf(stderr, "Error: only a cgroup can be defined\n");
@@ -1522,8 +1522,8 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		// filesystem
 		//*************************************
-		else if (strcmp(argv[i], "--allusers") == 0)
-			arg_allusers = 1;
+		// else if (strcmp(argv[i], "--allusers") == 0)
+		// 	arg_allusers = 1;
 		// else if (strncmp(argv[i], "--bind=", 7) == 0) {
 		// 	if (checkcfg(CFG_BIND)) {
 		// 		char *line;
@@ -1608,95 +1608,95 @@ int main(int argc, char **argv, char **envp) {
 		// 	profile_check_line(line, 0, NULL);	// will exit if something wrong
 		// 	profile_add(line);
 		// }
-		else if (strcmp(argv[i], "--disable-mnt") == 0)
-			arg_disable_mnt = 1;
-#ifdef HAVE_OVERLAYFS
-		else if (strcmp(argv[i], "--overlay") == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
+		// else if (strcmp(argv[i], "--disable-mnt") == 0)
+		// 	arg_disable_mnt = 1;
+// #ifdef HAVE_OVERLAYFS
+// 		else if (strcmp(argv[i], "--overlay") == 0) {
+// 			if (checkcfg(CFG_OVERLAYFS)) {
+// 				if (arg_overlay) {
+// 					fprintf(stderr, "Error: only one overlay command is allowed\n");
+// 					exit(1);
+// 				}
 
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
+// 				if (cfg.chrootdir) {
+// 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+// 					exit(1);
+// 				}
+// 				struct stat s;
+// 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+// 					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+// 					exit(1);
+// 				}
+// 				arg_overlay = 1;
+// 				arg_overlay_keep = 1;
 
-				char *subdirname;
-				if (asprintf(&subdirname, "%d", getpid()) == -1)
-					errExit("asprintf");
-				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+// 				char *subdirname;
+// 				if (asprintf(&subdirname, "%d", getpid()) == -1)
+// 					errExit("asprintf");
+// 				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
 
-				free(subdirname);
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-				arg_overlay_reuse = 1;
+// 				free(subdirname);
+// 			}
+// 			else
+// 				exit_err_feature("overlayfs");
+// 		}
+// 		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
+// 			if (checkcfg(CFG_OVERLAYFS)) {
+// 				if (arg_overlay) {
+// 					fprintf(stderr, "Error: only one overlay command is allowed\n");
+// 					exit(1);
+// 				}
+// 				if (cfg.chrootdir) {
+// 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+// 					exit(1);
+// 				}
+// 				struct stat s;
+// 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+// 					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+// 					exit(1);
+// 				}
+// 				arg_overlay = 1;
+// 				arg_overlay_keep = 1;
+// 				arg_overlay_reuse = 1;
 
-				char *subdirname = argv[i] + 16;
-				if (*subdirname == '\0') {
-					fprintf(stderr, "Error: invalid overlay option\n");
-					exit(1);
-				}
+// 				char *subdirname = argv[i] + 16;
+// 				if (*subdirname == '\0') {
+// 					fprintf(stderr, "Error: invalid overlay option\n");
+// 					exit(1);
+// 				}
 
-				// check name
-				invalid_filename(subdirname, 0); // no globbing
-				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
-					fprintf(stderr, "Error: invalid overlay name\n");
-					exit(1);
-				}
-				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-#endif
+// 				// check name
+// 				invalid_filename(subdirname, 0); // no globbing
+// 				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
+// 					fprintf(stderr, "Error: invalid overlay name\n");
+// 					exit(1);
+// 				}
+// 				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
+// 			}
+// 			else
+// 				exit_err_feature("overlayfs");
+// 		}
+// 		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
+// 			if (checkcfg(CFG_OVERLAYFS)) {
+// 				if (arg_overlay) {
+// 					fprintf(stderr, "Error: only one overlay command is allowed\n");
+// 					exit(1);
+// 				}
+// 				if (cfg.chrootdir) {
+// 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
+// 					exit(1);
+// 				}
+// 				struct stat s;
+// 				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
+// 					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
+// 					exit(1);
+// 				}
+// 				arg_overlay = 1;
+// 			}
+// 			else
+// 				exit_err_feature("overlayfs");
+// 		}
+// #endif
 // #ifdef HAVE_FIRETUNNEL
 // 		else if (strcmp(argv[i], "--tunnel") == 0) {
 // 			// try to connect to the default client side of the tunnel
@@ -1846,157 +1846,157 @@ int main(int argc, char **argv, char **envp) {
 				exit_err_feature("chroot");
 		}
 #endif
-		else if (strcmp(argv[i], "--writable-etc") == 0) {
-			if (cfg.etc_private_keep) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-				exit(1);
-			}
-			arg_writable_etc = 1;
-		}
-		else if (strcmp(argv[i], "--writable-var") == 0) {
-			arg_writable_var = 1;
-		}
-		else if (strcmp(argv[i], "--keep-var-tmp") == 0) {
-		        arg_keep_var_tmp = 1;
-		}
-		else if (strcmp(argv[i], "--writable-run-user") == 0) {
-			arg_writable_run_user = 1;
-		}
-		else if (strcmp(argv[i], "--writable-var-log") == 0) {
-			arg_writable_var_log = 1;
-		}
-		else if (strcmp(argv[i], "--machine-id") == 0) {
-			arg_machineid = 1;
-		}
-		else if (strcmp(argv[i], "--private") == 0) {
-			arg_private = 1;
-		}
-		else if (strncmp(argv[i], "--private=", 10) == 0) {
-			if (cfg.home_private_keep) {
-				fprintf(stderr, "Error: a private list of files was already defined with --private-home option.\n");
-				exit(1);
-			}
+		// else if (strcmp(argv[i], "--writable-etc") == 0) {
+		// 	if (cfg.etc_private_keep) {
+		// 		fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+		// 		exit(1);
+		// 	}
+		// 	arg_writable_etc = 1;
+		// }
+		// else if (strcmp(argv[i], "--writable-var") == 0) {
+		// 	arg_writable_var = 1;
+		// }
+		// else if (strcmp(argv[i], "--keep-var-tmp") == 0) {
+		//         arg_keep_var_tmp = 1;
+		// }
+		// else if (strcmp(argv[i], "--writable-run-user") == 0) {
+		// 	arg_writable_run_user = 1;
+		// }
+		// else if (strcmp(argv[i], "--writable-var-log") == 0) {
+		// 	arg_writable_var_log = 1;
+		// }
+		// else if (strcmp(argv[i], "--machine-id") == 0) {
+		// 	arg_machineid = 1;
+		// }
+		// else if (strcmp(argv[i], "--private") == 0) {
+		// 	arg_private = 1;
+		// }
+		// else if (strncmp(argv[i], "--private=", 10) == 0) {
+		// 	if (cfg.home_private_keep) {
+		// 		fprintf(stderr, "Error: a private list of files was already defined with --private-home option.\n");
+		// 		exit(1);
+		// 	}
 
-			// extract private home dirname
-			cfg.home_private = argv[i] + 10;
-			if (*cfg.home_private == '\0') {
-				fprintf(stderr, "Error: invalid private option\n");
-				exit(1);
-			}
-			fs_check_private_dir();
+		// 	// extract private home dirname
+		// 	cfg.home_private = argv[i] + 10;
+		// 	if (*cfg.home_private == '\0') {
+		// 		fprintf(stderr, "Error: invalid private option\n");
+		// 		exit(1);
+		// 	}
+		// 	fs_check_private_dir();
 
-			// downgrade to --private if the directory is the user home directory
-			if (strcmp(cfg.home_private, cfg.homedir) == 0) {
-				free(cfg.home_private);
-				cfg.home_private = NULL;
-			}
-			arg_private = 1;
-		}
-#ifdef HAVE_PRIVATE_HOME
-		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
-			if (checkcfg(CFG_PRIVATE_HOME)) {
-				if (cfg.home_private) {
-					fprintf(stderr, "Error: a private home directory was already defined with --private option.\n");
-					exit(1);
-				}
+		// 	// downgrade to --private if the directory is the user home directory
+		// 	if (strcmp(cfg.home_private, cfg.homedir) == 0) {
+		// 		free(cfg.home_private);
+		// 		cfg.home_private = NULL;
+		// 	}
+		// 	arg_private = 1;
+		// }
+// #ifdef HAVE_PRIVATE_HOME
+// 		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
+// 			if (checkcfg(CFG_PRIVATE_HOME)) {
+// 				if (cfg.home_private) {
+// 					fprintf(stderr, "Error: a private home directory was already defined with --private option.\n");
+// 					exit(1);
+// 				}
 
-				// extract private home dirname
-				if (*(argv[i] + 15) == '\0') {
-					fprintf(stderr, "Error: invalid private-home option\n");
-					exit(1);
-				}
-				if (cfg.home_private_keep) {
-					if ( asprintf(&cfg.home_private_keep, "%s,%s", cfg.home_private_keep, argv[i] + 15) < 0 )
-						errExit("asprintf");
-				} else
-					cfg.home_private_keep = argv[i] + 15;
-				arg_private = 1;
-			}
-			else
-				exit_err_feature("private-home");
-		}
-#endif
-		else if (strcmp(argv[i], "--private-dev") == 0) {
-			arg_private_dev = 1;
-		}
-		else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
-			arg_keep_dev_shm = 1;
-		}
-		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
-			if (arg_writable_etc) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-				exit(1);
-			}
+// 				// extract private home dirname
+// 				if (*(argv[i] + 15) == '\0') {
+// 					fprintf(stderr, "Error: invalid private-home option\n");
+// 					exit(1);
+// 				}
+// 				if (cfg.home_private_keep) {
+// 					if ( asprintf(&cfg.home_private_keep, "%s,%s", cfg.home_private_keep, argv[i] + 15) < 0 )
+// 						errExit("asprintf");
+// 				} else
+// 					cfg.home_private_keep = argv[i] + 15;
+// 				arg_private = 1;
+// 			}
+// 			else
+// 				exit_err_feature("private-home");
+// 		}
+// #endif
+		// else if (strcmp(argv[i], "--private-dev") == 0) {
+		// 	arg_private_dev = 1;
+		// }
+		// else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
+		// 	arg_keep_dev_shm = 1;
+		// }
+		// else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
+		// 	if (arg_writable_etc) {
+		// 		fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+		// 		exit(1);
+		// 	}
 
-			// extract private etc list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-etc option\n");
-				exit(1);
-			}
-			if (cfg.etc_private_keep) {
-				if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.etc_private_keep = argv[i] + 14;
-			arg_private_etc = 1;
-		}
-		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
-			// extract private opt list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-opt option\n");
-				exit(1);
-			}
-			if (cfg.opt_private_keep) {
-				if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.opt_private_keep = argv[i] + 14;
-			arg_private_opt = 1;
-		}
-		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
-			// extract private srv list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-srv option\n");
-				exit(1);
-			}
-			if (cfg.srv_private_keep) {
-				if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.srv_private_keep = argv[i] + 14;
-			arg_private_srv = 1;
-		}
-		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
-			// extract private bin list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-bin option\n");
-				exit(1);
-			}
-			if (cfg.bin_private_keep) {
-				if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.bin_private_keep = argv[i] + 14;
-			arg_private_bin = 1;
-		}
-		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
-			if (checkcfg(CFG_PRIVATE_LIB)) {
-				// extract private lib list (if any)
-				if (argv[i][13] == '=') {
-					if (cfg.lib_private_keep) {
-						if (argv[i][14] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0)
-							errExit("asprintf");
-					} else
-						cfg.lib_private_keep = argv[i] + 14;
-				}
-				arg_private_lib = 1;
-			}
-			else
-				exit_err_feature("private-lib");
-		}
-		else if (strcmp(argv[i], "--private-tmp") == 0) {
-			arg_private_tmp = 1;
-		}
+		// 	// extract private etc list
+		// 	if (*(argv[i] + 14) == '\0') {
+		// 		fprintf(stderr, "Error: invalid private-etc option\n");
+		// 		exit(1);
+		// 	}
+		// 	if (cfg.etc_private_keep) {
+		// 		if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, argv[i] + 14) < 0 )
+		// 			errExit("asprintf");
+		// 	} else
+		// 		cfg.etc_private_keep = argv[i] + 14;
+		// 	arg_private_etc = 1;
+		// }
+		// else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
+		// 	// extract private opt list
+		// 	if (*(argv[i] + 14) == '\0') {
+		// 		fprintf(stderr, "Error: invalid private-opt option\n");
+		// 		exit(1);
+		// 	}
+		// 	if (cfg.opt_private_keep) {
+		// 		if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, argv[i] + 14) < 0 )
+		// 			errExit("asprintf");
+		// 	} else
+		// 		cfg.opt_private_keep = argv[i] + 14;
+		// 	arg_private_opt = 1;
+		// }
+		// else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
+		// 	// extract private srv list
+		// 	if (*(argv[i] + 14) == '\0') {
+		// 		fprintf(stderr, "Error: invalid private-srv option\n");
+		// 		exit(1);
+		// 	}
+		// 	if (cfg.srv_private_keep) {
+		// 		if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, argv[i] + 14) < 0 )
+		// 			errExit("asprintf");
+		// 	} else
+		// 		cfg.srv_private_keep = argv[i] + 14;
+		// 	arg_private_srv = 1;
+		// }
+		// else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
+		// 	// extract private bin list
+		// 	if (*(argv[i] + 14) == '\0') {
+		// 		fprintf(stderr, "Error: invalid private-bin option\n");
+		// 		exit(1);
+		// 	}
+		// 	if (cfg.bin_private_keep) {
+		// 		if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
+		// 			errExit("asprintf");
+		// 	} else
+		// 		cfg.bin_private_keep = argv[i] + 14;
+		// 	arg_private_bin = 1;
+		// }
+		// else if (strncmp(argv[i], "--private-lib", 13) == 0) {
+		// 	if (checkcfg(CFG_PRIVATE_LIB)) {
+		// 		// extract private lib list (if any)
+		// 		if (argv[i][13] == '=') {
+		// 			if (cfg.lib_private_keep) {
+		// 				if (argv[i][14] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0)
+		// 					errExit("asprintf");
+		// 			} else
+		// 				cfg.lib_private_keep = argv[i] + 14;
+		// 		}
+		// 		arg_private_lib = 1;
+		// 	}
+		// 	else
+		// 		exit_err_feature("private-lib");
+		// }
+		// else if (strcmp(argv[i], "--private-tmp") == 0) {
+		// 	arg_private_tmp = 1;
+		// }
 // #ifdef HAVE_USERTMPFS
 // 		else if (strcmp(argv[i], "--private-cache") == 0) {
 // 			if (checkcfg(CFG_PRIVATE_CACHE))
@@ -2005,19 +2005,19 @@ int main(int argc, char **argv, char **envp) {
 // 				exit_err_feature("private-cache");
 // 		}
 // #endif
-		else if (strcmp(argv[i], "--private-cwd") == 0) {
-			cfg.cwd = NULL;
-			arg_private_cwd = 1;
-		}
-		else if (strncmp(argv[i], "--private-cwd=", 14) == 0) {
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-cwd option\n");
-				exit(1);
-			}
+		// else if (strcmp(argv[i], "--private-cwd") == 0) {
+		// 	cfg.cwd = NULL;
+		// 	arg_private_cwd = 1;
+		// }
+		// else if (strncmp(argv[i], "--private-cwd=", 14) == 0) {
+		// 	if (*(argv[i] + 14) == '\0') {
+		// 		fprintf(stderr, "Error: invalid private-cwd option\n");
+		// 		exit(1);
+		// 	}
 
-			fs_check_private_cwd(argv[i] + 14);
-			arg_private_cwd = 1;
-		}
+		// 	fs_check_private_cwd(argv[i] + 14);
+		// 	arg_private_cwd = 1;
+		// }
 
 		//*************************************
 		// hostname, etc
@@ -2029,47 +2029,47 @@ int main(int argc, char **argv, char **envp) {
 				return 1;
 			}
 		}
-		else if (strncmp(argv[i], "--hostname=", 11) == 0) {
-			cfg.hostname = argv[i] + 11;
-			if (strlen(cfg.hostname) == 0) {
-				fprintf(stderr, "Error: please provide a hostname for sandbox\n");
-				return 1;
-			}
-		}
-		else if (strcmp(argv[i], "--nogroups") == 0)
-			arg_nogroups = 1;
-#ifdef HAVE_USERNS
-		else if (strcmp(argv[i], "--noroot") == 0) {
-			if (checkcfg(CFG_USERNS))
-				check_user_namespace();
-			else
-				exit_err_feature("noroot");
-		}
-#endif
-		else if (strcmp(argv[i], "--nonewprivs") == 0)
-			arg_nonewprivs = 1;
+		// else if (strncmp(argv[i], "--hostname=", 11) == 0) {
+		// 	cfg.hostname = argv[i] + 11;
+		// 	if (strlen(cfg.hostname) == 0) {
+		// 		fprintf(stderr, "Error: please provide a hostname for sandbox\n");
+		// 		return 1;
+		// 	}
+		// }
+		// else if (strcmp(argv[i], "--nogroups") == 0)
+		// 	arg_nogroups = 1;
+// #ifdef HAVE_USERNS
+// 		else if (strcmp(argv[i], "--noroot") == 0) {
+// 			if (checkcfg(CFG_USERNS))
+// 				check_user_namespace();
+// 			else
+// 				exit_err_feature("noroot");
+// 		}
+// #endif
+		// else if (strcmp(argv[i], "--nonewprivs") == 0)
+		// 	arg_nonewprivs = 1;
 		else if (strncmp(argv[i], "--env=", 6) == 0)
 			env_store(argv[i] + 6, SETENV);
 		else if (strncmp(argv[i], "--rmenv=", 8) == 0)
 			env_store(argv[i] + 8, RMENV);
-		else if (strcmp(argv[i], "--nosound") == 0)
-			arg_nosound = 1;
-		else if (strcmp(argv[i], "--noautopulse") == 0)
-			arg_noautopulse = 1;
-		else if (strcmp(argv[i], "--novideo") == 0)
-			arg_novideo = 1;
-		else if (strcmp(argv[i], "--no3d") == 0)
-			arg_no3d = 1;
-		else if (strcmp(argv[i], "--notv") == 0)
-			arg_notv = 1;
-		else if (strcmp(argv[i], "--nodvd") == 0)
-			arg_nodvd = 1;
-		else if (strcmp(argv[i], "--nou2f") == 0)
-			arg_nou2f = 1;
-		else if (strcmp(argv[i], "--nodbus") == 0) {
-			arg_dbus_user = DBUS_POLICY_BLOCK;
-			arg_dbus_system = DBUS_POLICY_BLOCK;
-		}
+		// else if (strcmp(argv[i], "--nosound") == 0)
+		// 	arg_nosound = 1;
+		// else if (strcmp(argv[i], "--noautopulse") == 0)
+		// 	arg_noautopulse = 1;
+		// else if (strcmp(argv[i], "--novideo") == 0)
+		// 	arg_novideo = 1;
+		// else if (strcmp(argv[i], "--no3d") == 0)
+		// 	arg_no3d = 1;
+		// else if (strcmp(argv[i], "--notv") == 0)
+		// 	arg_notv = 1;
+		// else if (strcmp(argv[i], "--nodvd") == 0)
+		// 	arg_nodvd = 1;
+		// else if (strcmp(argv[i], "--nou2f") == 0)
+		// 	arg_nou2f = 1;
+		// else if (strcmp(argv[i], "--nodbus") == 0) {
+		// 	arg_dbus_user = DBUS_POLICY_BLOCK;
+		// 	arg_dbus_system = DBUS_POLICY_BLOCK;
+		// }
 
 		//*************************************
 		// D-BUS proxy
@@ -2540,52 +2540,52 @@ int main(int argc, char **argv, char **envp) {
 		// 	}
 		// }
 
-		else if (strncmp(argv[i], "--hosts-file=", 13) == 0)
-			cfg.hosts_file = fs_check_hosts_file(argv[i] + 13);
+		// else if (strncmp(argv[i], "--hosts-file=", 13) == 0)
+		// 	cfg.hosts_file = fs_check_hosts_file(argv[i] + 13);
 
-#ifdef HAVE_NETWORK
-		else if (strcmp(argv[i], "--netfilter") == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				arg_netfilter = 1;
-			}
-			else
-				exit_err_feature("networking");
-		}
+// #ifdef HAVE_NETWORK
+// 		else if (strcmp(argv[i], "--netfilter") == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				arg_netfilter = 1;
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				arg_netfilter = 1;
-				arg_netfilter_file = argv[i] + 12;
-				check_netfilter_file(arg_netfilter_file);
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				arg_netfilter = 1;
+// 				arg_netfilter_file = argv[i] + 12;
+// 				check_netfilter_file(arg_netfilter_file);
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				arg_netfilter6 = 1;
-				arg_netfilter6_file = argv[i] + 13;
-				check_netfilter_file(arg_netfilter6_file);
-			}
-			else
-				exit_err_feature("networking");
-		}
+// 		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				arg_netfilter6 = 1;
+// 				arg_netfilter6_file = argv[i] + 13;
+// 				check_netfilter_file(arg_netfilter6_file);
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
 
-		else if (strncmp(argv[i], "--netns=", 8) == 0) {
-			if (checkcfg(CFG_NETWORK)) {
-				arg_netns = argv[i] + 8;
-				check_netns(arg_netns);
-			}
-			else
-				exit_err_feature("networking");
-		}
-#endif
+// 		else if (strncmp(argv[i], "--netns=", 8) == 0) {
+// 			if (checkcfg(CFG_NETWORK)) {
+// 				arg_netns = argv[i] + 8;
+// 				check_netns(arg_netns);
+// 			}
+// 			else
+// 				exit_err_feature("networking");
+// 		}
+// #endif
 		//*************************************
 		// command
 		//*************************************
-		else if (strncmp(argv[i], "--timeout=", 10) == 0)
-			cfg.timeout = extract_timeout(argv[i] + 10);
+		// else if (strncmp(argv[i], "--timeout=", 10) == 0)
+		// 	cfg.timeout = extract_timeout(argv[i] + 10);
 		// else if (strcmp(argv[i], "--audit") == 0) {
 		// 	arg_audit_prog = LIBDIR "/firejail/faudit";
 		// 	profile_add_ignore("shell none");
@@ -2608,82 +2608,82 @@ int main(int argc, char **argv, char **envp) {
 		// 	profile_add_ignore("shell none");
 		// 	arg_audit = 1;
 		// }
-		else if (strcmp(argv[i], "--appimage") == 0)
-			arg_appimage = 1;
-		else if (strcmp(argv[i], "--shell=none") == 0) {
-			arg_shell_none = 1;
-			if (cfg.shell) {
-				fprintf(stderr, "Error: a shell was already specified\n");
-				return 1;
-			}
-		}
-		else if (strncmp(argv[i], "--shell=", 8) == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			invalid_filename(argv[i] + 8, 0); // no globbing
+		// else if (strcmp(argv[i], "--appimage") == 0)
+		// 	arg_appimage = 1;
+		// else if (strcmp(argv[i], "--shell=none") == 0) {
+		// 	arg_shell_none = 1;
+		// 	if (cfg.shell) {
+		// 		fprintf(stderr, "Error: a shell was already specified\n");
+		// 		return 1;
+		// 	}
+		// }
+		// else if (strncmp(argv[i], "--shell=", 8) == 0) {
+		// 	if (arg_shell_none) {
+		// 		fprintf(stderr, "Error: --shell=none was already specified.\n");
+		// 		return 1;
+		// 	}
+		// 	invalid_filename(argv[i] + 8, 0); // no globbing
 
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = argv[i] + 8;
+		// 	if (cfg.shell) {
+		// 		fprintf(stderr, "Error: only one user shell can be specified\n");
+		// 		return 1;
+		// 	}
+		// 	cfg.shell = argv[i] + 8;
 
-			if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
-				fprintf(stderr, "Error: invalid shell\n");
-				exit(1);
-			}
+		// 	if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
+		// 		fprintf(stderr, "Error: invalid shell\n");
+		// 		exit(1);
+		// 	}
 
-			// access call checks as real UID/GID, not as effective UID/GID
-			if(cfg.chrootdir) {
-				char *shellpath;
-				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
-					errExit("asprintf");
-				if (access(shellpath, X_OK)) {
-					fprintf(stderr, "Error: cannot access shell file in chroot\n");
-					exit(1);
-				}
-				free(shellpath);
-			} else if (access(cfg.shell, X_OK)) {
-				fprintf(stderr, "Error: cannot access shell file\n");
-				exit(1);
-			}
-		}
-		else if (strcmp(argv[i], "-c") == 0) {
-			arg_command = 1;
-			if (i == (argc -  1)) {
-				fprintf(stderr, "Error: option -c requires an argument\n");
-				return 1;
-			}
-		}
+		// 	// access call checks as real UID/GID, not as effective UID/GID
+		// 	if(cfg.chrootdir) {
+		// 		char *shellpath;
+		// 		if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
+		// 			errExit("asprintf");
+		// 		if (access(shellpath, X_OK)) {
+		// 			fprintf(stderr, "Error: cannot access shell file in chroot\n");
+		// 			exit(1);
+		// 		}
+		// 		free(shellpath);
+		// 	} else if (access(cfg.shell, X_OK)) {
+		// 		fprintf(stderr, "Error: cannot access shell file\n");
+		// 		exit(1);
+		// 	}
+		// }
+		// else if (strcmp(argv[i], "-c") == 0) {
+		// 	arg_command = 1;
+		// 	if (i == (argc -  1)) {
+		// 		fprintf(stderr, "Error: option -c requires an argument\n");
+		// 		return 1;
+		// 	}
+		// }
 
 		// unlike all other x11 features, this is available always
-		else if (strcmp(argv[i], "--x11=none") == 0) {
-			arg_x11_block = 1;
-		}
-#ifdef HAVE_X11
-		else if (strcmp(argv[i], "--x11=xorg") == 0) {
-			if (checkcfg(CFG_X11))
-				arg_x11_xorg = 1;
-			else
-				exit_err_feature("x11");
-		}
-#endif
-		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
-			// NOTE: this is second part of option handler,
-			//		 atempt to find and join sandbox is done in other one
+		// else if (strcmp(argv[i], "--x11=none") == 0) {
+		// 	arg_x11_block = 1;
+		// }
+// #ifdef HAVE_X11
+// 		else if (strcmp(argv[i], "--x11=xorg") == 0) {
+// 			if (checkcfg(CFG_X11))
+// 				arg_x11_xorg = 1;
+// 			else
+// 				exit_err_feature("x11");
+// 		}
+// #endif
+		// else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
+		// 	// NOTE: this is second part of option handler,
+		// 	//		 atempt to find and join sandbox is done in other one
 
-			// set sandbox name and start normally
-			cfg.name = argv[i] + 16;
-			if (strlen(cfg.name) == 0) {
-				fprintf(stderr, "Error: please provide a name for sandbox\n");
-				return 1;
-			}
-		}
-		else if (strcmp(argv[i], "--deterministic-exit-code") == 0) {
-			arg_deterministic_exit_code = 1;
-		}
+		// 	// set sandbox name and start normally
+		// 	cfg.name = argv[i] + 16;
+		// 	if (strlen(cfg.name) == 0) {
+		// 		fprintf(stderr, "Error: please provide a name for sandbox\n");
+		// 		return 1;
+		// 	}
+		// }
+		// else if (strcmp(argv[i], "--deterministic-exit-code") == 0) {
+		// 	arg_deterministic_exit_code = 1;
+		// }
 		else {
 			// double dash - positional params to follow
 			if (strcmp(argv[i], "--") == 0) {
@@ -2701,16 +2701,16 @@ int main(int argc, char **argv, char **envp) {
 			}
 
 			// we have a program name coming
-			if (arg_appimage) {
-				cfg.command_name = strdup(argv[i]);
-				if (!cfg.command_name)
-					errExit("strdup");
+			// if (arg_appimage) {
+				// cfg.command_name = strdup(argv[i]);
+				// if (!cfg.command_name)
+				// 	errExit("strdup");
 
-				// disable shell=* for appimages
-				arg_shell_none = 0;
-			}
-			else
-				extract_command_name(i, argv);
+				// // disable shell=* for appimages
+				// arg_shell_none = 0;
+			// }
+			// else
+			extract_command_name(i, argv);
 			prog_index = i;
 			break;
 		}
@@ -2720,9 +2720,9 @@ int main(int argc, char **argv, char **envp) {
 	// exit chroot, overlay and appimage sandboxes when caps are explicitly specified on command line
 	if (getuid() != 0 && arg_caps_cmdline) {
 		char *opt = NULL;
-		if (arg_appimage)
-			opt = "appimage";
-		else if (arg_overlay)
+		// if (arg_appimage)
+		// 	opt = "appimage";
+		if (arg_overlay)
 			opt = "overlay";
 		else if (cfg.chrootdir)
 			opt = "chroot";
@@ -2741,9 +2741,9 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	// check trace configuration
-	if (arg_trace && arg_tracelog) {
-		fwarning("--trace and --tracelog are mutually exclusive; --tracelog disabled\n");
-	}
+	// if (arg_trace && arg_tracelog) {
+	// 	fwarning("--trace and --tracelog are mutually exclusive; --tracelog disabled\n");
+	// }
 
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
@@ -2758,8 +2758,8 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	// enable seccomp if only seccomp.block-secondary was specified
-	if (arg_seccomp_block_secondary)
-		arg_seccomp = 1;
+	// if (arg_seccomp_block_secondary)
+	// 	arg_seccomp = 1;
 
 	// log command
 	logargs(argc, argv);
@@ -2778,8 +2778,8 @@ int main(int argc, char **argv, char **envp) {
 			fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
 			exit(1);
 		}
-		if (arg_debug)
-			printf("Autoselecting %s as shell\n", cfg.shell);
+		// if (arg_debug)
+		// 	printf("Autoselecting %s as shell\n", cfg.shell);
 	}
 
 	// build the sandbox command
@@ -2803,8 +2803,8 @@ int main(int argc, char **argv, char **envp) {
 	}*/
 
 	assert(cfg.command_name);
-	if (arg_debug)
-		printf("Command name #%s#\n", cfg.command_name);
+	// if (arg_debug)
+	// 	printf("Command name #%s#\n", cfg.command_name);
 
 
 	// load the profile
@@ -2839,12 +2839,12 @@ int main(int argc, char **argv, char **envp) {
 	// check network configuration options - it will exit if anything went wrong
 	// net_check_cfg();
 
-	if (arg_seccomp)
-		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
+	// if (arg_seccomp)
+	// 	arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
 
-	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
-	if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
-		fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
+	// bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
+	// if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
+	// 	fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
 
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
@@ -2925,15 +2925,15 @@ int main(int argc, char **argv, char **envp) {
 	// in user mode CLONE_NEWIPC will break MIT Shared Memory Extension (MIT-SHM)
 	if (getuid() == 0 || arg_ipc) {
 		flags |= CLONE_NEWIPC;
-		if (arg_debug)
-			printf("Enabling IPC namespace\n");
+		// if (arg_debug)
+		// 	printf("Enabling IPC namespace\n");
 	}
 
-	if (any_bridge_configured() || any_interface_configured() || arg_nonetwork) {
+	if (any_bridge_configured() || any_interface_configured()) {
 		flags |= CLONE_NEWNET;
 	}
-	else if (arg_debug)
-		printf("Using the local network stack\n");
+	// else if (arg_debug)
+	// 	printf("Using the local network stack\n");
 
 	EUID_ASSERT();
 	EUID_ROOT();
@@ -2960,7 +2960,7 @@ int main(int argc, char **argv, char **envp) {
 			printf("The new log directory is /proc/%d/root/var/log\n", child);
 	}
 
-	if (!arg_nonetwork) {
+	// if (!arg_nonetwork) {
 		EUID_ROOT();
 		pid_t net_child = fork();
 		if (net_child < 0)
@@ -2972,8 +2972,8 @@ int main(int argc, char **argv, char **envp) {
 			if (setregid(0, 0))
 				errExit("setregid");
 			// network_main(child);
-			if (arg_debug)
-				printf("Host network configured\n");
+			// if (arg_debug)
+			// 	printf("Host network configured\n");
 #ifdef HAVE_GCOV
 			__gcov_flush();
 #endif
@@ -2983,7 +2983,7 @@ int main(int argc, char **argv, char **envp) {
 		// wait for the child to finish
 		waitpid(net_child, NULL, 0);
 		EUID_USER();
-	}
+	// }
 	EUID_ASSERT();
 
  	// close each end of the unused pipes

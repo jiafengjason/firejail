@@ -116,8 +116,8 @@ void fs_var_log(void) {
 			wtmp_group = s.st_gid;
 
 		// mount a tmpfs on top of /var/log
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/log\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/log\n");
 		if (mount("tmpfs", "/var/log", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/log");
 		fs_logger("tmpfs /var/log");
@@ -151,8 +151,8 @@ void fs_var_lib(void) {
 
 	// ISC DHCP multiserver
 	if (stat("/var/lib/dhcp", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/lib/dhcp\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/lib/dhcp\n");
 		if (mount("tmpfs", "/var/lib/dhcp", "tmpfs", MS_NOSUID |  MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/dhcp");
 		fs_logger("tmpfs /var/lib/dhcp");
@@ -170,8 +170,8 @@ void fs_var_lib(void) {
 
 	// nginx multiserver
 	if (stat("/var/lib/nginx", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/lib/nginx\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/lib/nginx\n");
 		if (mount("tmpfs", "/var/lib/nginx", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/nginx");
 		fs_logger("tmpfs /var/lib/nginx");
@@ -179,8 +179,8 @@ void fs_var_lib(void) {
 
 	// net-snmp multiserver
 	if (stat("/var/lib/snmp", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/lib/snmp\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/lib/snmp\n");
 		if (mount("tmpfs", "/var/lib/snmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/snmp");
 		fs_logger("tmpfs /var/lib/snmp");
@@ -188,8 +188,8 @@ void fs_var_lib(void) {
 
 	// this is where sudo remembers its state
 	if (stat("/var/lib/sudo", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/lib/sudo\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/lib/sudo\n");
 		if (mount("tmpfs", "/var/lib/sudo", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/lib/sudo");
 		fs_logger("tmpfs /var/lib/sudo");
@@ -200,16 +200,16 @@ void fs_var_cache(void) {
 	struct stat s;
 
 	if (stat("/var/cache/apache2", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/cache/apache2\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/cache/apache2\n");
 		if (mount("tmpfs", "/var/cache/apache2", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/apache2");
 		fs_logger("tmpfs /var/cache/apache2");
 	}
 
 	if (stat("/var/cache/lighttpd", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/cache/lighttpd\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/cache/lighttpd\n");
 		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /var/cache/lighttpd");
 		fs_logger("tmpfs /var/cache/lighttpd");
@@ -233,25 +233,26 @@ void fs_var_cache(void) {
 }
 
 void dbg_test_dir(const char *dir) {
-	if (arg_debug) {
-		if (is_dir(dir))
-			printf("%s is a directory\n", dir);
-		if (is_link(dir)) {
-			char *lnk = realpath(dir, NULL);
-			if (lnk) {
-				printf("%s is a symbolic link to %s\n", dir, lnk);
-				free(lnk);
-			}
-		}
-	}
+	// if (arg_debug) {
+	// 	if (is_dir(dir))
+	// 		printf("%s is a directory\n", dir);
+	// 	if (is_link(dir)) {
+	// 		char *lnk = realpath(dir, NULL);
+	// 		if (lnk) {
+	// 			printf("%s is a symbolic link to %s\n", dir, lnk);
+	// 			free(lnk);
+	// 		}
+	// 	}
+	// }
+    ;
 }
 
 
 void fs_var_lock(void) {
 
 	if (is_dir("/var/lock")) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/lock\n");
+		// if (arg_debug)
+		// 	printf("Mounting tmpfs on /var/lock\n");
 		if (mount("tmpfs", "/var/lock", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 			errExit("mounting /lock");
 		fs_logger("tmpfs /var/lock");
@@ -266,8 +267,8 @@ void fs_var_tmp(void) {
 	struct stat s;
 	if (stat("/var/tmp", &s) == 0) {
 		if (!is_link("/var/tmp")) {
-			if (arg_debug)
-				printf("Mounting tmpfs on /var/tmp\n");
+			// if (arg_debug)
+			// 	printf("Mounting tmpfs on /var/tmp\n");
 			if (mount("tmpfs", "/var/tmp", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,  "mode=1777,gid=0") < 0)
 				errExit("mounting /var/tmp");
 			fs_logger("tmpfs /var/tmp");
@@ -292,8 +293,8 @@ void fs_var_utmp(void) {
 	}
 
 	// create a new utmp file
-	if (arg_debug)
-		printf("Create the new utmp file\n");
+	// if (arg_debug)
+	// 	printf("Create the new utmp file\n");
 
 	/* coverity[toctou] */
 	FILE *fp = fopen(RUN_UTMP_FILE, "w");
@@ -319,8 +320,8 @@ void fs_var_utmp(void) {
 	fclose(fp);
 
 	// mount the new utmp file
-	if (arg_debug)
-		printf("Mount the new utmp file\n");
+	// if (arg_debug)
+	// 	printf("Mount the new utmp file\n");
 	if (mount(RUN_UTMP_FILE, UTMP_FILE, NULL, MS_BIND|MS_NOSUID|MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
 	fs_logger("create /var/run/utmp");

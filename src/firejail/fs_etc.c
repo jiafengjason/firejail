@@ -34,8 +34,8 @@ void fs_machineid(void) {
 	// if --machine-id flag is inactive, do nothing
 	if (arg_machineid == 0)
 		return;
-	if (arg_debug)
-		printf("Generating a new machine-id\n");
+	// if (arg_debug)
+	// 	printf("Generating a new machine-id\n");
 
 	// init random number generator
 	srand(time(NULL));
@@ -63,8 +63,8 @@ void fs_machineid(void) {
 
 	struct stat s;
 	if (stat("/etc/machine-id", &s) == 0) {
-		if (arg_debug)
-			printf("installing a new /etc/machine-id\n");
+		// if (arg_debug)
+		// 	printf("installing a new /etc/machine-id\n");
 
 		if (mount(RUN_MACHINEID, "/etc/machine-id", "none", MS_BIND, "mode=444,gid=0"))
 			errExit("mount");
@@ -81,8 +81,8 @@ static int check_dir_or_file(const char *fname) {
 
 	struct stat s;
 	if (stat(fname, &s) == -1) {
-		if (arg_debug)
-			fwarning("file %s not found.\n", fname);
+		// if (arg_debug)
+		// 	fwarning("file %s not found.\n", fname);
 		return 0;
 	}
 
@@ -117,8 +117,8 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 		return;
 	}
 
-	if (arg_debug)
-		printf("copying %s to private %s\n", src, private_dir);
+	// if (arg_debug)
+	// 	printf("copying %s to private %s\n", src, private_dir);
 
 	struct stat s;
 	if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
@@ -146,8 +146,8 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	// nothing to do if directory does not exist
 	struct stat s;
 	if (stat(private_dir, &s) == -1) {
-		if (arg_debug)
-			printf("Cannot find %s\n", private_dir);
+		// if (arg_debug)
+		// 	printf("Cannot find %s\n", private_dir);
 		return;
 	}
 
@@ -164,8 +164,8 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	// copy the list of files in the new etc directory
 	// using a new child process with root privileges
 	if (*private_list != '\0') {
-		if (arg_debug)
-			printf("Copying files in the new %s directory:\n", private_dir);
+		// if (arg_debug)
+		// 	printf("Copying files in the new %s directory:\n", private_dir);
 
 		// copy the list of files in the new home directory
 		char *dlist = strdup(private_list);
@@ -186,8 +186,8 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		fs_logger_print();
 	}
 
-	if (arg_debug)
-		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
+	// if (arg_debug)
+	// 	printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);

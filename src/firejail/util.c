@@ -108,12 +108,12 @@ static void clean_supplementary_groups(gid_t gid) {
 		if (rv)
 			goto clean_all;
 
-		if (arg_debug) {
-			printf("Supplementary groups: ");
-			for (i = 0; i < new_ngroups; i++)
-				printf("%d ", new_groups[i]);
-			printf("\n");
-		}
+		// if (arg_debug) {
+		// 	printf("Supplementary groups: ");
+		// 	for (i = 0; i < new_ngroups; i++)
+		// 		printf("%d ", new_groups[i]);
+		// 	printf("\n");
+		// }
 	}
 	else
 		goto clean_all;
@@ -131,16 +131,16 @@ clean_all:
 // - for root group or if nogroups is set, supplementary groups are not configured
 void drop_privs(int nogroups) {
 	gid_t gid = getgid();
-	if (arg_debug)
-		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
+	// if (arg_debug)
+	// 	printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
 
 	// configure supplementary groups
 	EUID_ROOT();
 	if (gid == 0 || nogroups) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
-		if (arg_debug)
-			printf("No supplementary groups\n");
+		// if (arg_debug)
+		// 	printf("No supplementary groups\n");
 	}
 	else if (arg_noroot)
 		clean_supplementary_groups(gid);
@@ -209,56 +209,58 @@ void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/fnet
 }
 
 void logsignal(int s) {
-	if (!arg_debug)
-		return;
+	;// if (!arg_debug)
+	// 	return;
 
-	openlog("firejail", LOG_NDELAY | LOG_PID, LOG_USER);
-	syslog(LOG_INFO, "Signal %d caught", s);
-	closelog();
+	// openlog("firejail", LOG_NDELAY | LOG_PID, LOG_USER);
+	// syslog(LOG_INFO, "Signal %d caught", s);
+	// closelog();
 }
 
 
 void logmsg(const char *msg) {
-	if (!arg_debug)
-		return;
+	;// if (!arg_debug)
+	// 	return;
 
-	openlog("firejail", LOG_NDELAY | LOG_PID, LOG_USER);
-	syslog(LOG_INFO, "%s\n", msg);
-	closelog();
+	// openlog("firejail", LOG_NDELAY | LOG_PID, LOG_USER);
+	// syslog(LOG_INFO, "%s\n", msg);
+	// closelog();
 }
 
 
 void logargs(int argc, char **argv) {
-	if (!arg_debug)
-		return;
+	
+    ;// if (!arg_debug)
+	// 	return;
 
-	int i;
-	int len = 0;
+	// int i;
+	// int len = 0;
 
-	// calculate message length
-	for (i = 0; i < argc; i++)
-		len += strlen(argv[i]) + 1;	  // + ' '
+	// // calculate message length
+	// for (i = 0; i < argc; i++)
+	// 	len += strlen(argv[i]) + 1;	  // + ' '
 
-	// build message
-	char msg[len + 1];
-	char *ptr = msg;
-	for (i = 0; i < argc; i++) {
-		sprintf(ptr, "%s ", argv[i]);
-		ptr += strlen(ptr);
-	}
+	// // build message
+	// char msg[len + 1];
+	// char *ptr = msg;
+	// for (i = 0; i < argc; i++) {
+	// 	sprintf(ptr, "%s ", argv[i]);
+	// 	ptr += strlen(ptr);
+	// }
 
-	// log message
-	logmsg(msg);
+	// // log message
+	// logmsg(msg);
 }
 
 
 void logerr(const char *msg) {
-	if (!arg_debug)
-		return;
+	
+    ;// if (!arg_debug)
+	// 	return;
 
-	openlog("firejail", LOG_NDELAY | LOG_PID, LOG_USER);
-	syslog(LOG_ERR, "%s\n", msg);
-	closelog();
+	// openlog("firejail", LOG_NDELAY | LOG_PID, LOG_USER);
+	// syslog(LOG_ERR, "%s\n", msg);
+	// closelog();
 }
 
 
@@ -977,8 +979,8 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 	struct stat s;
 
 	if (stat(dir, &s)) {
-		if (arg_debug)
-			printf("Creating empty %s directory\n", dir);
+		// if (arg_debug)
+		// 	printf("Creating empty %s directory\n", dir);
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -990,8 +992,8 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 				if (chmod(dir, mode) == -1)
 					{;} // do nothing
 			}
-			else if (arg_debug)
-				printf("Directory %s not created: %s\n", dir, strerror(errno));
+			// else if (arg_debug)
+			// 	printf("Directory %s not created: %s\n", dir, strerror(errno));
 #ifdef HAVE_GCOV
 			__gcov_flush();
 #endif
@@ -1010,8 +1012,8 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 	struct stat s;
 
 	if (stat(dir, &s)) {
-		if (arg_debug)
-			printf("Creating empty %s directory\n", dir);
+		// if (arg_debug)
+		// 	printf("Creating empty %s directory\n", dir);
 		/* coverity[toctou] */
 		// don't fail if directory already exists. This can be the case in a race
 		// condition, when two jails launch at the same time. See #1013
@@ -1029,8 +1031,8 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 	struct stat s;
 
 	if (stat(fname, &s)) {
-		if (arg_debug)
-			printf("Creating empty %s file\n", fname);
+		// if (arg_debug)
+		// 	printf("Creating empty %s file\n", fname);
 
 		/* coverity[toctou] */
 		FILE *fp = fopen(fname, "w");
@@ -1110,8 +1112,8 @@ unsigned extract_timeout(const char *str) {
 void disable_file_or_dir(const char *fname) {
 	struct stat s;
 	if (stat(fname, &s) != -1) {
-		if (arg_debug)
-			printf("blacklist %s\n", fname);
+		// if (arg_debug)
+		// 	printf("blacklist %s\n", fname);
 		if (is_dir(fname)) {
 			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
 				errExit("disable directory");

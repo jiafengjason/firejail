@@ -112,8 +112,8 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 }
 
 static int store_xauthority(void) {
-	if (arg_x11_block)
-		return 0;
+	// if (arg_x11_block)
+	// 	return 0;
 
 	// put a copy of .Xauthority in XAUTHORITY_FILE
 	char *dest = RUN_XAUTHORITY_FILE;
@@ -151,8 +151,8 @@ static int store_xauthority(void) {
 }
 
 static int store_asoundrc(void) {
-	if (arg_nosound)
-		return 0;
+	// if (arg_nosound)
+	// 	return 0;
 
 	// put a copy of .asoundrc in ASOUNDRC_FILE
 	char *dest = RUN_ASOUNDRC_FILE;
@@ -259,8 +259,8 @@ void fs_private_homedir(void) {
 	gid_t g = getgid();
 
 	// mount bind private_homedir on top of homedir
-	if (arg_debug)
-		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
+	// if (arg_debug)
+	// 	printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
 	// get file descriptors for homedir and private_homedir, fails if there is any symlink
 	int src = safe_fd(private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (src == -1)
@@ -314,8 +314,8 @@ void fs_private_homedir(void) {
 
 	if (u != 0) {
 		// mask /root
-		if (arg_debug)
-			printf("Mounting a new /root directory\n");
+		// if (arg_debug)
+		// 	printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting /root directory");
 		// selinux_relabel_path("/root", "/root");
@@ -323,8 +323,8 @@ void fs_private_homedir(void) {
 	}
 	if (u == 0 && !arg_allusers) {
 		// mask /home
-		if (arg_debug)
-			printf("Mounting a new /home directory\n");
+		// if (arg_debug)
+		// 	printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
 		// selinux_relabel_path("/home", "/home");
@@ -353,8 +353,8 @@ void fs_private(void) {
 	int aflag = store_asoundrc();
 
 	// mask /root
-	if (arg_debug)
-		printf("Mounting a new /root directory\n");
+	// if (arg_debug)
+	// 	printf("Mounting a new /root directory\n");
 	if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 		errExit("mounting /root directory");
 	// selinux_relabel_path("/root", "/root");
@@ -362,8 +362,8 @@ void fs_private(void) {
 
 	// mask /home
 	if (!arg_allusers) {
-		if (arg_debug)
-			printf("Mounting a new /home directory\n");
+		// if (arg_debug)
+		// 	printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
 		// selinux_relabel_path("/home", "/home");
@@ -373,8 +373,8 @@ void fs_private(void) {
 	if (u != 0) {
 		if (!arg_allusers && strncmp(homedir, "/home/", 6) == 0) {
 			// create new empty /home/user directory
-			if (arg_debug)
-				printf("Create a new user directory\n");
+			// if (arg_debug)
+			// 	printf("Create a new user directory\n");
 			if (mkdir(homedir, S_IRWXU) == -1) {
 				if (mkpath_as_root(homedir) == -1)
 					errExit("mkpath");
@@ -441,8 +441,8 @@ static char *check_dir_or_file(const char *name) {
 
 	// basic checks
 	invalid_filename(name, 0); // no globbing
-	if (arg_debug)
-		printf("Private home: checking %s\n", name);
+	// if (arg_debug)
+	// 	printf("Private home: checking %s\n", name);
 
 	// expand home directory
 	char *fname = expand_macros(name);
@@ -499,8 +499,8 @@ errexit:
 static void duplicate(char *name) {
 	char *fname = check_dir_or_file(name);
 
-	if (arg_debug)
-		printf("Private home: duplicating %s\n", fname);
+	// if (arg_debug)
+	// 	printf("Private home: duplicating %s\n", fname);
 	assert(strncmp(fname, cfg.homedir, strlen(cfg.homedir)) == 0);
 
 	struct stat s;
@@ -552,8 +552,8 @@ void fs_private_home_list(void) {
 	// selinux_relabel_path(RUN_HOME_DIR, "/home");
 	fs_logger_print();	// save the current log
 
-	if (arg_debug)
-		printf("Copying files in the new home:\n");
+	// if (arg_debug)
+	// 	printf("Copying files in the new home:\n");
 
 	// copy the list of files in the new home directory
 	char *dlist = strdup(cfg.home_private_keep);
@@ -572,8 +572,8 @@ void fs_private_home_list(void) {
 	fs_logger_print();	// save the current log
 	free(dlist);
 
-	if (arg_debug)
-		printf("Mount-bind %s on top of %s\n", RUN_HOME_DIR, homedir);
+	// if (arg_debug)
+	// 	printf("Mount-bind %s on top of %s\n", RUN_HOME_DIR, homedir);
 
 	int fd = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
@@ -608,8 +608,8 @@ void fs_private_home_list(void) {
 
 	if (uid != 0) {
 		// mask /root
-		if (arg_debug)
-			printf("Mounting a new /root directory\n");
+		// if (arg_debug)
+		// 	printf("Mounting a new /root directory\n");
 		if (mount("tmpfs", "/root", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=700,gid=0") < 0)
 			errExit("mounting /root directory");
 		// selinux_relabel_path("/root", "/root");
@@ -617,8 +617,8 @@ void fs_private_home_list(void) {
 	}
 	if (uid == 0 && !arg_allusers) {
 		// mask /home
-		if (arg_debug)
-			printf("Mounting a new /home directory\n");
+		// if (arg_debug)
+		// 	printf("Mounting a new /home directory\n");
 		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
 		// selinux_relabel_path("/home", "/home");

@@ -70,8 +70,8 @@ static void sanitize_home(void) {
 	assert(getuid() != 0);	// this code works only for regular users
 	struct stat s;
 
-	if (arg_debug)
-		printf("Cleaning /home directory\n");
+	// if (arg_debug)
+	// 	printf("Cleaning /home directory\n");
 	// keep a copy of the user home directory
 	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
@@ -120,8 +120,8 @@ static void sanitize_home(void) {
 	if (mount("tmpfs", RUN_WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 	fs_logger2("tmpfs", RUN_WHITELIST_HOME_DIR);
-	if (!arg_private)
-		fs_logger2("whitelist", cfg.homedir);
+	// if (!arg_private)
+	// 	fs_logger2("whitelist", cfg.homedir);
 
 	return;
 
@@ -130,8 +130,8 @@ errout:
 }
 
 static void sanitize_run(void) {
-	if (arg_debug)
-		printf("Cleaning /run/user directory\n");
+	// if (arg_debug)
+	// 	printf("Cleaning /run/user directory\n");
 
 	char *runuser;
 	if (asprintf(&runuser, "/run/user/%u", getuid()) == -1)
@@ -140,8 +140,8 @@ static void sanitize_run(void) {
 	struct stat s;
 	if (stat(runuser, &s) == -1) {
 		// cannot find /user/run/$UID directory, just return
-		if (arg_debug)
-			printf("Cannot find %s directory\n", runuser);
+		// if (arg_debug)
+		// 	printf("Cannot find %s directory\n", runuser);
 		free(runuser);
 		return;
 	}
@@ -186,8 +186,8 @@ static void sanitize_passwd(void) {
 	if (stat("/etc/passwd", &s) == -1)
 		return;
 	assert(uid_min);
-	if (arg_debug)
-		printf("Sanitizing /etc/passwd, UID_MIN %d\n", uid_min);
+	// if (arg_debug)
+	// 	printf("Sanitizing /etc/passwd, UID_MIN %d\n", uid_min);
 	if (is_link("/etc/passwd")) {
 		fprintf(stderr, "Error: invalid /etc/passwd\n");
 		exit(1);
@@ -321,8 +321,8 @@ static void sanitize_group(void) {
 	if (stat("/etc/group", &s) == -1)
 		return;
 	assert(gid_min);
-	if (arg_debug)
-		printf("Sanitizing /etc/group, GID_MIN %d\n", gid_min);
+	// if (arg_debug)
+	// 	printf("Sanitizing /etc/group, GID_MIN %d\n", gid_min);
 	if (is_link("/etc/group")) {
 		fprintf(stderr, "Error: invalid /etc/group\n");
 		exit(1);

@@ -239,9 +239,9 @@
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 1, 0),	\
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
-#define BLACKLIST(syscall_nr)	\
-	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1),	\
-	KILL_OR_RETURN_ERRNO
+// #define BLACKLIST(syscall_nr)	\
+// 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1),	\
+// 	KILL_OR_RETURN_ERRNO
 
 #define WHITELIST(syscall_nr) \
 	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, syscall_nr, 0, 1), \
@@ -257,8 +257,8 @@
 #define RETURN_ERRNO(nr) \
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
 
-extern int arg_seccomp_error_action;	// error action: errno, log or kill
-#define KILL_OR_RETURN_ERRNO \
-	BPF_STMT(BPF_RET+BPF_K, arg_seccomp_error_action)
+// extern int arg_seccomp_error_action;	// error action: errno, log or kill
+// #define KILL_OR_RETURN_ERRNO \
+// 	BPF_STMT(BPF_RET+BPF_K, arg_seccomp_error_action)
 
 #endif

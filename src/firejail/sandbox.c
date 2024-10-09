@@ -77,8 +77,8 @@ static void sandbox_handler(int sig){
 			if (count == 0)
 				break;
 
-			if (arg_debug)
-				printf("Waiting on PID %d to finish\n", monitored_pid);
+			// if (arg_debug)
+			// 	printf("Waiting on PID %d to finish\n", monitored_pid);
 			sleep(1);
 			monsec--;
 		}
@@ -126,20 +126,20 @@ static void install_handler(void) {
 // 		caps_drop_dac_override();
 // }
 
-#ifdef HAVE_APPARMOR
-void set_apparmor(void) {
-	EUID_ASSERT();
-	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
-		if (aa_change_onexec("firejail-default")) {
-			fwarning("Cannot confine the application using AppArmor.\n"
-				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
-				"As root, run \"aa-enforce firejail-default\" to load it.\n");
-		}
-		else if (arg_debug)
-			printf("AppArmor enabled\n");
-	}
-}
-#endif
+// #ifdef HAVE_APPARMOR
+// void set_apparmor(void) {
+// 	EUID_ASSERT();
+// 	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
+// 		if (aa_change_onexec("firejail-default")) {
+// 			fwarning("Cannot confine the application using AppArmor.\n"
+// 				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
+// 				"As root, run \"aa-enforce firejail-default\" to load it.\n");
+// 		}
+// 		else if (arg_debug)
+// 			printf("AppArmor enabled\n");
+// 	}
+// }
+// #endif
 
 // static void seccomp_debug(void) {
 // 	if (arg_debug == 0)
@@ -233,8 +233,8 @@ static void sandbox_if_up(Bridge *br) {
 
 		// just assign the address
 		assert(br->ipsandbox);
-		if (arg_debug)
-			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
+		// if (arg_debug)
+		// 	printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
 		net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 		arp_announce(dev, br);
 	}
@@ -256,8 +256,8 @@ static void sandbox_if_up(Bridge *br) {
 			}
 		}
 
-		if (arg_debug)
-			printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
+		// if (arg_debug)
+		// 	printf("Configuring %d.%d.%d.%d address on interface %s\n", PRINT_IP(br->ipsandbox), dev);
 		// net_config_interface(dev, br->ipsandbox, br->mask, br->mtu);
 		arp_announce(dev, br);
 	}
@@ -313,8 +313,8 @@ static int monitor_application(pid_t app_pid) {
 		if (asprintf(&msg, "monitoring pid %d\n", monitored_pid) == -1)
 			errExit("asprintf");
 		logmsg(msg);
-		if (arg_debug)
-			printf("%s\n", msg);
+		// if (arg_debug)
+		// 	printf("%s\n", msg);
 		free(msg);
 
 		pid_t rv;
@@ -350,8 +350,8 @@ static int monitor_application(pid_t app_pid) {
 			}
 		}
 		while(rv != monitored_pid);
-		if (arg_debug)
-			printf("Sandbox monitor: waitpid %d retval %d status %d\n", monitored_pid, rv, status);
+		// if (arg_debug)
+		// 	printf("Sandbox monitor: waitpid %d retval %d status %d\n", monitored_pid, rv, status);
 
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {
@@ -391,8 +391,8 @@ static int monitor_application(pid_t app_pid) {
 		}
 		closedir(dir);
 
-		if (monitored_pid != 0 && arg_debug)
-			printf("Sandbox monitor: monitoring %d\n", monitored_pid);
+		// if (monitored_pid != 0 && arg_debug)
+		// 	printf("Sandbox monitor: monitoring %d\n", monitored_pid);
 	}
 
 	// return the appropriate exit status.
@@ -421,8 +421,8 @@ static int ok_to_run(const char *program) {
 	else { // search $PATH
 		char *path1 = getenv("PATH");
 		if (path1) {
-			if (arg_debug)
-				printf("Searching $PATH for %s\n", program);
+			// if (arg_debug)
+			// 	printf("Searching $PATH for %s\n", program);
 			char *path2 = strdup(path1);
 			if (!path2)
 				errExit("strdup");
@@ -434,8 +434,8 @@ static int ok_to_run(const char *program) {
 
 				if (asprintf(&fname, "%s/%s", ptr, program) == -1)
 					errExit("asprintf");
-				if (arg_debug)
-					printf("trying #%s#\n", fname);
+				// if (arg_debug)
+				// 	printf("trying #%s#\n", fname);
 
 				struct stat s;
 				int rv = stat(fname, &s);
@@ -470,37 +470,37 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	// restore original umask
 	umask(orig_umask);
 
-	if (arg_debug) {
-		printf("Starting application\n");
-		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
-	}
+	// if (arg_debug) {
+	// 	printf("Starting application\n");
+	// 	printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
+	// }
 
 	//****************************************
 	// audit
 	//****************************************
-	if (arg_audit) {
-		assert(arg_audit_prog);
+// 	if (arg_audit) {
+// 		assert(arg_audit_prog);
 
-#ifdef HAVE_GCOV
-		__gcov_dump();
-#endif
-		// seccomp_install_filters();
-		if (set_sandbox_status)
-			*set_sandbox_status = SANDBOX_DONE;
-		execl(arg_audit_prog, arg_audit_prog, NULL);
-	}
+// #ifdef HAVE_GCOV
+// 		__gcov_dump();
+// #endif
+// 		// seccomp_install_filters();
+// 		if (set_sandbox_status)
+// 			*set_sandbox_status = SANDBOX_DONE;
+// 		execl(arg_audit_prog, arg_audit_prog, NULL);
+// 	}
 	//****************************************
 	// start the program without using a shell
 	//****************************************
-	else if (arg_shell_none) {
-		if (arg_debug) {
-			int i;
-			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
-				if (cfg.original_argv[i] == NULL)
-					break;
-				printf("execvp argument %d: %s\n", i - cfg.original_program_index, cfg.original_argv[i]);
-			}
-		}
+	if (arg_shell_none) {
+		// if (arg_debug) {
+		// 	int i;
+		// 	for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
+		// 		if (cfg.original_argv[i] == NULL)
+		// 			break;
+		// 		printf("execvp argument %d: %s\n", i - cfg.original_program_index, cfg.original_argv[i]);
+		// 	}
+		// }
 
 		if (cfg.original_program_index == 0) {
 			fprintf(stderr, "Error: --shell=none configured, but no program specified\n");
@@ -534,39 +534,39 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		int index = 0;
 		arg[index++] = cfg.shell;
 		if (cfg.command_line) {
-			if (arg_debug)
-				printf("Running %s command through %s\n", cfg.command_line, cfg.shell);
+			// if (arg_debug)
+			// 	printf("Running %s command through %s\n", cfg.command_line, cfg.shell);
 			arg[index++] = "-c";
 			if (arg_doubledash)
 				arg[index++] = "--";
 			arg[index++] = cfg.command_line;
 		}
 		else if (login_shell) {
-			if (arg_debug)
-				printf("Starting %s login shell\n", cfg.shell);
+			// if (arg_debug)
+			// 	printf("Starting %s login shell\n", cfg.shell);
 			arg[index++] = "-l";
 		}
-		else if (arg_debug)
-			printf("Starting %s shell\n", cfg.shell);
+		// else if (arg_debug)
+		// 	printf("Starting %s shell\n", cfg.shell);
 
 		assert(index < 5);
 		arg[index] = NULL;
 
-		if (arg_debug) {
-			char *msg;
-			if (asprintf(&msg, "sandbox %d, execvp into %s",
-				sandbox_pid, cfg.command_line ? cfg.command_line : cfg.shell) == -1)
-				errExit("asprintf");
-			logmsg(msg);
-			free(msg);
+		// if (arg_debug) {
+		// 	char *msg;
+		// 	if (asprintf(&msg, "sandbox %d, execvp into %s",
+		// 		sandbox_pid, cfg.command_line ? cfg.command_line : cfg.shell) == -1)
+		// 		errExit("asprintf");
+		// 	logmsg(msg);
+		// 	free(msg);
 
-			int i;
-			for (i = 0; i < 5; i++) {
-				if (arg[i] == NULL)
-					break;
-				printf("execvp argument %d: %s\n", i, arg[i]);
-			}
-		}
+		// 	int i;
+		// 	for (i = 0; i < 5; i++) {
+		// 		if (arg[i] == NULL)
+		// 			break;
+		// 		printf("execvp argument %d: %s\n", i, arg[i]);
+		// 	}
+		// }
 
 		if (!arg_command && !arg_quiet)
 			print_time();
@@ -596,7 +596,7 @@ static void enforce_filters(void) {
 
 	// disable all capabilities
 	fmessage("\n**     Warning: dropping all Linux capabilities     **\n\n");
-	arg_caps_drop_all = 1;
+	// arg_caps_drop_all = 1;
 
 	// drop all supplementary groups; /etc/group file inside chroot
 	// is controlled by a regular usr
@@ -705,8 +705,8 @@ int sandbox(void* sandbox_arg) {
 	(void)sandbox_arg;
 
 	pid_t child_pid = getpid();
-	if (arg_debug)
-		printf("Initializing child process\n");
+	// if (arg_debug)
+	// 	printf("Initializing child process\n");
 
  	// close each end of the unused pipes
  	close(parent_to_child_fds[1]);
@@ -715,8 +715,8 @@ int sandbox(void* sandbox_arg) {
  	// wait for parent to do base setup
  	wait_for_other(parent_to_child_fds[0]);
 
-	if (arg_debug && child_pid == 1)
-		printf("PID namespace installed\n");
+	// if (arg_debug && child_pid == 1)
+	// 	printf("PID namespace installed\n");
 
 
 	//****************************
@@ -885,8 +885,8 @@ int sandbox(void* sandbox_arg) {
 	//  - create an empty /etc/ld.so.preload
 	//****************************
 	if (cfg.protocol) {
-		if (arg_debug)
-			printf("Build protocol filter: %s\n", cfg.protocol);
+		// if (arg_debug)
+		// 	printf("Build protocol filter: %s\n", cfg.protocol);
 
 		// build the seccomp filter as a regular user
 		int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
@@ -896,12 +896,12 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
-	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
+	// bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
 	// for --appimage, --chroot and --overlay* we force NO_NEW_PRIVS
 	// and drop all capabilities
-	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
+	if (getuid() != 0 && (cfg.chrootdir || arg_overlay)) {
 		enforce_filters();
-		need_preload = arg_trace || arg_tracelog;
+		// need_preload = arg_trace || arg_tracelog;
 	}
 
 	// trace pre-install
@@ -938,26 +938,26 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// private mode
 	//****************************
-	if (arg_private) {
-		if (cfg.home_private) {	// --private=
-			if (cfg.chrootdir)
-				fwarning("private=directory feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private=directory feature is disabled in overlay\n");
-			else
-				fs_private_homedir();
-		}
-		else if (cfg.home_private_keep) { // --private-home=
-			if (cfg.chrootdir)
-				fwarning("private-home= feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private-home= feature is disabled in overlay\n");
-			else
-				fs_private_home_list();
-		}
-		else // --private
-			fs_private();
-	}
+	// if (arg_private) {
+	// 	if (cfg.home_private) {	// --private=
+	// 		if (cfg.chrootdir)
+	// 			fwarning("private=directory feature is disabled in chroot\n");
+	// 		else if (arg_overlay)
+	// 			fwarning("private=directory feature is disabled in overlay\n");
+	// 		else
+	// 			fs_private_homedir();
+	// 	}
+	// 	else if (cfg.home_private_keep) { // --private-home=
+	// 		if (cfg.chrootdir)
+	// 			fwarning("private-home= feature is disabled in chroot\n");
+	// 		else if (arg_overlay)
+	// 			fwarning("private-home= feature is disabled in overlay\n");
+	// 		else
+	// 			fs_private_home_list();
+	// 	}
+	// 	else // --private
+	// 		fs_private();
+	// }
 
 	if (arg_private_dev)
 		fs_private_dev();
@@ -983,27 +983,27 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// private-bin is disabled for appimages
-	if (arg_private_bin && !arg_appimage) {
+	if (arg_private_bin) {
 		if (cfg.chrootdir)
 			fwarning("private-bin feature is disabled in chroot\n");
 		else if (arg_overlay)
 			fwarning("private-bin feature is disabled in overlay\n");
 		else {
 			// for --x11=xorg we need to add xauth command
-			if (arg_x11_xorg) {
-				EUID_USER();
-				char *tmp;
-				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
-					errExit("asprintf");
-				cfg.bin_private_keep = tmp;
-				EUID_ROOT();
-			}
+			// if (arg_x11_xorg) {
+			// 	EUID_USER();
+			// 	char *tmp;
+			// 	if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
+			// 		errExit("asprintf");
+			// 	cfg.bin_private_keep = tmp;
+			// 	EUID_ROOT();
+			// }
 			fs_private_bin_list();
 		}
 	}
 
 	// private-lib is disabled for appimages
-	if (arg_private_lib && !arg_appimage) {
+	if (arg_private_lib) {
 		if (cfg.chrootdir)
 			fwarning("private-lib feature is disabled in chroot\n");
 		else if (arg_overlay)
@@ -1100,20 +1100,20 @@ int sandbox(void* sandbox_arg) {
 	// else if (!arg_noautopulse)
 	// 	pulseaudio_init();
 
-	if (arg_no3d)
-		fs_dev_disable_3d();
+	// if (arg_no3d)
+	// 	fs_dev_disable_3d();
 
-	if (arg_notv)
-		fs_dev_disable_tv();
+	// if (arg_notv)
+	// 	fs_dev_disable_tv();
 
-	if (arg_nodvd)
-		fs_dev_disable_dvd();
+	// if (arg_nodvd)
+	// 	fs_dev_disable_dvd();
 
-	if (arg_nou2f)
-		fs_dev_disable_u2f();
+	// if (arg_nou2f)
+	// 	fs_dev_disable_u2f();
 
-	if (arg_novideo)
-		fs_dev_disable_video();
+	// if (arg_novideo)
+	// 	fs_dev_disable_video();
 
 	//****************************
 	// install trace
@@ -1163,13 +1163,13 @@ int sandbox(void* sandbox_arg) {
 			}
 		}
 	}
-	if (arg_debug) {
-		char *cpath = get_current_dir_name();
-		if (cpath) {
-			printf("Current directory: %s\n", cpath);
-			free(cpath);
-		}
-	}
+	// if (arg_debug) {
+	// 	char *cpath = get_current_dir_name();
+	// 	if (cpath) {
+	// 		printf("Current directory: %s\n", cpath);
+	// 		free(cpath);
+	// 	}
+	// }
 
 	EUID_ROOT();
 	// clean /tmp/.X11-unix sockets
@@ -1289,8 +1289,8 @@ int sandbox(void* sandbox_arg) {
 				exit(1);
 			}
 		}
-		else if (arg_debug)
-			printf("NO_NEW_PRIVS set\n");
+		// else if (arg_debug)
+		// 	printf("NO_NEW_PRIVS set\n");
 	}
 
 	//****************************************
@@ -1320,10 +1320,10 @@ int sandbox(void* sandbox_arg) {
 		errExit("fork");
 
 	if (app_pid == 0) {
-#ifdef HAVE_APPARMOR
-		// add apparmor confinement after the execve
-		set_apparmor();
-#endif
+// #ifdef HAVE_APPARMOR
+// 		// add apparmor confinement after the execve
+// 		set_apparmor();
+// #endif
 
 		// set nice and rlimits
 		if (arg_nice)

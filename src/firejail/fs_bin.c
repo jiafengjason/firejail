@@ -56,8 +56,8 @@ static char *check_dir_or_file(const char *name) {
 		// check file
 		if (asprintf(&fname, "%s/%s", paths[i], name) == -1)
 			errExit("asprintf");
-		if (arg_debug)
-			printf("Checking %s/%s\n", paths[i], name);
+		// if (arg_debug)
+		// 	printf("Checking %s/%s\n", paths[i], name);
 		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) { // do not allow directories
 			// check symlink to firejail executable in /usr/local/bin
 			if (strcmp(paths[i], "/usr/local/bin") == 0 && is_link(fname)) {
@@ -66,8 +66,8 @@ static char *check_dir_or_file(const char *name) {
 				if (actual_path) {
 					char *ptr = strstr(actual_path, "/firejail");
 					if (ptr && strlen(ptr) == strlen("/firejail")) {
-						if (arg_debug)
-							printf("firejail exec symlink detected\n");
+						// if (arg_debug)
+						// 	printf("firejail exec symlink detected\n");
 						free(actual_path);
 						free(fname);
 						fname = NULL;
@@ -87,8 +87,8 @@ static char *check_dir_or_file(const char *name) {
 	}
 
 	if (!fname) {
-		if (arg_debug)
-			fwarning("file %s not found\n", name);
+		// if (arg_debug)
+		// 	fwarning("file %s not found\n", name);
 		return NULL;
 	}
 
@@ -130,8 +130,8 @@ static int valid_full_path_file(const char *name) {
 			return 1;
 		i++;
 	}
-	if (arg_debug)
-		printf("file %s not found\n", name);
+	// if (arg_debug)
+	// 	printf("file %s not found\n", name);
 	return 0;
 }
 
@@ -276,8 +276,8 @@ void fs_private_bin_list(void) {
 	// create /run/firejail/mnt/bin directory
 	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
 
-	if (arg_debug)
-		printf("Copying files in the new bin directory\n");
+	// if (arg_debug)
+	// 	printf("Copying files in the new bin directory\n");
 
 	// copy the list of files in the new home directory
 	char *dlist = strdup(private_list);
@@ -300,8 +300,8 @@ void fs_private_bin_list(void) {
 	while (paths[i]) {
 		struct stat s;
 		if (stat(paths[i], &s) == 0) {
-			if (arg_debug)
-				printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
+			// if (arg_debug)
+			// 	printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
 			if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 			fs_logger2("tmpfs", paths[i]);

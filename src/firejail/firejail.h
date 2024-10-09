@@ -258,32 +258,32 @@ static inline int any_dhcp(void) {
   return any_ip_dhcp() || any_ip6_dhcp();
 }
 
-extern int arg_private;		// mount private /home
+// extern int arg_private;		// mount private /home
 extern int arg_private_cache;	// private home/.cache
-extern int arg_debug;		// print debug messages
+// extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
-extern int arg_nonetwork;	// --net=none
+// extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
 
-extern int arg_seccomp;	// enable default seccomp filter
+// extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
-extern int arg_seccomp_postexec;	// need postexec ld.preload library?
-extern int arg_seccomp_block_secondary;	// block any secondary architectures
+// extern int arg_seccomp_postexec;	// need postexec ld.preload library?
+// extern int arg_seccomp_block_secondary;	// block any secondary architectures
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list
-extern int arg_caps_drop_all;		// drop all capabilities
+// extern int arg_caps_drop_all;		// drop all capabilities
 extern int arg_caps_keep;		// keep list
 extern char *arg_caps_list;		// optional caps list
 
-extern int arg_trace;		// syscall tracing support
+// extern int arg_trace;		// syscall tracing support
 extern char *arg_tracefile;	// syscall tracing file
-extern int arg_tracelog;	// blacklist tracing support
+// extern int arg_tracelog;	// blacklist tracing support
 extern int arg_rlimit_cpu;	// rlimit cpu
 extern int arg_rlimit_nofile;	// rlimit nofile
 extern int arg_rlimit_nproc;	// rlimit nproc
@@ -311,10 +311,10 @@ extern int arg_private_lib;	// private lib directory
 extern int arg_private_cwd;	// private working directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
-extern int arg_nosound;	// disable sound
+// extern int arg_nosound;	// disable sound
 extern int arg_noautopulse; // disable automatic ~/.config/pulse init
-extern int arg_novideo; //disable video devices in /dev
-extern int arg_no3d;		// disable 3d hardware acceleration
+// extern int arg_novideo; //disable video devices in /dev
+// extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace
@@ -325,13 +325,13 @@ extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
-extern int arg_appimage;	// appimage
-extern int arg_audit;		// audit
-extern char *arg_audit_prog;	// audit
+// extern int arg_appimage;	// appimage
+// extern int arg_audit;		// audit
+// extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
-extern int arg_allow_debuggers;	// allow debuggers
-extern int arg_x11_block;	// block X11
-extern int arg_x11_xorg;	// use X11 security extension
+// extern int arg_allow_debuggers;	// allow debuggers
+// extern int arg_x11_block;	// block X11
+// extern int arg_x11_xorg;	// use X11 security extension
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
@@ -373,7 +373,7 @@ char *guess_shell(void);
 #define SANDBOX_DONE '1'
 int sandbox(void* sandbox_arg);
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) __attribute__((noreturn));
-void set_apparmor(void);
+// void set_apparmor(void);
 
 // network_main.c
 // void net_configure_sandbox_ip(Bridge *br);
