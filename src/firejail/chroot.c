@@ -127,7 +127,7 @@ static void update_file_ex(int parentfd, const char *relpath) {
     }
 
     // 逐行读取临时文件的内容，并写入目标文件
-    while ((bytes_read = read(temp_in, line, MAX_LINE_LENGTH)) > 0) {
+    while ((bytes_read = read(temp_in, line, 1024)) > 0) {
         if(write(out, line, bytes_read) == -1) {
             perror("Error writing file");
             break;
