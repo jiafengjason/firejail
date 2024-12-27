@@ -78,7 +78,7 @@ static void update_file_ex(int parentfd, const char *relpath) {
         errExit("fstat");
 
     // 创建一个临时文件存储更新后的内容
-    char temp_filename[] = "ld.so.preload_tmp";
+    char temp_filename[] = "/tmp/tempXXXXXX";
     int tempfd = mkstemp(temp_filename);
     if (tempfd == -1) {
         perror("Error creating temporary file");
