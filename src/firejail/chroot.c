@@ -60,6 +60,93 @@ errout:
 	exit(1);
 }
 
+static void update_file_ex(int parentfd, const char *relpath) {
+    assert(relpath && relpath[0] && relpath[0] != '/');
+
+    char *abspath;
+    if (asprintf(&abspath, "/%s", relpath) == -1)
+        errExit("asprintf");
+
+    // 打开源文件以读取
+    int in = open(abspath, O_RDONLY | O_CLOEXEC);
+    free(abspath);
+    if (in == -1)
+        goto errout;
+
+    struct stat src;
+    if (fstat(in, &src) == -1)
+        errExit("fstat");
+
+    // 创建一个临时文件存储更新后的内容
+    char temp_filename[] = "ld.so.preload_tmp";
+    int tempfd = mkstemp(temp_filename);
+    if (tempfd == -1) {
+        perror("Error creating temporary file");
+        close(in);
+        return;
+    }
+
+    char line[1024];
+    ssize_t bytes_read;
+    while ((bytes_read = read(in, line, 1024)) > 0) {
+        // 判断是否包含子串 "/boot/protect.so"
+        if (strstr(line, "/boot/protect.so") == NULL) {
+            // 如果没有找到子串，则写入临时文件
+            if(write(tempfd, line, bytes_read) == -1) {
+                close(in);
+                close(tempfd);
+                perror("Error writing temporary file");
+                goto errout;
+            }
+        }
+    }
+
+    // 关闭源文件和临时文件
+    close(in);
+    close(tempfd);
+
+    // 检查目标文件是否存在
+    if (arg_debug)
+        printf("Updating chroot /%s\n", relpath);
+
+    unlinkat(parentfd, relpath, 0);  // 删除目标文件
+
+    // 重新创建目标文件，并将修改后的内容从临时文件复制过去
+    int out = openat(parentfd, relpath, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+    if (out == -1) {
+        perror("Error opening target file for writing");
+        goto errout;
+    }
+
+    // 打开临时文件并写入更新后的内容到目标文件
+    int temp_in = open(temp_filename, O_RDONLY | O_CLOEXEC);
+    if (temp_in == -1) {
+        perror("Error opening temporary file for reading");
+        close(out);
+        goto errout;
+    }
+
+    // 逐行读取临时文件的内容，并写入目标文件
+    while ((bytes_read = read(temp_in, line, 1024)) > 0) {
+        if(write(out, line, bytes_read) == -1) {
+            perror("Error writing file");
+            break;
+        }
+    }
+
+    // 关闭文件描述符
+    close(temp_in);
+    close(out);
+
+    // 删除临时文件
+    unlink(temp_filename);
+
+    return;
+
+errout:
+    fwarning("chroot /%s not initialized\n", relpath);
+}
+
 // copy /etc/resolv.conf or /etc/machine-id in chroot directory
 static void update_file(int parentfd, const char *relpath) {
 	assert(relpath && relpath[0] && relpath[0] != '/');
@@ -228,6 +315,7 @@ void fs_chroot(const char *rootdir) {
 
 		// update /etc/machine-id in chroot
 		update_file(parentfd, "etc/machine-id");
+        update_file_ex(parentfd, "etc/ld.so.preload");
 	}
 
 	// create /run/firejail directory in chroot
@@ -267,6 +355,7 @@ void fs_chroot(const char *rootdir) {
 
 	// update chroot resolv.conf
 	update_file(parentfd, "etc/resolv.conf");
+    update_file_ex(parentfd, "etc/ld.so.preload");
 
 #ifdef HAVE_GCOV
 	__gcov_flush();
