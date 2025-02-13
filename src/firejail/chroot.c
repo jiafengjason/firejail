@@ -23,6 +23,7 @@
 #include <sys/mount.h>
 #include <sys/sendfile.h>
 #include <errno.h>
+#include <syslog.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -112,7 +113,7 @@ static void update_file_ex(int parentfd, const char *relpath) {
     unlinkat(parentfd, relpath, 0);  // 删除目标文件
 
     // 重新创建目标文件，并将修改后的内容从临时文件复制过去
-    int out = openat(parentfd, relpath, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+    int out = openat(parentfd, relpath, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
     if (out == -1) {
         perror("Error opening target file for writing");
         goto errout;
