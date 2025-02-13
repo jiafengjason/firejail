@@ -23,7 +23,6 @@
 #include <sys/mount.h>
 #include <sys/sendfile.h>
 #include <errno.h>
-#include <syslog.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
