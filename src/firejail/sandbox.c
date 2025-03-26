@@ -28,6 +28,7 @@
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <syslog.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <syscall.h>
@@ -56,6 +57,7 @@ static int monitored_pid = 0;
 static void sandbox_handler(int sig){
 	usleep(10000); // don't race to print a message
 	fmessage("\nChild received signal %d, shutting down the sandbox...\n", sig);
+	syslog(LOG_ERR, "Child received signal %d, shutting down the sandbox...\n", sig);
 
 	// broadcast sigterm to all processes in the group
 	kill(-1, SIGTERM);
@@ -1336,6 +1338,7 @@ int sandbox(void* sandbox_arg) {
 
 	int status = monitor_application(app_pid);	// monitor application
 	flush_stdin();
+	syslog(LOG_ERR, "monitor_application, pid = %d\n", app_pid);
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status

@@ -28,6 +28,7 @@
 #include <sys/mount.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <syslog.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
@@ -186,6 +187,7 @@ static void myexit(int rv) {
 
 static void my_handler(int s) {
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
+	syslog(LOG_ERR,"Parent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
 
 	if (waitpid(child, NULL, WNOHANG) == 0) {
@@ -3118,6 +3120,7 @@ printf("link #%s#\n", prf->link);
 #endif
 
 
+	syslog(LOG_ERR,"child exit %d\n", child);
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));
 	} else if (WIFSIGNALED(status)) {
